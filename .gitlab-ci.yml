@@ -1,0 +1,42 @@
+# before_script:
+stages:
+  - build
+  - migrate
+  - deploy
+
+build:
+  stage: build
+  script: 
+    - cp ~/antarctic-map/.env ./.env
+    - docker build --no-cache -t antarctic-map:latest .
+  only:
+    - master
+  tags:
+    - build
+    - shell
+
+migrate:
+  stage: migrate
+  script: 
+    - export PATH="/home/gitlab-runner/.local/bin:$PATH"
+    - pip3 install -U pip
+    - pip3 install --no-cache -r requirements.txt
+  only:
+    - master
+  tags:
+    - deploy
+    - shell
+
+deploy_prod:
+  stage: deploy
+  script:
+    - docker-compose up --force-recreate -d
+    - docker container prune -f
+    - docker image prune -a -f
+  environment:
+    name: production
+  only:
+    - master
+  tags:
+    - deploy
+    - shell
