@@ -15,11 +15,8 @@ const alias = require("./alias")
 module.exports = {
   mode: 'production',
   entry: {
-    index:     ["./frontend/index/index"],
-    map:       ["./frontend/map/index"],
-    comment:   ["react-hot-loader/patch", "./frontend/comment/index"],
-    admin:     ["./frontend/admin/src/index"],
-    dashboard: ["react-hot-loader/patch", "./frontend/dashboard/src/index"]
+    index:       ["./frontend/index/index"],
+    antarctic:   ["./frontend/antarctic/index"],
   },
   output: {
     path: path.join(__dirname, '../static/dist/'),
@@ -51,7 +48,7 @@ module.exports = {
       new OptimizeCSSAssetsPlugin({}),
       new webpack.BannerPlugin(`
       Production build ${moment().format('YYYY-MM-DD HH:mm:ss')}
-      Copy right by www.freeyeti.net
+      Copy right by antarctic.freeyeti.net
       FreeYeti <yeti@freeyeti.net>
       `)
     ]
