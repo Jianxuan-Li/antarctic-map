@@ -2,6 +2,9 @@ FROM ubuntu:18.04
 
 ARG PROJECT_PATH=/antarctic
 ARG NODE_VERSION=v12.18.2
+ARG GEOSERVER_URL_VAR
+
+ENV GEOSERVER_URL ${GEOSERVER_URL_VAR}
 
 # Create working dir
 RUN mkdir ${PROJECT_PATH} && mkdir /statics && mkdir /data

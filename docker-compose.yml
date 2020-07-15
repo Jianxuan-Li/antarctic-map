@@ -17,6 +17,8 @@ services:
       - ANTARCTIC_MAP_DATABASE_PWD=${ANTARCTIC_MAP_DATABASE_PWD}
       - ANTARCTIC_MAP_DATABASE_USER=${ANTARCTIC_MAP_DATABASE_USER}
       - ANTARCTIC_MAP_DATABASE_PORT=${ANTARCTIC_MAP_DATABASE_PORT}
+    env_file:
+      - /opt/env_files/antarctic.env
     networks:
       antarctic_map_net:
         ipv4_address: 172.50.5.10
