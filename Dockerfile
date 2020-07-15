@@ -31,6 +31,7 @@ RUN apt-get update -y \
     && mkdir -p /nodejs \
     && tar -xJf node.tar.xz -C /nodejs \
     && rm node.tar.xz \
+    && npm install -g node-gyp \
     && npm install && npm run build \
     && DJANGO_SETTINGS_MODULE="map.settings" python3 manage.py collectstatic \
     && rm -rf ./frontend ./node_modules && npm cache clean \
