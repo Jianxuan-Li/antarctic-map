@@ -13,9 +13,13 @@ while [ "$1" != "" ]; do
             backend)
                 docker-compose -f docker-compose.build.backend.yml build
                 ;;
+
+            prod)
+                docker-compose build
+                ;;
             
             -h | --help)
-                echo $"Usage: $0 {postgis|frontend|backend}"
+                echo $"Usage: $0 {postgis|frontend|backend|prod}"
                 exit 1
     
     esac

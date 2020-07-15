@@ -86,7 +86,6 @@ module.exports = {
         {
           loader: 'css-loader',
           options: {
-            minimize: true,
             modules: true,
             localIdentName: '[hash:base64]'
           }
@@ -139,7 +138,7 @@ module.exports = {
         {
           loader: 'css-loader',
           options: {
-            minimize: true
+            // minimize: true
           }
         },
         {
@@ -160,7 +159,7 @@ module.exports = {
              {
               loader: 'css-loader', // translates CSS into CommonJS modules
               options: {
-                minimize: true,
+                // minimize: true,
                 sourceMap: true
               }
             },{
