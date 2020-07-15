@@ -1,0 +1,31 @@
+FROM ubuntu:18.04
+
+ARG NODE_VERSION=v12.18.2
+
+# Set timezone
+ENV TZ Etc/UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Set LANG
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+
+ENV PATH /nodejs/node-${NODE_VERSION}-linux-x64/bin:$PATH
+
+RUN mkdir /antarctic
+WORKDIR /antarctic
+COPY . .
+
+RUN apt-get update -y \
+    && apt-get install -y \
+        gnupg2 build-essential python3 python3-pip python2.7-dev gdal-bin \
+        wget \
+    && wget -q -O node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz \
+    && mkdir -p /nodejs \
+    && tar -xJf node.tar.xz -C /nodejs \
+    && rm node.tar.xz \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* 
+
+VOLUME  ["/code"]
+WORKDIR /code
+EXPOSE 9000

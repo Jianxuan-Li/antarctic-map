@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev.frontend
+    image: antarctic-map-frontend:latest
+    volumes:
+      - ${SOURCE_CODE_PATH}:/code
+    ports:
+      - "9000:9000"

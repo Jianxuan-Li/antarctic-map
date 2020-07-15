@@ -1,0 +1,30 @@
+#!/bin/bash
+while [ "$1" != "" ]; do
+    case "$1" in
+            backend)
+                docker-compose -f docker-compose.dev.yml run -p 8000:8000 backend bash
+                ;;
+
+            frontend)
+                docker-compose -f docker-compose.dev.yml run -p 9000:9000 frontend bash
+                ;;
+
+            start)
+                npm start
+                ;;
+
+            runserver)
+                python3 manage.py runserver 0.0.0.0:8000
+                ;;
+
+            down)
+                docker-compose -f docker-compose.dev.yml down
+                ;;   
+            
+            -h | --help)
+                echo $"Usage: $0 {db|backend|frontend|down|run}"
+                exit 1
+
+    esac
+    shift
+done

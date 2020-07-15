@@ -1,0 +1,12 @@
+__pycache__
+.vscode
+.git
+build
+node_modules
+static/dist
+tmp
+*.gitlab-ci.yml
+backup.sh
+webpack-stats*
+yarn-error.log
+README.md

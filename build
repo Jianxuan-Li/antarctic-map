@@ -1,0 +1,23 @@
+#!/bin/bash
+
+while [ "$1" != "" ]; do
+    case "$1" in
+            postgis)
+                docker-compose -f docker-compose.build.postgis.yml build
+                ;;
+
+            frontend)
+                docker-compose -f docker-compose.build.frontend.yml build
+                ;;
+
+            backend)
+                docker-compose -f docker-compose.build.backend.yml build
+                ;;
+            
+            -h | --help)
+                echo $"Usage: $0 {postgis|frontend|backend}"
+                exit 1
+    
+    esac
+    shift
+done

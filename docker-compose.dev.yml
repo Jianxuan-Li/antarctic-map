@@ -1,0 +1,32 @@
+version: '3.5'
+
+networks:
+  antarctic_dev_net:
+    name: antarctic_dev_net
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.30.5.0/24"
+        - subnet: "2001:3984:3989::/64"
+
+services:
+  backend:
+    image: antarctic-map-backend:latest
+    ports:
+      - "8000:8000"
+    networks:
+      antarctic_dev_net:
+        ipv4_address: 172.30.5.20
+        ipv6_address: 2001:3984:3989::20
+    volumes:
+      - ${SOURCE_CODE_PATH}:/code
+  frontend:
+    image: antarctic-map-frontend:latest
+    ports:
+      - "9000:9000"
+    networks:
+      antarctic_dev_net:
+        ipv4_address: 172.30.5.21
+        ipv6_address: 2001:3984:3989::21
+    volumes:
+      - ${SOURCE_CODE_PATH}:/code

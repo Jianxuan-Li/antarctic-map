@@ -1,0 +1,32 @@
+{% extends 'blank_layout.html' %}
+
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}AntarcticMap{% endblock %}
+
+{% if not local_static %}
+    {% block add_css %}
+        {% render_bundle 'antarctic' 'css' 'DEFAULT' %}
+        {% render_bundle 'index' 'css' 'DEFAULT' %}
+    {% endblock %}
+{% endif %}
+
+{% block add_script %}
+    {% if not local_static %}
+        {% render_bundle 'vendor' 'js' 'DEFAULT' %}
+    {% endif %}
+    {% render_bundle 'antarctic' 'js' 'DEFAULT' %}
+    {% render_bundle 'index' 'js' 'DEFAULT' %}
+{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Map of Antarctic">
+  <meta name="keywords" content="Antarctic,map">
+{% endblock %}
+
+{% block content %}
+    <main role="main">
+        <div id="antarctic-map"></div>
+    </main>
+{% endblock %}

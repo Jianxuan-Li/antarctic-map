@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+  web:
+    image: antarctic-map:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: always
+    ports:
+      - "9001:9000"
+    environment:
+      - ANTARCTIC_MAP_DATABASE_HOST=${ANTARCTIC_MAP_DATABASE_HOST}
+      - ANTARCTIC_MAP_DATABASE_PWD=${ANTARCTIC_MAP_DATABASE_PWD}
+      - ANTARCTIC_MAP_DATABASE_USER=${ANTARCTIC_MAP_DATABASE_USER}
+      - ANTARCTIC_MAP_DATABASE_PORT=${ANTARCTIC_MAP_DATABASE_PORT}
+    networks:
+      antarctic_map_net:
+        ipv4_address: 172.50.5.10
+        ipv6_address: 2001:3984:4001::10
+
+networks:
+  antarctic_map_net:
+    name: antarctic_map_net
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.50.5.0/24"
+        - subnet: "2001:3984:4001::/64"

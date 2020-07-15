@@ -1,0 +1,30 @@
+# Docker file for development
+FROM ubuntu:18.04
+
+RUN apt-get update -y && apt-get install -y \ 
+    gnupg2 python3 python3-pip gdal-bin \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set timezone
+ENV TZ Etc/UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Set LANG
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+
+# Set DNS
+RUN echo "nameserver 114.114.114.114" >> /etc/resolv.conf
+
+# Create working dir
+RUN mkdir /antarctic
+WORKDIR /antarctic
+COPY ./requirements.txt /antarctic/requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Project initalization
+ENV DJANGO_SETTINGS_MODULE "map.settings_dev"
+VOLUME  ["/code"]
+WORKDIR /code
+
+EXPOSE 8000
