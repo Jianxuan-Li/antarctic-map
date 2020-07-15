@@ -25,14 +25,13 @@ RUN apt-get update -y \
     && apt-get install -y \
         gnupg2 make python3 python3-pip gdal-bin \
         nginx wget \
-    # && rm -rf /var/lib/apt/lists/* 
-    && pip3 --no-cache-dir install -r requirements.txt \
     && wget -q -O node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz \
     && mkdir -p /nodejs \
     && tar -xJf node.tar.xz -C /nodejs \
     && rm node.tar.xz \
     && npm install -g node-gyp \
     && npm install && npm run build \
+    && pip3 --no-cache-dir install -r requirements.txt \
     && DJANGO_SETTINGS_MODULE="map.settings" python3 manage.py collectstatic \
     && rm -rf ./frontend ./node_modules && npm cache clean \
     && rm -rf /nodejs \
