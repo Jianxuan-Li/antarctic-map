@@ -1,7 +1,10 @@
 version: '3.5'
 
 services:
-  web:
+  antarctic_map:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: antarctic-map:latest
     deploy:
       replicas: 1
