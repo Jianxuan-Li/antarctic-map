@@ -19,23 +19,26 @@ ENV LANG C.UTF-8
 
 # Project initalization
 ENV DJANGO_SETTINGS_MODULE "map.settings"
-ENV PATH /nodejs/node-${NODE_VERSION}-linux-x64/bin:$PATH
+ENV PATH /yarnpkg/yarn-v1.22.4/bin:/nodejs/node-${NODE_VERSION}-linux-x64/bin:$PATH
 
 RUN apt-get update -y \
     && apt-get install -y \
-        gnupg2 make python3 python3-pip gdal-bin \
+        gnupg2 python3 python3-pip gdal-bin \
         nginx wget \
     && wget -q -O node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz \
     && mkdir -p /nodejs \
+    && wget -q -O yarn.tar.gz https://data.westdc.cn/packages/yarn-v1.22.4.tar.gz \
+    && mkdir -p /nodejs && mkdir -p /yarnpkg \
     && tar -xJf node.tar.xz -C /nodejs \
     && rm node.tar.xz \
-    && npm install -g node-gyp \
-    && npm install && npm run build \
+    && tar -xzf yarn.tar.gz -C /yarnpkg \
+    && rm yarn.tar.gz \
+    && yarn install --network-timeout 60000 && yarn build \
     && pip3 --no-cache-dir install -r requirements.txt \
     && DJANGO_SETTINGS_MODULE="map.settings" python3 manage.py collectstatic \
-    && rm -rf ./frontend ./node_modules && npm cache clean \
-    && rm -rf /nodejs \
-    && apt-get purge -y python3-pip wget make \
+    && rm -rf ./frontend ./node_modules && yarn cache clean \
+    && rm -rf /nodejs /yarnpkg \
+    && apt-get purge -y python3-pip wget \
     && apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 RUN chmod +x ./docker-entrypoint.sh

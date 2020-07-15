@@ -3,7 +3,6 @@ const fs = require('fs')
 const path = require('path')
 const moment = require('moment')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -113,8 +112,9 @@ module.exports = {
         {
           loader: 'css-loader',
           options: {
-            modules: true,
-            localIdentName: '[hash:base64]'
+            modules: {
+              localIdentName: '[hash:base64]'
+            }
           }
         },
         {
@@ -128,7 +128,9 @@ module.exports = {
         {
           loader: 'less-loader',
           options: {
-            relativeUrls: false
+            lessOptions: {
+              relativeUrls: false
+            }
           }
         }
       ]
@@ -215,7 +217,8 @@ module.exports = {
     // }),
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(true),
-      API_SERVER_PLACEHOLDER: JSON.stringify('')
+      API_SERVER_PLACEHOLDER: JSON.stringify(''),
+      "GEOSERVER_URL": JSON.stringify(process.env.GEOSERVER_URL)
     }),
     new webpack.ProvidePlugin({
       'React': 'react'
