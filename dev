@@ -10,7 +10,7 @@ while [ "$1" != "" ]; do
                 ;;
 
             start)
-                npm start
+                yarn start
                 ;;
 
             runserver)

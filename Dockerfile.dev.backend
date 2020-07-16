@@ -14,7 +14,7 @@ ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
 # Set DNS
-RUN echo "nameserver 114.114.114.114" >> /etc/resolv.conf
+RUN echo "nameserver 1.1.1.1" >> /etc/resolv.conf
 
 # Create working dir
 RUN mkdir /antarctic
