@@ -32,7 +32,11 @@ class AntarcticMap extends Component {
                     <Panel />
                 </div>
                 <div className={styles.tilesLoading}>
-                    {tilesLoading && (<div>Loading: {tilesProgress}</div>)}
+                    {tilesLoading && (<div>
+                        <div className={styles.meter}>
+                            <span style={{width: tilesProgress}}></span>
+                        </div>
+                        <div>Loading: {tilesProgress}</div></div>)}
                 </div>
                 <div className={styles.control}>
                     <Control />
