@@ -17,10 +17,10 @@ ENV LANG C.UTF-8
 RUN echo "nameserver 1.1.1.1" >> /etc/resolv.conf
 
 # Create working dir
-RUN mkdir /antarctic
-WORKDIR /antarctic
-COPY ./requirements.txt /antarctic/requirements.txt
-RUN pip3 install --no-cache-dir -r requirements.txt
+# RUN mkdir /antarctic
+# WORKDIR /antarctic
+# COPY ../requirements.txt /antarctic/requirements.txt
+# RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Project initalization
 ENV DJANGO_SETTINGS_MODULE "map.settings_dev"

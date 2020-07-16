@@ -6,10 +6,10 @@ const rules = require("./webpack.rules");
 const BundleTracker = require("webpack-bundle-tracker");
 const alias = require("./alias")
 
-const devProtocol = 'http'           //开发环境启动协议，http 或 https
-const devHost = '0.0.0.0'          //开发环境所在主机名，一般是localhost，如果连接远程的环境则写0.0.0.0
-const devPort = 9000;                //启动端口，同时启动多个APP的时候需要启动在不同端口
-const staticPath = '/static/dist/';  //和settings.py里的WEBPACK_LOADER的设置对应
+const devProtocol = 'http'                  //开发环境启动协议，http 或 https
+const devHost = 'antarctic-map-statics'     //开发环境所在主机名，一般是localhost，如果连接远程的环境则写0.0.0.0
+const devPort = 9000;                       //启动端口，同时启动多个APP的时候需要启动在不同端口
+const staticPath = '/static/dist/';         //和settings.py里的WEBPACK_LOADER的设置对应
 
 const publicPath = (protocol, host, port, path) => protocol + "://" + host + ":" + port + path
 
@@ -179,7 +179,7 @@ module.exports = {
     hot: true, // 热更新
     headers: { "Access-Control-Allow-Origin": "*" },
     historyApiFallback: true, // 404 页面替换
-    host: devHost, // 配置 host, 服务器外部可访问
+    host: '0.0.0.0', // 配置 host, 服务器外部可访问
     port: devPort,
     disableHostCheck: true,
     public: devHost + ":" + devPort,

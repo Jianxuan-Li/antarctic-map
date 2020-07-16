@@ -2,27 +2,39 @@
 
 ## Development
 
+Prepare: 
+
+* clone code to your workspace
+* install docker
+
 1. Build images for development
+
+Create a host record in `/etc/hosts`, point docker host to antarctic-map-statics. 
+
+On OSX/Linux: `127.0.0.1       antarctic-map-statics`
+
+On Windows, find out your IP-address of the gateway of docker network, and point it to `antarctic-map-statics`, example: `192.168.99.100  antarctic-map-statics`
+
+(Notice: this hostname is configured in `config/webpack.config.dev.js`)
 
 Create `.env` file in project directory with content:
 
 ```bash
 SOURCE_CODE_PATH=/path/to/your/code
+GEOSERVER_URL=https://example.com/geoserver/
 ```
 
 Then build the images
 
 ```bash
-~~./build postgis~~
+cd ./dev-in-docker
 ./build frontend
 ./build backend
 ```
 
 2. Start frontend container
 
-```bash
-./dev frontend
-```
+Run `./dev frontend` in project root.
 
 Then, start webpack dev server in the contianer (hot reload is availabled)
 
@@ -40,8 +52,13 @@ yarn start
 Start django service in container
 
 ```bash
+pip3 install -r requirements.txt
 ./dev runserver
 ```
+
+4. Recycle container
+
+Quit the containers, and run `./dev down`.
 
 ## `.env`
 
