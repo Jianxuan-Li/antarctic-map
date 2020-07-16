@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - GEOSERVER_URL=${GEOSERVER_URL}
     image: antarctic-map:latest
     deploy:
       replicas: 1
@@ -12,11 +14,6 @@ services:
         condition: always
     ports:
       - "9001:9000"
-    environment:
-      - ANTARCTIC_MAP_DATABASE_HOST=${ANTARCTIC_MAP_DATABASE_HOST}
-      - ANTARCTIC_MAP_DATABASE_PWD=${ANTARCTIC_MAP_DATABASE_PWD}
-      - ANTARCTIC_MAP_DATABASE_USER=${ANTARCTIC_MAP_DATABASE_USER}
-      - ANTARCTIC_MAP_DATABASE_PORT=${ANTARCTIC_MAP_DATABASE_PORT}
     env_file:
       - /opt/env_files/antarctic.env
     networks:

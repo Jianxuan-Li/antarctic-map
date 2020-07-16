@@ -7,8 +7,8 @@ stages:
 build:
   stage: build
   script: 
-    - cp ~/antarctic-map/.env ./.env
-    - docker build --no-cache -t antarctic-map:latest .
+    - /opt/env_files/antarctic_build.sh
+    - docker-compose build
   only:
     - master
   tags:
