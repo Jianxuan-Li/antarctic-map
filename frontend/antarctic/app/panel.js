@@ -30,9 +30,13 @@ class Panel extends Component {
         return (
             <div>
                 <h1 className={styles.title}>AntarcticMap</h1>
-                <div>
+                <div className={styles.badges}>
+                    <a href="https://gitlab.com/FreeYeti/antarctic-map/">
+                        <img alt="Gitlab" src="https://img.shields.io/badge/gitlab-fork-brightgreen"/></a>
                     <a href="https://gitlab.com/FreeYeti/antarctic-map/-/pipelines">
-                    <img alt="pipeline status" src="https://gitlab.com/FreeYeti/antarctic-map/badges/master/pipeline.svg" /></a>
+                        <img alt="pipeline status" src="https://gitlab.com/FreeYeti/antarctic-map/badges/master/pipeline.svg" /></a>
+                    <a href="https://gitlab.com/FreeYeti/antarctic-map/">
+                        <img alt="pipeline status" src="https://gitlab.com/FreeYeti/antarctic-map/badges/master/coverage.svg" /></a>
                 </div>
                 
                 <div>
