@@ -8,6 +8,8 @@ class Store {
   @observable sources = {}
   @observable currentLayer = false
   @observable scale = null
+  @observable tilesLoading = false
+  @observable tilesProgress = '0%'
 
   availableLayers = [
     {

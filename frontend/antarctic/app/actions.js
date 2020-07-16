@@ -129,6 +129,44 @@ class Actions extends BaseActions {
         this.store.currentLayer = layerCreator.createWmsLayer(layer)
         map.addLayer(this.store.currentLayer)
         map.getView().fit(bounds, {duration: 1500});
+
+        let source = this.store.currentLayer.getSource()
+
+        this.store.tilesLoading = true
+
+        let loading = 0;
+        let loaded = 0;
+
+        let update = () => {
+            let progress = (loaded / loading * 100).toFixed(1) + '%';
+            this.store.tilesProgress = progress;
+    
+            if (loading === loaded) {
+                this.loading = 0
+                this.loaded = 0
+                this.store.tilesLoading = false
+                this.store.tilesProgress = '0%';
+            }
+
+            if(loading > loaded){
+                this.store.tilesLoading = true
+            }
+        }
+
+        source.on('tileloadstart', () => {
+            if(this.loading === 0){
+                this.store.tilesLoading = false
+            }
+            ++loading
+            update()
+        });
+
+        source.on('tileloadend', () => {
+            setTimeout(function() {
+                ++loaded
+                update()
+            }, 100);
+        })
     }
 
     @action

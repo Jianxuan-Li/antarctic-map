@@ -25,11 +25,14 @@ class AntarcticMap extends Component {
     }
 
     render() {
-        let { scale } = this.props.mapStore
+        let { scale, tilesLoading, tilesProgress } = this.props.mapStore
         return (
             <div>
                 <div className={styles.panel}>
                     <Panel />
+                </div>
+                <div className={styles.tilesLoading}>
+                    {tilesLoading && (<div>Loading: {tilesProgress}</div>)}
                 </div>
                 <div className={styles.control}>
                     <Control />
