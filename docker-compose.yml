@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - GEOSERVER_URL=${GEOSERVER_URL}
+        - GEOSERVER_URL_VAR=${GEOSERVER_URL}
     image: antarctic-map:latest
     deploy:
       replicas: 1
