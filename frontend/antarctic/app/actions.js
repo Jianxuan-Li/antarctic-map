@@ -16,6 +16,7 @@ import TileWMS from 'ol/source/TileWMS'
 
 import { Animations } from './animation'
 import LayersUtil from '@util/map/layers'
+import { getScale } from '@util/map/resolution'
 let layerCreator = new LayersUtil(GEOSERVER_URL, 'antarctic', 'EPSG:3031')
 
 let bounds = [-4524537.706531357, -4524537.706531357, 
@@ -52,6 +53,7 @@ class Actions extends BaseActions {
         });
         
         this.store.map.getView().fit(bounds);
+        this.store.scale = getScale(this.store.map)
     }
 
     @action
@@ -77,6 +79,14 @@ class Actions extends BaseActions {
         this.store.map.addLayer(layer)
     }
 
+    @action
+    attachOnChangeResolution() {
+        let { map } = this.store
+        map.getView().on('change:resolution', (evt) => {
+            this.store.scale = getScale(map, evt)
+        });
+    }
+    
     @action
     attachOnClick(){
         let { map, sources } = this.store

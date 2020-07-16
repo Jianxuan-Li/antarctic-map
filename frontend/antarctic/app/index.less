@@ -1,4 +1,4 @@
-.panel{
+.panel {
   width: 300px;
   padding-left: 10px;
   border-right: #ccc solid 1px;
@@ -6,6 +6,8 @@
   position: absolute;
   top: 0;
   bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
   h1.title{
     color: #444;
     font-size: 18px;
@@ -19,4 +21,18 @@
   bottom: 0;
   left: 300px;
   right: 0;
+}
+
+.control{
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+}
+
+.scale{
+  position: absolute;
+  z-index: 2;
+  bottom: 10px;
+  left: 320px;
 }

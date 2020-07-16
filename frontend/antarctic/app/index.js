@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react'
 import styles from './index.less'
 
 import Panel from './panel'
+import Control from './control'
 
 @inject('mapAction', 'mapStore')
 @observer
@@ -20,14 +21,21 @@ class AntarcticMap extends Component {
         let { mapAction } = this.props
         mapAction.initMap('map2d')
         mapAction.addSeaMask()
-        mapAction.attachOnClick()
+        mapAction.attachOnChangeResolution()
     }
 
     render() {
+        let { scale } = this.props.mapStore
         return (
             <div>
                 <div className={styles.panel}>
                     <Panel />
+                </div>
+                <div className={styles.control}>
+                    <Control />
+                </div>
+                <div className={styles.scale}>
+                    Scale = 1 : {scale}
                 </div>
                 <div className={styles.map} id="map2d"></div>
             </div>

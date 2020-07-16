@@ -7,6 +7,7 @@ class Store {
   @observable map = null
   @observable sources = {}
   @observable currentLayer = false
+  @observable scale = null
 
   availableLayers = [
     {
