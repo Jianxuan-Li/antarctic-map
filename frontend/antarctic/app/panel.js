@@ -2,6 +2,8 @@ import { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import queryString from 'query-string'
 
+import ProgressBar from '@components/progressbar'
+
 import styles from './index.less'
 
 @inject('mapAction', 'mapStore')
@@ -30,7 +32,7 @@ class Panel extends Component {
 
     render() {
         let layers = this.props.mapStore.availableLayers;
-        let { baseLayers, currentBaseLayerValue } = this.props.mapStore; 
+        let { baseLayers, currentBaseLayerValue, baseLayerLoading, baseLayerProgress } = this.props.mapStore; 
 
         return (
             <div>
@@ -49,7 +51,8 @@ class Panel extends Component {
                     { baseLayers && baseLayers.length > 0 && baseLayers.map((item, index) => {
                         return (<div key={item.key}>
                             <input type="radio" name="baseLayer" value={item.value} onChange={(e) => this.handleBaseLayerChange(e)} checked={currentBaseLayerValue == item.value ? true : false} />{item.name}
-                            </div>)
+                            {currentBaseLayerValue == item.value && baseLayerLoading && <ProgressBar progress={baseLayerProgress} />}
+                        </div>)
                     })}
                 </div>
 

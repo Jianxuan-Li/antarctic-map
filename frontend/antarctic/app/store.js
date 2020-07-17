@@ -15,6 +15,9 @@ class Store {
   @observable tilesLoading = false
   @observable tilesProgress = '0%'
 
+  @observable baseLayerLoading = false
+  @observable baseLayerProgress = '0%'
+
   baseLayers = [
     {
       key: 1,

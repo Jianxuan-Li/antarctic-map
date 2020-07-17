@@ -66,6 +66,13 @@ class Actions extends BaseActions {
         this.store.currentBaseLayer.setZIndex(0)
         map.addLayer(this.store.currentBaseLayer)
         map.getView().fit(this.store.bounds)
+
+        let source = this.store.currentBaseLayer.getSource()
+
+        handleTilesLoading(source, (loading, progress) => {
+            this.store.baseLayerLoading = loading
+            this.store.baseLayerProgress = progress
+        })
     }
 
     @action
