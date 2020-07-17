@@ -54,29 +54,6 @@ class Actions extends BaseActions {
     }
 
     @action
-    addSeaMask(){
-        this.store.sources.seaMask = new TileWMS({
-            url: GEOSERVER_URL + "antarctic/wms",
-            params: {
-                'FORMAT': 'image/png',
-                'VERSION': '1.1.1',
-                'TILED': true,
-                'STYLES': '',
-                'LAYERS': 'antarctic:Seamask_medium_res_polygon',
-                'SRS': 'EPSG:3031',
-                'tilesOrigin': -4524537.706531357 + "," + -4524537.706531357
-            }
-        });
-
-        let layer = new TileLayer({
-            source: this.store.sources.seaMask,
-            opacity: 1,
-            visible: true
-        })
-        this.store.map.addLayer(layer)
-    }
-
-    @action
     changeBaseLayer(layer) {
         let { map } = this.store
         if(this.store.currentBaseLayer){

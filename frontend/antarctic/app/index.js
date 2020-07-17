@@ -5,6 +5,8 @@ import styles from './index.less'
 import Panel from './panel'
 import Control from './control'
 
+import ProgressBar from '@components/progressbar'
+
 @inject('mapAction', 'mapStore')
 @observer
 class AntarcticMap extends Component {
@@ -33,11 +35,7 @@ class AntarcticMap extends Component {
                 </div>
                 <div className={styles.tilesLoading}>
                     { /* TODO: progress component */ }
-                    {tilesLoading && (<div>
-                        <div className={styles.meter}>
-                            <span style={{width: tilesProgress}}></span>
-                        </div>
-                        <div>Loading: {tilesProgress}</div></div>)}
+                    {tilesLoading && (<ProgressBar progress={tilesProgress} />)}
                 </div>
                 <div className={styles.control}>
                     <Control />
