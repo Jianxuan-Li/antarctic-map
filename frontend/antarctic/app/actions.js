@@ -17,6 +17,7 @@ import TileWMS from 'ol/source/TileWMS'
 import { Animations } from './animation'
 import LayersUtil from '@util/map/layers'
 import { getScale } from '@util/map/resolution'
+import { handleTilesLoading } from '@util/map/loading'
 let layerCreator = new LayersUtil(GEOSERVER_URL, 'antarctic', 'EPSG:3031')
 
 class Actions extends BaseActions {
@@ -121,40 +122,9 @@ class Actions extends BaseActions {
 
         let source = this.store.currentLayer.getSource()
 
-        this.store.tilesLoading = true
-
-        let loading = 0;
-        let loaded = 0;
-
-        let update = () => {
-            let progress = (loaded / loading * 100).toFixed(1) + '%';
-            this.store.tilesProgress = progress;
-    
-            if (loading === loaded) {
-                this.loading = 0
-                this.loaded = 0
-                this.store.tilesLoading = false
-                this.store.tilesProgress = '0%';
-            }
-
-            if(loading > loaded){
-                this.store.tilesLoading = true
-            }
-        }
-
-        source.on('tileloadstart', () => {
-            if(this.loading === 0){
-                this.store.tilesLoading = false
-            }
-            ++loading
-            update()
-        });
-
-        source.on('tileloadend', () => {
-            setTimeout(function() {
-                ++loaded
-                update()
-            }, 100);
+        handleTilesLoading(source, (loading, progress) => {
+            this.store.tilesLoading = loading
+            this.store.tilesProgress = progress
         })
     }
 
