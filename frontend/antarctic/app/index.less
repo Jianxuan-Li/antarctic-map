@@ -1,9 +1,13 @@
+@map-z-index: 1;
+@overlay-z-index: 99;
+
 .panel {
   width: 300px;
   padding-left: 10px;
   border-right: #ccc solid 1px;
   background-color: #fcfcfc;
   position: absolute;
+  z-index: @overlay-z-index;
   top: 0;
   bottom: 0;
   overflow-x: hidden;
@@ -27,7 +31,7 @@
 
 .map{
   position: absolute;
-  z-index: 1;
+  z-index: @map-z-index;
   top: 0;
   bottom: 0;
   left: 300px;
@@ -36,21 +40,21 @@
 
 .control{
   position: absolute;
-  z-index: 2;
+  z-index: @overlay-z-index;
   top: 10px;
   right: 10px;
 }
 
 .scale{
   position: absolute;
-  z-index: 2;
+  z-index: @overlay-z-index;
   bottom: 10px;
   left: 320px;
 }
 
 .tilesLoading{
   position: absolute;
-  z-index: 2;
+  z-index: @overlay-z-index;
   top: 10px;
   left: 320px;
 }
