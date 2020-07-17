@@ -19,9 +19,6 @@ import LayersUtil from '@util/map/layers'
 import { getScale } from '@util/map/resolution'
 let layerCreator = new LayersUtil(GEOSERVER_URL, 'antarctic', 'EPSG:3031')
 
-let bounds = [-4524537.706531357, -4524537.706531357, 
-              4524537.706531376, 4524537.706531376];
-
 class Actions extends BaseActions {
 
     @action
@@ -52,7 +49,7 @@ class Actions extends BaseActions {
             view: this.store.view
         });
         
-        this.store.map.getView().fit(bounds);
+        this.store.map.getView().fit(this.store.bounds);
         this.store.scale = getScale(this.store.map)
     }
 
@@ -77,6 +74,20 @@ class Actions extends BaseActions {
             visible: true
         })
         this.store.map.addLayer(layer)
+    }
+
+    @action
+    changeBaseLayer(layer) {
+        let { map } = this.store
+        if(this.store.currentBaseLayer){
+            map.removeLayer(this.store.currentBaseLayer)
+        }
+        this.store.currentBaseLayer = layerCreator.createWmsLayer(layer)
+        this.store.currentBaseLayerValue = layer
+        this.store.bounds = this.store.baseLayerBounds[layer]
+        this.store.currentBaseLayer.setZIndex(0)
+        map.addLayer(this.store.currentBaseLayer)
+        map.getView().fit(this.store.bounds)
     }
 
     @action
@@ -127,8 +138,9 @@ class Actions extends BaseActions {
             map.removeLayer(this.store.currentLayer)
         }
         this.store.currentLayer = layerCreator.createWmsLayer(layer)
+        this.store.currentLayer.setZIndex(1)
         map.addLayer(this.store.currentLayer)
-        map.getView().fit(bounds, {duration: 1500});
+        map.getView().fit(this.store.bounds, {duration: 1500});
 
         let source = this.store.currentLayer.getSource()
 

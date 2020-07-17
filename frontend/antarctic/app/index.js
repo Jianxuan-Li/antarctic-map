@@ -20,7 +20,7 @@ class AntarcticMap extends Component {
     componentDidMount() {
         let { mapAction } = this.props
         mapAction.initMap('map2d')
-        mapAction.addSeaMask()
+        mapAction.changeBaseLayer('Seamask_medium_res_polygon')
         mapAction.attachOnChangeResolution()
     }
 
@@ -32,6 +32,7 @@ class AntarcticMap extends Component {
                     <Panel />
                 </div>
                 <div className={styles.tilesLoading}>
+                    { /* TODO: progress component */ }
                     {tilesLoading && (<div>
                         <div className={styles.meter}>
                             <span style={{width: tilesProgress}}></span>
@@ -41,6 +42,7 @@ class AntarcticMap extends Component {
                 <div className={styles.control}>
                     <Control />
                 </div>
+                { /* TODO: feature: hang out */ }
                 <div className={styles.scale}>
                     Scale = 1 : {scale}
                 </div>

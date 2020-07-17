@@ -24,8 +24,13 @@ class Panel extends Component {
         this.props.mapAction.changeLayer(e.target.value)
     }
 
+    handleBaseLayerChange = (e) => {
+        this.props.mapAction.changeBaseLayer(e.target.value)
+    }
+
     render() {
         let layers = this.props.mapStore.availableLayers;
+        let { baseLayers, currentBaseLayerValue } = this.props.mapStore; 
 
         return (
             <div>
@@ -39,6 +44,15 @@ class Panel extends Component {
                         <img alt="pipeline status" src="https://gitlab.com/FreeYeti/antarctic-map/badges/master/coverage.svg" /></a>
                 </div>
                 
+                <div>
+                    <h2>Base map</h2>
+                    { baseLayers && baseLayers.length > 0 && baseLayers.map((item, index) => {
+                        return (<div key={item.key}>
+                            <input type="radio" name="baseLayer" value={item.value} onChange={(e) => this.handleBaseLayerChange(e)} checked={currentBaseLayerValue == item.value ? true : false} />{item.name}
+                            </div>)
+                    })}
+                </div>
+
                 <div>
                     <h2>Layers</h2>
                     {layers && layers.length > 0 && layers.map((item, index) => {
