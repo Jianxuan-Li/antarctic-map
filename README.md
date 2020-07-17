@@ -59,13 +59,9 @@ yarn build
 yarn start
 ```
 
-3. Start backend container
+3. Start backend container in other terminal window (or tab) and run `./dev backend`
 
-```bash
-./dev backend
-```
-
-Start django service in container
+Start django service in the backend container
 
 ```bash
 pip3 install -r requirements.txt
