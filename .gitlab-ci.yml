@@ -8,7 +8,7 @@ build:
   stage: build
   script: 
     - /opt/env_files/antarctic_build.sh
-    - docker-compose build
+    - docker-compose build --no-cache
   only:
     - master
   tags:
