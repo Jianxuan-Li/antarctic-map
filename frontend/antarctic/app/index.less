@@ -1,6 +1,22 @@
 @map-z-index: 1;
 @overlay-z-index: 99;
 
+.menuButton{
+  position: absolute;
+  top: 0px;
+  left: 320px;
+  z-index: @overlay-z-index;
+
+  label{
+    font-size: 26px;
+    cursor: pointer;
+  }
+
+  input{
+    display: none;
+  }
+}
+
 .panel {
   width: 300px;
   padding-left: 10px;
@@ -27,6 +43,10 @@
     display: block;
     padding-right: 3px;
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .map{
@@ -36,6 +56,10 @@
   bottom: 0;
   left: 300px;
   right: 0;
+
+  @media (max-width: 768px) {
+    left: 0px;
+  }
 }
 
 .control{
@@ -56,5 +80,9 @@
   position: absolute;
   z-index: @overlay-z-index;
   top: 10px;
-  left: 320px;
+  left: 350px;
+
+  @media (max-width: 768px) {
+    left: 50px;
+  }
 }

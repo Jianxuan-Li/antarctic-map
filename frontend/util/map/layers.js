@@ -36,7 +36,6 @@ export default class Layers{
 
     createWmsLayer(name, options = {}, origin = false){
         let projectionExtent = this.projection.getExtent()
-        console.log(projectionExtent)
         let size = getWidth(projectionExtent) / 256;
         let resolutions = new Array(this.maxZoom);
         let matrixIds = new Array(this.maxZoom);

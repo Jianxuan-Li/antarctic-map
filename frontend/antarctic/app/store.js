@@ -12,11 +12,15 @@ class Store {
   @observable bounds = [-4524537.706531357, -4524537.706531357, 
                           4524537.706531376, 4524537.706531376]
   @observable scale = null
+
   @observable tilesLoading = false
   @observable tilesProgress = '0%'
 
   @observable baseLayerLoading = false
   @observable baseLayerProgress = '0%'
+
+  @observable showPanel = true
+  @observable firstLoad = true
 
   baseLayers = [
     {

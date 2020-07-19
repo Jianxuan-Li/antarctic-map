@@ -26,11 +26,19 @@ class AntarcticMap extends Component {
         mapAction.attachOnChangeResolution()
     }
 
+    handleMenuChange = (e) => {
+        this.props.mapAction.togglePanel(e.target.checked)
+    }
+
     render() {
-        let { scale, tilesLoading, tilesProgress } = this.props.mapStore
+        let { scale, tilesLoading, tilesProgress, showPanel } = this.props.mapStore
         return (
             <div>
-                <div className={styles.panel}>
+                <div className={styles.menuButton} style={{left: showPanel ? '320px': '20px'}}>
+                    <label htmlFor="toggleMenu">&#9776;</label>
+                    <input type="checkbox" id="toggleMenu" checked={showPanel} defaultChecked={showPanel} onClick={this.handleMenuChange} />
+                </div>
+                <div className={styles.panel} style={{display: showPanel ? 'block':'none'}}>
                     <Panel />
                 </div>
                 <div className={styles.tilesLoading}>

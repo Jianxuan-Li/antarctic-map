@@ -73,6 +73,10 @@ class Actions extends BaseActions {
             this.store.baseLayerLoading = loading
             this.store.baseLayerProgress = progress
         })
+
+        setTimeout(() => {
+            this.store.showPanel = false
+        }, 1500);
     }
 
     @action
@@ -133,11 +137,20 @@ class Actions extends BaseActions {
             this.store.tilesLoading = loading
             this.store.tilesProgress = progress
         })
+
+        setTimeout(() => {
+            this.store.showPanel = false
+        }, 1500);
     }
 
     @action
     getCenter(){
         console.log(this.store.view.getCenter())
+    }
+
+    @action
+    togglePanel(v){
+        this.store.showPanel = v
     }
 }
 
