@@ -75,7 +75,7 @@ class Actions extends BaseActions {
         })
 
         setTimeout(() => {
-            this.store.showPanel = false
+            this.togglePanel(false)
         }, 1500);
     }
 
@@ -139,7 +139,7 @@ class Actions extends BaseActions {
         })
 
         setTimeout(() => {
-            this.store.showPanel = false
+            this.togglePanel(false)
         }, 1500);
     }
 
@@ -150,7 +150,13 @@ class Actions extends BaseActions {
 
     @action
     togglePanel(v){
+        if(this.store.windowSize > 768) return
         this.store.showPanel = v
+    }
+
+    @action
+    setWindowSize(windowSize){
+        this.store.windowSize = windowSize
     }
 }
 

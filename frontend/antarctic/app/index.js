@@ -24,6 +24,14 @@ class AntarcticMap extends Component {
         mapAction.initMap('map2d')
         mapAction.changeBaseLayer('Seamask_medium_res_polygon')
         mapAction.attachOnChangeResolution()
+        this.props.mapAction.setWindowSize(window.innerWidth)
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768){
+                this.props.mapAction.togglePanel(true)
+            }
+            this.props.mapAction.setWindowSize(window.innerWidth)
+        });
     }
 
     handleMenuChange = (e) => {

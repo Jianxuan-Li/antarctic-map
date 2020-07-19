@@ -21,6 +21,7 @@ class Store {
 
   @observable showPanel = true
   @observable firstLoad = true
+  @observable windowSize = null
 
   baseLayers = [
     {
