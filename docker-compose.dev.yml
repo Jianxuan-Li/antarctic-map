@@ -30,3 +30,11 @@ services:
         ipv6_address: 2001:3984:3989::21
     volumes:
       - ${SOURCE_CODE_PATH}:/code
+  databsae:
+    image: antarctic-postgis:latest
+    ports:
+      - "5436:5432"
+    networks:
+      antarctic_dev_net:
+        ipv4_address: 172.30.5.22
+        ipv6_address: 2001:3984:3989::22

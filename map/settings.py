@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # To connect PostGIS
+    'django.contrib.postgres',
+    'django.contrib.gis',
+
     'webpack_loader',
     'portal'
 ]
@@ -80,9 +85,19 @@ WSGI_APPLICATION = 'map.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ.get('ANTARCTIC_MAP_DATABASE_NAME'),
+        'USER': os.environ.get('ANTARCTIC_MAP_DATABASE_USER'),
+        'PASSWORD': os.environ.get('ANTARCTIC_MAP_DATABASE_PWD'),
+        'HOST': os.environ.get('ANTARCTIC_MAP_DATABASE_HOST'),
+        'PORT': os.environ.get('ANTARCTIC_MAP_DATABASE_PORT'),
+        'OPTIONS': {
+            'sslmode': 'verify-ca',
+            'sslrootcert': os.path.join(BASE_DIR, 'secret', 'server-ca.pem'),
+            'sslcert': os.path.join(BASE_DIR, 'secret', 'client-cert.pem'),
+            'sslkey': os.path.join(BASE_DIR, 'secret', 'client-key.pem')
+        },
+    },
 }
 
 

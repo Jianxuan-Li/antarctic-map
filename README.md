@@ -46,9 +46,14 @@ Then build the images
 cd ./dev-in-docker
 ./build frontend
 ./build backend
+./build postgis
 ```
 
-2. Start frontend container
+2. Start PostGIS database development server
+
+`./dev postgis`
+
+3. Start frontend container
 
 Run `./dev frontend` in project root.
 
@@ -59,14 +64,17 @@ yarn build
 yarn start
 ```
 
-3. Start backend container in other terminal window (or tab) and run `./dev backend`
+4. Start backend container in other terminal window (or tab) and run `./dev backend`
 
 Start django service in the backend container
 
 ```bash
 pip3 install -r requirements.txt
+python3 manage.py migrate
 ./dev runserver
 ```
+
+Every time you update code from the code repository, don't forget execute `python3 manage.py migrate`
 
 4. Recycle container
 
@@ -76,7 +84,8 @@ Quit the containers, and run `./dev down`.
 
 * GEOSERVER_URL
 * SOURCE_CODE_PATH
-* ~~ANTARCTIC_MAP_DATABASE_PWD~~
-* ~~ANTARCTIC_MAP_DATABASE_USER~~
-* ~~ANTARCTIC_MAP_DATABASE_PORT~~
-* ~~ANTARCTIC_MAP_DATABASE_HOST~~
+* ANTARCTIC_MAP_DATABASE_PWD
+* ANTARCTIC_MAP_DATABASE_USER
+* ANTARCTIC_MAP_DATABASE_PORT
+* ANTARCTIC_MAP_DATABASE_HOST
+* ANTARCTIC_MAP_DATABASE_NAME

@@ -9,6 +9,14 @@ while [ "$1" != "" ]; do
                 docker-compose -f docker-compose.dev.yml run -p 9000:9000 frontend bash
                 ;;
 
+            tempdb)
+                mkdir -p ./tmp/{etc/postgresql,var/{log/postgresql,lib/postgresql}}
+                ;;
+            
+            postgis)
+                docker-compose -f docker-compose.dev.yml up -d databsae
+                ;;
+
             start)
                 yarn start
                 ;;

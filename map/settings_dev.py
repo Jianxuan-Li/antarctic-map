@@ -18,3 +18,14 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats-vendor.json')
     },
 }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'antarctic',
+        'USER': 'antarctic',
+        'PASSWORD': 'antarctic',
+        'HOST': '172.30.5.22',
+        'PORT': 5432
+    },
+}
