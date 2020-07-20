@@ -15,6 +15,17 @@ build:
     - build
     - shell
 
+analyze:
+  stage: analyze
+  script:
+    - /opt/env_files/antarctic_build.sh
+    - CI=true dive antarctic-map:latest
+  only:
+    - master
+  tags:
+    - build
+    - shell  
+
 migrate:
   stage: migrate
   script: 

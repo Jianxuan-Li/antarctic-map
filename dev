@@ -30,7 +30,7 @@ while [ "$1" != "" ]; do
                 ;;   
             
             -h | --help)
-                echo $"Usage: $0 {db|backend|frontend|down|run}"
+                echo $"Usage: $0 {postgis|backend|frontend|down|runserver|start}"
                 exit 1
                 ;;
 
