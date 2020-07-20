@@ -38,7 +38,7 @@ RUN apt-get update -y \
     && rm yarn.tar.gz \
     && yarn install --network-timeout 60000 && yarn build \
     && pip3 --no-cache-dir install -r requirements.txt \
-    && DJANGO_SETTINGS_MODULE="map.settings" python3 manage.py collectstatic \
+    && DJANGO_SETTINGS_MODULE="map.settings_docker_build" python3 manage.py collectstatic \
     && rm -rf ./frontend ./node_modules && yarn cache clean \
     && rm -rf /nodejs /yarnpkg \
     && apt-get purge -y python3-pip wget \

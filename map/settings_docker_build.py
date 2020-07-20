@@ -1,4 +1,4 @@
 import os
-from forest.settings_docker import *
+from map.settings_docker import *
 
 LOGGING = {}
