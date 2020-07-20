@@ -3,6 +3,7 @@ stages:
   - build
   - migrate
   - deploy
+  - analyze
 
 build:
   stage: build
