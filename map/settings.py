@@ -91,12 +91,12 @@ DATABASES = {
         'PASSWORD': os.environ.get('ANTARCTIC_MAP_DATABASE_PWD'),
         'HOST': os.environ.get('ANTARCTIC_MAP_DATABASE_HOST'),
         'PORT': os.environ.get('ANTARCTIC_MAP_DATABASE_PORT'),
-        'OPTIONS': {
-            'sslmode': 'verify-ca',
-            'sslrootcert': os.path.join(BASE_DIR, 'secret', 'server-ca.pem'),
-            'sslcert': os.path.join(BASE_DIR, 'secret', 'client-cert.pem'),
-            'sslkey': os.path.join(BASE_DIR, 'secret', 'client-key.pem')
-        },
+        # 'OPTIONS': {
+        #     'sslmode': 'verify-ca',
+        #     'sslrootcert': os.path.join(BASE_DIR, 'secret', 'server-ca.pem'),
+        #     'sslcert': os.path.join(BASE_DIR, 'secret', 'client-cert.pem'),
+        #     'sslkey': os.path.join(BASE_DIR, 'secret', 'client-key.pem')
+        # },
     },
 }
 
