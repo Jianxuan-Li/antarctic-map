@@ -1,9 +1,9 @@
 # before_script:
 stages:
   - build
+  - analyze
   - migrate
   - deploy
-  - analyze
 
 build:
   stage: build
