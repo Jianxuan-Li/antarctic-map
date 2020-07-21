@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.gis',
 
     'webpack_loader',
-    'portal'
+    'geodata',
+    'portal',
 ]
 
 MIDDLEWARE = [
