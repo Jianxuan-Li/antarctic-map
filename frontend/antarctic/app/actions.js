@@ -15,10 +15,11 @@ import { Fill, Icon, Stroke, Style, Text } from 'ol/style.js';
 import TileWMS from 'ol/source/TileWMS'
 
 import { Animations } from './animation'
-import LayersUtil from '@util/map/layers'
+import { WMSLayerUtil } from '@util/map/layers'
 import { getScale } from '@util/map/resolution'
 import { handleTilesLoading } from '@util/map/loading'
-let layerCreator = new LayersUtil(GEOSERVER_URL, 'antarctic', 'EPSG:3031')
+
+let WMSLayerCreator = new WMSLayerUtil(GEOSERVER_URL, 'antarctic', 'EPSG:3031')
 
 class Actions extends BaseActions {
 
@@ -57,15 +58,21 @@ class Actions extends BaseActions {
     @action
     changeBaseLayer(layer) {
         let { map } = this.store
-        if(this.store.currentBaseLayer){
+        
+        if(this.store.currentBaseLayer)
+            // Remove old base layer to save network resource
             map.removeLayer(this.store.currentBaseLayer)
-        }
-        this.store.currentBaseLayer = layerCreator.createWmsLayer(layer)
+        
+        this.store.currentBaseLayer = WMSLayerCreator.create(layer)
         this.store.currentBaseLayerValue = layer
-        this.store.bounds = this.store.baseLayerBounds[layer]
-        this.store.currentBaseLayer.setZIndex(0)
+        this.store.currentBaseLayer.setZIndex(0) //Move to bottom
         map.addLayer(this.store.currentBaseLayer)
-        map.getView().fit(this.store.bounds)
+        
+        this.store.bounds = this.store.baseLayerBounds[layer]
+
+        setTimeout(() => {
+            map.getView().fit(this.store.bounds, {duration: 1500})
+        }, 1000);
 
         let source = this.store.currentBaseLayer.getSource()
 
@@ -123,10 +130,9 @@ class Actions extends BaseActions {
     @action
     changeLayer(layer) {
         let { map,  } = this.store
-        if(this.store.currentLayer){
-            map.removeLayer(this.store.currentLayer)
-        }
-        this.store.currentLayer = layerCreator.createWmsLayer(layer)
+        if(this.store.currentLayer) map.removeLayer(this.store.currentLayer)
+        
+        this.store.currentLayer = WMSLayerCreator.create(layer)
         this.store.currentLayer.setZIndex(1)
         map.addLayer(this.store.currentLayer)
         map.getView().fit(this.store.bounds, {duration: 1500});
