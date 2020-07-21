@@ -25,6 +25,7 @@ export default class Layers{
 
         let projectionExtent = this.projection.getExtent()
         let size = getWidth(projectionExtent) / 256;
+        
         let resolutions = new Array(zoom);
         let matrixIds = new Array(zoom);
 
