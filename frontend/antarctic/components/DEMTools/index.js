@@ -1,5 +1,7 @@
 import { Component } from 'react'
 import { observer, inject } from 'mobx-react'
+import { transform } from 'ol/proj';
+import { getTopLeft, getBottomRight } from 'ol/extent';
 
 import styles from './index.less'
 
@@ -12,11 +14,34 @@ class DEMTools extends Component {
 
         this.state = {
             loading: false,
+            coordinates: {
+                north: 0,
+                west: 0,
+                south: 0,
+                east: 0,
+            }
         }
     }
 
     componentDidMount() {
         
+    }
+
+    handleDraw = () => {
+        this.props.demAction.attachDraw(this.props.mapStore.map, 
+            (val) => {
+                let topLeft = transform(getTopLeft(val), 'EPSG:3031', 'EPSG:4326')
+                let bottomRight = transform(getBottomRight(val), 'EPSG:3031', 'EPSG:4326')
+                this.setState({
+                    coordinates: {
+                        north: topLeft[1],
+                        west: topLeft[0],
+                        south: bottomRight[1],
+                        east: bottomRight[0],
+                    }
+                })
+                console.log(this.state.coordinates)
+            })
     }
 
     render() {
@@ -38,7 +63,7 @@ class DEMTools extends Component {
                         <input type="radio" name="approach" value="numpy" defaultChecked="true" /> Numpy
                     </div>
                     <div>
-                        <button>Select area on map</button>
+                        <button onClick={this.handleDraw}>Select area on map</button>
                         <button disabled>Analyze</button>
                     </div>
                 </div>
