@@ -4,6 +4,7 @@ import styles from './index.less'
 
 import Panel from './Panel'
 import Control from './Control'
+import Legend from './Legend'
 
 import ProgressBar from '@components/progressbar'
 
@@ -54,7 +55,7 @@ class AntarcticMap extends Component {
                 <div className={styles.scale}>
                     Scale = 1 : {scale}
                 </div>
-                { /* TODO: legend */ }
+                <Legend />
                 <div className={styles.map} id="map2d"></div>
             </div>
         )

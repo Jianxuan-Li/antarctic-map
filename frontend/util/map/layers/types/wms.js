@@ -41,6 +41,8 @@ export default class WMSLayer extends Layers {
             ...options
         })
 
+        layer.set('name', name)
+
         return layer
     }
 }

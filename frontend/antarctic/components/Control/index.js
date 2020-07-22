@@ -1,6 +1,5 @@
 import { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import queryString from 'query-string'
 
 import styles from './index.less'
 
