@@ -1,7 +1,6 @@
 import { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import { transform } from 'ol/proj';
-import { getTopLeft, getBottomRight } from 'ol/extent';
+import GeoJSON from 'ol/format/GeoJSON'
 
 import styles from './index.less'
 
@@ -14,12 +13,7 @@ class DEMTools extends Component {
 
         this.state = {
             loading: false,
-            coordinates: {
-                north: 0,
-                west: 0,
-                south: 0,
-                east: 0,
-            }
+            features: null
         }
     }
 
@@ -27,20 +21,24 @@ class DEMTools extends Component {
         
     }
 
-    handleDraw = () => {
-        this.props.demAction.attachDraw(this.props.mapStore.map, 
-            (val) => {
-                let topLeft = transform(getTopLeft(val), 'EPSG:3031', 'EPSG:4326')
-                let bottomRight = transform(getBottomRight(val), 'EPSG:3031', 'EPSG:4326')
-                this.setState({
-                    coordinates: {
-                        north: topLeft[1],
-                        west: topLeft[0],
-                        south: bottomRight[1],
-                        east: bottomRight[0],
-                    }
-                })
-                console.log(this.state.coordinates)
+    handleDraw = async () => {
+        let { attachDraw, exec } = this.props.demAction
+
+        attachDraw(this.props.mapStore.map, 
+            async (features) => {
+                this.setState({ features: features })
+                let geom = features[0].getGeometry()
+
+                // Convert to GeoJSON, submit to backend
+                let GeoJSONHandler = new GeoJSON()
+                let json = GeoJSONHandler.writeGeometry(geom)
+
+                let result = await exec('mean', 'numpy', json)
+
+                alert('I am work on this feature, different approachs will take some time.')
+
+                // Transform and show on map ?
+                // console.log(geom.transform('EPSG:3031', 'EPSG:4326'))
             })
     }
 
@@ -63,8 +61,8 @@ class DEMTools extends Component {
                         <input type="radio" name="approach" value="numpy" defaultChecked="true" /> Numpy
                     </div>
                     <div>
-                        <button onClick={this.handleDraw}>Select area on map</button>
-                        <button disabled>Analyze</button>
+                        To analyze the DEM data, please select area on the map
+                        <button onClick={this.handleDraw}>Select area</button>
                     </div>
                 </div>
             </div>

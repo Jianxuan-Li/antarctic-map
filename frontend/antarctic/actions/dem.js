@@ -27,11 +27,12 @@ class Actions extends BaseActions {
     }
 
     @action
-    attachDraw(map, callback) {
+    attachDraw = (map, callback) => {
         this.store.draw = new MapDraw(map)
+
         this.store.draw.attachDraw((e) => {
-            if (this.vectorLayer) {
-                map.removeLayer(this.vectorLayer);
+            if (this.store.paintedLayer) {
+                map.removeLayer(this.store.paintedLayer);
             }
 
             let source = new VectorSource({
@@ -40,20 +41,20 @@ class Actions extends BaseActions {
                 ]
             });
 
-            this.vectorLayer = new VectorLayer({
+            this.store.paintedLayer = new VectorLayer({
                 source: source,
                 style: new Style({
                     fill: new Fill({
-                        color: 'rgba(0, 0, 255, 0.2)'
+                        color: 'rgba(125, 125, 125, 0.5)'
                     })
                 })
             })
 
-            map.addLayer(this.vectorLayer);
+            map.addLayer(this.store.paintedLayer);
             this.store.draw.stopDraw()
             
             if (callback)
-                callback(source.getExtent())
+                callback(source.getFeatures())
         })
 
         this.store.draw.startDraw()
@@ -62,6 +63,22 @@ class Actions extends BaseActions {
     @action
     detachDraw(){
         this.store.draw.stopDraw()
+    }
+
+    @action
+    clearDraw(map){
+        if (this.store.paintedLayer){
+            map.removeLayer(this.store.paintedLayer);
+        }
+    }
+
+    @action
+    exec = async (algo, approach, geom_string) => {
+        let result = await this.post(
+                                apis.DEM_MEAN('numpy'), 
+                                {geom_string: JSON.stringify(geom_string)}, 
+                                true)
+        return result
     }
 }
 

@@ -32,6 +32,7 @@ class Panel extends Component {
             this.props.demAction.toggleDemTools(true)
         }else{
             this.props.demAction.toggleDemTools(false)
+            this.props.demAction.clearDraw(this.props.mapStore.map)
         }
     }
 
@@ -62,9 +63,9 @@ class Panel extends Component {
                     <h2>Base map</h2>
                     { baseLayers && baseLayers.length > 0 && baseLayers.map((item, index) => {
                         return (<div key={item.key}>
-                            <input type="radio" name="baseLayer" value={item.value} 
+                            <input type="radio" name="baseLayer" value={item.value} id={"radio_"+item.value}
                                 onChange={(e) => this.handleBaseLayerChange(e)} 
-                                checked={currentBaseLayerValue == item.value} />{item.name}
+                                checked={currentBaseLayerValue == item.value} /> <label htmlFor={"radio_"+item.value}>{item.name}</label>
                             {currentBaseLayerValue == item.value && baseLayerLoading && <ProgressBar progress={baseLayerProgress} />}
                         </div>)
                     })}
@@ -74,9 +75,9 @@ class Panel extends Component {
                     <h2>Layers</h2>
                     {layers && layers.length > 0 && layers.map((item, index) => {
                         return (<div key={item.key}>
-                            <input type="radio" name="layer" value={item.value} 
+                            <input type="radio" name="layer" value={item.value} id={"layer_"+item.value}
                             onChange={(e) => this.handleLayerChange(e)} 
-                            checked={currentLayerValue == item.value}/>{item.name}
+                            checked={currentLayerValue == item.value}/> <label htmlFor={"layer_"+item.value}>{item.name}</label>
                         </div>)
                     })}
                     <button onClick={this.handleClearLayer} 
