@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import Map from './app/index.js'
+import Map from './components/index.js'
 
 /**
  * 路由按需加载

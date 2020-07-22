@@ -14,7 +14,7 @@ import Projection from 'ol/proj/Projection';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style.js';
 import TileWMS from 'ol/source/TileWMS'
 
-import { Animations } from '@antarctic/app/animation'
+import { Animations } from '@antarctic/components/animation'
 import { WMSLayerUtil } from '@util/map/layers'
 import { getScale } from '@util/map/resolution'
 import { handleTilesLoading } from '@util/map/loading'
