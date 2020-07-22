@@ -32,6 +32,10 @@ class Store {
       key: 2,
       name: 'Landsat image mosaic',
       value: 'LIMA_image_mosaic'
+    }, {
+      key: 3,
+      name: 'DEM hillshade',
+      value: 'dem_hillshade'
     }
   ]
 
@@ -65,7 +69,6 @@ class Store {
       key: 6,
       name: 'DEM',
       value: 'krigged_dem_nsidc',
-      // legend: '/statics/legends/dem_legend.png'
     }
     // TODO: Seaice
   ]
