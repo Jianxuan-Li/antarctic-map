@@ -2,11 +2,11 @@ import { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import queryString from 'query-string'
 
-import ProgressBar from '@components/progressbar'
+import ProgressBar from '@components/Progressbar'
 
 import styles from './index.less'
 
-@inject('mapAction', 'mapStore')
+@inject('mapAction', 'mapStore', 'demAction')
 @observer
 class Panel extends Component {
 
@@ -28,6 +28,11 @@ class Panel extends Component {
 
     handleBaseLayerChange = (e) => {
         this.props.mapAction.changeBaseLayer(e.target.value)
+        if (e.target.value == 'dem_hillshade'){
+            this.props.demAction.toggleDemTools(true)
+        }else{
+            this.props.demAction.toggleDemTools(false)
+        }
     }
 
     handleClearLayer = (e) => {
@@ -74,7 +79,8 @@ class Panel extends Component {
                             checked={currentLayerValue == item.value}/>{item.name}
                         </div>)
                     })}
-                    <button onClick={this.handleClearLayer}>Clear</button>
+                    <button onClick={this.handleClearLayer} 
+                        style={{display: currentLayerValue ? 'block':'none'}}>Clear</button>
                 </div>
             </div>
         )

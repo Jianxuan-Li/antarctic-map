@@ -1,7 +1,5 @@
 import { observable } from "mobx"
 
-const LANGUAGE_CODE = location.pathname.indexOf('/en/') !== -1 ? 'en' : 'zh-hans'
-
 class Store {
   @observable view = null
   @observable map = null
@@ -37,7 +35,7 @@ class Store {
       value: 'LIMA_image_mosaic'
     }, {
       key: 3,
-      name: 'DEM hillshade',
+      name: 'DEM hillshade  [Analysis tools]',
       value: 'dem_hillshade'
     }
   ]

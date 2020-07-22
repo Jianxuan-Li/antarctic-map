@@ -5,8 +5,10 @@ import styles from './index.less'
 import Panel from './Panel'
 import Control from './Control'
 import Legend from './Legend'
+import Scale from './Scale'
+import DEMTools from './DEMTools'
 
-import ProgressBar from '@components/progressbar'
+import ProgressBar from '@components/Progressbar'
 
 @inject('mapAction', 'mapStore')
 @observer
@@ -40,22 +42,21 @@ class AntarcticMap extends Component {
     }
 
     render() {
-        let { scale, tilesLoading, tilesProgress, showPanel } = this.props.mapStore
+        let { tilesLoading, tilesProgress, showPanel } = this.props.mapStore
         return (
             <div>
                 <div className={styles.menuButton} style={{left: showPanel ? '320px': '20px'}}>
                     <label htmlFor="toggleMenu">&#9776;</label>
                     <input type="checkbox" id="toggleMenu" checked={showPanel} defaultChecked={showPanel} onClick={this.handleMenuChange} />
                 </div>
-                <Panel showPanel={showPanel} />
                 <div className={styles.tilesLoading}>
                     {tilesLoading && (<ProgressBar progress={tilesProgress} />)}
                 </div>
+                <Panel showPanel={showPanel} />
                 <Control />
-                <div className={styles.scale}>
-                    Scale = 1 : {scale}
-                </div>
+                <Scale />
                 <Legend />
+                <DEMTools />
                 <div className={styles.map} id="map2d"></div>
             </div>
         )
