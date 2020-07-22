@@ -61,8 +61,12 @@ class Store {
       key: 5,
       name: 'Antarctic circle',
       value: 'Antarctic_Circle_line'
+    }, {
+      key: 6,
+      name: 'DEM',
+      value: 'krigged_dem_nsidc',
+      // legend: '/statics/legends/dem_legend.png'
     }
-    // TODO: DEM
     // TODO: Seaice
   ]
 }

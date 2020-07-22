@@ -1,7 +1,7 @@
 import {action, runInAction} from 'mobx'
 import {message} from 'antd'
 import {history} from 'react-router-dom'
-import store from './store'
+import store from '@antarctic/store'
 import Cookie from 'js-cookie'
 
 import BaseActions from '@components/BaseActions'
@@ -14,7 +14,7 @@ import Projection from 'ol/proj/Projection';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style.js';
 import TileWMS from 'ol/source/TileWMS'
 
-import { Animations } from './animation'
+import { Animations } from '@antarctic/app/animation'
 import { WMSLayerUtil } from '@util/map/layers'
 import { getScale } from '@util/map/resolution'
 import { handleTilesLoading } from '@util/map/loading'

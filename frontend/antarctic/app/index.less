@@ -1,5 +1,4 @@
-@map-z-index: 1;
-@overlay-z-index: 99;
+@import "variables";
 
 .menuButton{
   position: absolute;
@@ -17,38 +16,6 @@
   }
 }
 
-.panel {
-  width: 300px;
-  padding-left: 10px;
-  border-right: #ccc solid 1px;
-  background-color: #fcfcfc;
-  position: absolute;
-  z-index: @overlay-z-index;
-  top: 0;
-  bottom: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  h1.title{
-    color: #444;
-    font-size: 18px;
-  }
-
-  .badges{
-    display: block;
-    overflow: hidden;
-  }
-
-  .badges > a{
-    float: left;
-    display: block;
-    padding-right: 3px;
-  }
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-}
-
 .map{
   position: absolute;
   z-index: @map-z-index;
@@ -60,13 +27,6 @@
   @media (max-width: 768px) {
     left: 0px;
   }
-}
-
-.control{
-  position: absolute;
-  z-index: @overlay-z-index;
-  top: 10px;
-  right: 10px;
 }
 
 .scale{

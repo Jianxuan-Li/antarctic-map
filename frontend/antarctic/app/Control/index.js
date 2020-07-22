@@ -30,7 +30,7 @@ class Control extends Component {
 
     render() {
         return (
-            <div>
+            <div className={styles.control}>
                 <button onClick={this.handleZoomIn}>+</button>
                 <button onClick={this.handleZoomOut}>-</button>
             </div>

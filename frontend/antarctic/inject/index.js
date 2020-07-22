@@ -1,5 +1,5 @@
-import mapAction from '../app/actions'
-import mapStore from '../app/store'
+import mapAction from '../actions'
+import mapStore from '../store'
 
 export default {
     mapAction,

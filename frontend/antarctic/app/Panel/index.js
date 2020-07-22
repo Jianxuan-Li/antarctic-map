@@ -32,10 +32,12 @@ class Panel extends Component {
 
     render() {
         let layers = this.props.mapStore.availableLayers;
-        let { baseLayers, currentBaseLayerValue, baseLayerLoading, baseLayerProgress } = this.props.mapStore; 
+        let { baseLayers, currentBaseLayerValue, baseLayerLoading, baseLayerProgress } = this.props.mapStore;
+        
+        let { showPanel } = this.props
 
         return (
-            <div>
+            <div className={styles.panel} style={{display: showPanel ? 'block':'none'}}>
                 <h1 className={styles.title}>AntarcticMap</h1>
                 <div className={styles.badges}>
                     <a href="https://gitlab.com/FreeYeti/antarctic-map/">

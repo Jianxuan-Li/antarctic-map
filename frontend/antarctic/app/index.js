@@ -2,8 +2,8 @@ import { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './index.less'
 
-import Panel from './panel'
-import Control from './control'
+import Panel from './Panel'
+import Control from './Control'
 
 import ProgressBar from '@components/progressbar'
 
@@ -46,20 +46,15 @@ class AntarcticMap extends Component {
                     <label htmlFor="toggleMenu">&#9776;</label>
                     <input type="checkbox" id="toggleMenu" checked={showPanel} defaultChecked={showPanel} onClick={this.handleMenuChange} />
                 </div>
-                <div className={styles.panel} style={{display: showPanel ? 'block':'none'}}>
-                    <Panel />
-                </div>
+                <Panel showPanel={showPanel} />
                 <div className={styles.tilesLoading}>
-                    { /* TODO: progress component */ }
                     {tilesLoading && (<ProgressBar progress={tilesProgress} />)}
                 </div>
-                <div className={styles.control}>
-                    <Control />
-                </div>
-                { /* TODO: feature: hang out */ }
+                <Control />
                 <div className={styles.scale}>
                     Scale = 1 : {scale}
                 </div>
+                { /* TODO: legend */ }
                 <div className={styles.map} id="map2d"></div>
             </div>
         )
