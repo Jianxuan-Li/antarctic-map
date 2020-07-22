@@ -5,6 +5,11 @@
   top: 0px;
   left: 320px;
   z-index: @overlay-z-index;
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
 
   label{
     font-size: 26px;
