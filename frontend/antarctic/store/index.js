@@ -6,9 +6,12 @@ class Store {
   @observable view = null
   @observable map = null
   @observable sources = {}
+
   @observable currentLayer = false
+  @observable currentLayerValue = null
   @observable currentBaseLayer = false
   @observable currentBaseLayerValue = null
+
   @observable bounds = [-4524537.706531357, -4524537.706531357, 
                           4524537.706531376, 4524537.706531376]
   @observable scale = null
@@ -41,7 +44,8 @@ class Store {
 
   baseLayerBounds = {
     'Seamask_medium_res_polygon': [-4524537.706531357, -4524537.706531357, 4524537.706531376, 4524537.706531376],
-    'LIMA_image_mosaic': [-2668274.9891312392, -2294625.04002297, 2813804.919897192, 2362334.9699799465]
+    'LIMA_image_mosaic': [-2668274.9891312392, -2294625.04002297, 2813804.919897192, 2362334.9699799465],
+    'dem_hillshade': [-2668274.9891312392, -2294625.04002297, 2813804.919897192, 2362334.9699799465]
   }
 
   availableLayers = [

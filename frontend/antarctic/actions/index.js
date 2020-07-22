@@ -130,12 +130,13 @@ class Actions extends BaseActions {
     @action
     changeLayer(layer) {
         let { map,  } = this.store
+        this.store.currentLayerValue = layer
         if(this.store.currentLayer) map.removeLayer(this.store.currentLayer)
         
         this.store.currentLayer = WMSLayerCreator.create(layer)
         this.store.currentLayer.setZIndex(1)
         map.addLayer(this.store.currentLayer)
-        map.getView().fit(this.store.bounds, {duration: 1500});
+        map.getView().fit(this.store.bounds, {duration: 1500})
 
         let source = this.store.currentLayer.getSource()
 
@@ -147,6 +148,14 @@ class Actions extends BaseActions {
         setTimeout(() => {
             this.togglePanel(false)
         }, 1500);
+    }
+
+    @action
+    clearLayer(){
+        if(!this.store.currentLayer) return
+        this.store.map.removeLayer(this.store.currentLayer)
+        this.store.currentLayerValue = null
+        this.store.currentLayer = false
     }
 
     @action

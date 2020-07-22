@@ -30,9 +30,14 @@ class Panel extends Component {
         this.props.mapAction.changeBaseLayer(e.target.value)
     }
 
+    handleClearLayer = (e) => {
+        this.props.mapAction.clearLayer()
+    }
+
     render() {
         let layers = this.props.mapStore.availableLayers;
-        let { baseLayers, currentBaseLayerValue, baseLayerLoading, baseLayerProgress } = this.props.mapStore;
+        let { baseLayers, currentBaseLayerValue, currentLayerValue, 
+             baseLayerLoading, baseLayerProgress } = this.props.mapStore;
         
         let { showPanel } = this.props
 
@@ -52,7 +57,9 @@ class Panel extends Component {
                     <h2>Base map</h2>
                     { baseLayers && baseLayers.length > 0 && baseLayers.map((item, index) => {
                         return (<div key={item.key}>
-                            <input type="radio" name="baseLayer" value={item.value} onChange={(e) => this.handleBaseLayerChange(e)} checked={currentBaseLayerValue == item.value ? true : false} />{item.name}
+                            <input type="radio" name="baseLayer" value={item.value} 
+                                onChange={(e) => this.handleBaseLayerChange(e)} 
+                                checked={currentBaseLayerValue == item.value} />{item.name}
                             {currentBaseLayerValue == item.value && baseLayerLoading && <ProgressBar progress={baseLayerProgress} />}
                         </div>)
                     })}
@@ -62,9 +69,12 @@ class Panel extends Component {
                     <h2>Layers</h2>
                     {layers && layers.length > 0 && layers.map((item, index) => {
                         return (<div key={item.key}>
-                            <input type="radio" name="layer" value={item.value} onChange={(e) => this.handleLayerChange(e)} />{item.name}
-                            </div>)
+                            <input type="radio" name="layer" value={item.value} 
+                            onChange={(e) => this.handleLayerChange(e)} 
+                            checked={currentLayerValue == item.value}/>{item.name}
+                        </div>)
                     })}
+                    <button onClick={this.handleClearLayer}>Clear</button>
                 </div>
             </div>
         )
