@@ -35,8 +35,9 @@ class Store {
       value: 'LIMA_image_mosaic'
     }, {
       key: 3,
-      name: 'DEM hillshade  [Analysis tools]',
-      value: 'dem_hillshade'
+      name: 'DEM hillshade  [Analytics tools]',
+      value: 'dem_hillshade',
+      analysis: true
     }
   ]
 
