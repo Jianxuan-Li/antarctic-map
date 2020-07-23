@@ -20,6 +20,7 @@ services:
         ipv6_address: 2001:3984:3989::20
     volumes:
       - ${SOURCE_CODE_PATH}:/code
+      - ${DATA_DIR}:/data
   frontend:
     image: antarctic-map-frontend:latest
     ports:

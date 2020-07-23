@@ -84,8 +84,17 @@ Quit the containers, and run `./dev down`.
 
 * GEOSERVER_URL
 * SOURCE_CODE_PATH
+* DATA_DIR
 * ANTARCTIC_MAP_DATABASE_PWD
 * ANTARCTIC_MAP_DATABASE_USER
 * ANTARCTIC_MAP_DATABASE_PORT
 * ANTARCTIC_MAP_DATABASE_HOST
 * ANTARCTIC_MAP_DATABASE_NAME
+
+## Data
+
+* [https://gitlab.com/FreeYeti/antarctic-data](https://gitlab.com/FreeYeti/antarctic-data)
+
+## GeoServer
+
+* [https://gitlab.com/FreeYeti/antarctic-geoserver](https://gitlab.com/FreeYeti/antarctic-geoserver)

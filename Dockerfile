@@ -29,18 +29,18 @@ ENV PATH /yarnpkg/yarn-v1.22.4/bin:/nodejs/node-${NODE_VERSION}-linux-x64/bin:$P
 RUN apt-get update -y \
     && apt-get install -y \
         gnupg2 python3 python3-gdal nginx \
-        python3-pip wget \
+        python3-pip wget python3-setuptools libatlas-base-dev python3-dev build-essential \
         --no-install-recommends \
     #
     # Frontend
-    && wget -q -O node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz \
+    && wget -q -O /node.tar.gz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz \
     && mkdir -p /nodejs \
-    && wget -q -O yarn.tar.gz https://data.westdc.cn/packages/yarn-v1.22.4.tar.gz \
+    && wget -q -O /yarn.tar.gz https://data.westdc.cn/packages/yarn-v1.22.4.tar.gz \
     && mkdir -p /nodejs && mkdir -p /yarnpkg \
-    && tar -xJf node.tar.xz -C /nodejs \
-    && rm node.tar.xz \
-    && tar -xzf yarn.tar.gz -C /yarnpkg \
-    && rm yarn.tar.gz \
+    && tar -xzf /node.tar.gz -C /nodejs \
+    && rm /node.tar.gz \
+    && tar -xzf /yarn.tar.gz -C /yarnpkg \
+    && rm /yarn.tar.gz \
     && yarn install --network-timeout 60000 && yarn build \
     #
     # Backend
@@ -50,7 +50,7 @@ RUN apt-get update -y \
     # Prune files
     && rm -rf ./frontend ./node_modules && yarn cache clean \
     && rm -rf /nodejs /yarnpkg \
-    && apt-get purge -y python3-pip wget \
+    && apt-get purge -y python3-pip wget python3-setuptools libatlas-base-dev python3-dev build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 RUN chmod +x ./docker-entrypoint.sh
