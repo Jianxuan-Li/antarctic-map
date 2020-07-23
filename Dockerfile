@@ -3,6 +3,7 @@ FROM ubuntu:18.04
 ARG PROJECT_PATH=/antarctic
 ARG NODE_VERSION=v12.18.2
 ARG GEOSERVER_URL_VAR
+ARG CPU_CORE=1
 
 ENV GEOSERVER_URL ${GEOSERVER_URL_VAR}
 
@@ -24,10 +25,14 @@ ENV LANG C.UTF-8
 ENV DJANGO_SETTINGS_MODULE "map.settings"
 ENV PATH /yarnpkg/yarn-v1.22.4/bin:/nodejs/node-${NODE_VERSION}-linux-x64/bin:$PATH
 
+
 RUN apt-get update -y \
     && apt-get install -y \
-        gnupg2 python3 python3-pip gdal-bin \
-        nginx wget \
+        gnupg2 python3 python3-gdal nginx \
+        python3-pip wget \
+        --no-install-recommends \
+    #
+    # Frontend
     && wget -q -O node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz \
     && mkdir -p /nodejs \
     && wget -q -O yarn.tar.gz https://data.westdc.cn/packages/yarn-v1.22.4.tar.gz \
@@ -37,8 +42,12 @@ RUN apt-get update -y \
     && tar -xzf yarn.tar.gz -C /yarnpkg \
     && rm yarn.tar.gz \
     && yarn install --network-timeout 60000 && yarn build \
+    #
+    # Backend
     && pip3 --no-cache-dir install -r requirements.txt \
     && DJANGO_SETTINGS_MODULE="map.settings_docker_build" python3 manage.py collectstatic \
+    #
+    # Prune files
     && rm -rf ./frontend ./node_modules && yarn cache clean \
     && rm -rf /nodejs /yarnpkg \
     && apt-get purge -y python3-pip wget \

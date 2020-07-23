@@ -7,8 +7,8 @@
   "scripts": {
     "start": "BABEL_ENV=dev webpack-dev-server --progress -w --env=dev",
     "vendor": "webpack --env=dll",
-    "build": "npm run vendor && npm run build2",
-    "build2": "BABEL_ENV=production NODE_ENV=production webpack --env=production"
+    "build:vendor": "npm run vendor && npm run build2",
+    "build": "BABEL_ENV=production NODE_ENV=production webpack --env=production"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,6 @@
   "homepage": "https://gitlab.com/FreeYeti/antarctic-map#readme",
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "js-cookie": "^2.2.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "react": "^16.13.1",
@@ -74,6 +73,7 @@
     "webpack-cleanup-plugin": "^0.5.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
-    "moment": "^2.27.0"
+    "moment": "^2.27.0",
+    "js-cookie": "^2.2.1"
   }
 }

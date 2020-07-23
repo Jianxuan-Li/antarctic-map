@@ -5,3 +5,5 @@ django-cors-headers
 django-webpack-loader
 uvicorn
 python-dateutil
+numpy
+rasterio

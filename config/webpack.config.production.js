@@ -29,7 +29,7 @@ module.exports = {
       cacheGroups: {
         vendor: {
           // 将第三方模块提取出来
-          test: /node_modules/,
+          test: /[\\/]node_modules[\\/](react|react-dom|isomorphic-fetch|mobx|mobx-react)[\\/]/,
           chunks: 'initial',
           name: 'vendor',
           priority: 10, // 优先级

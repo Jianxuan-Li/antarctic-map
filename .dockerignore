@@ -1,6 +1,13 @@
 __pycache__
 .vscode
 .git
+.gitignore
+.env
+dev-in-docker
+dev
+docker-compose.yml
+docker-compose.dev.yml
+LICENSE
 build
 node_modules
 static/dist

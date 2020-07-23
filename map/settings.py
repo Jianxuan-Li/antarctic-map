@@ -151,9 +151,7 @@ WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'dist/',
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats-production.json')
-    },
-    # 'VENDOR': {
-    #     'BUNDLE_DIR_NAME': 'dist/',
-    #     'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats-vendor.json')
-    # },
+    }
 }
+
+DATA_DIR = '/data'
