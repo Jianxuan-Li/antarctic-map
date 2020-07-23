@@ -29,13 +29,16 @@ class DEMTools extends Component {
                 this.setState({ features: features })
                 let geom = features[0].getGeometry()
 
+                console.log(geom.getArea())
+
+
                 // Convert to GeoJSON, submit to backend
                 let GeoJSONHandler = new GeoJSON()
                 let json = GeoJSONHandler.writeGeometry(geom)
 
                 let result = await exec('mean', 'numpy', json)
 
-                alert('I am work on this feature, different approachs will take some time.')
+                // alert('I am work on this feature, different approachs will take some time.')
 
                 // Transform and show on map ?
                 // console.log(geom.transform('EPSG:3031', 'EPSG:4326'))
