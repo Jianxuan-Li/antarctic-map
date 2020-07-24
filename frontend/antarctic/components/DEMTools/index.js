@@ -13,7 +13,8 @@ class DEMTools extends Component {
 
         this.state = {
             loading: false,
-            features: null
+            features: null,
+            results: false
         }
     }
 
@@ -26,18 +27,20 @@ class DEMTools extends Component {
 
         attachDraw(this.props.mapStore.map, 
             async (features) => {
-                this.setState({ features: features })
-                let geom = features[0].getGeometry()
-
-                console.log(geom.getArea())
-
-
-                // Convert to GeoJSON, submit to backend
+                this.setState({ 
+                    features: features,
+                    loading: true,
+                    results: false
+                })
+                let poly = features[0]
+                let geom = poly.getGeometry()
+                
+                // Convert to GeoJSON, and submit to backend
                 let GeoJSONHandler = new GeoJSON()
-                let json = GeoJSONHandler.writeGeometry(geom)
+                let json = GeoJSONHandler.writeFeatures(features)
 
-                let result = await exec('mean', 'numpy', json)
-
+                let results = await exec('mean', 'numpy', json)
+                this.setState({'results': results, 'loading': false})
                 // alert('I am work on this feature, different approachs will take some time.')
 
                 // Transform and show on map ?
@@ -47,6 +50,7 @@ class DEMTools extends Component {
 
     render() {
         let { enable } = this.props.demStore
+        let { loading, results } = this.state
         return (
             <div className={styles.demToolBox} style={{display: enable ? 'block':'none'}}>
                 <div className={styles.header}>DEM Analysis</div>
@@ -66,6 +70,12 @@ class DEMTools extends Component {
                     <div>
                         To analyze the DEM data, please select area on the map
                         <button onClick={this.handleDraw}>Select area</button>
+                    </div>
+                    <div style={{display: loading ? 'block':'none'}}>
+                        Analyzing...
+                    </div>
+                    <div style={{display: !loading && results && results.mean ? 'block' : 'none'}}>
+                        Average elevations {results && results.mean}
                     </div>
                 </div>
             </div>

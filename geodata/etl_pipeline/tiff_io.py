@@ -1,17 +1,18 @@
-import os
 from osgeo import gdal
 from gdalconst import GA_ReadOnly
 from osgeo import osr
+
 
 def ReadGeoTiff(file_name):
     ds = gdal.Open(file_name)
     band = ds.GetRasterBand(1)
     data_arr = band.ReadAsArray()
 
-    # Use NumPy array.shape to get 
+    # Use NumPy array.shape to get
     # dimensions(means how many rows) and elements(means how many columns)
     [Ysize, Xsize] = data_arr.shape
     return data_arr, Ysize, Xsize
+
 
 def GetGeoInfo(file_name):
     SourceDS = gdal.Open(file_name, GA_ReadOnly)
@@ -20,7 +21,9 @@ def GetGeoInfo(file_name):
     Projection.ImportFromWkt(SourceDS.GetProjectionRef())
     return GeoT, Projection
 
-def CreateGeoTiff(file_name, data_array, xsize, ysize, geo_t, proj, nodata_value):
+
+def CreateGeoTiff(file_name, data_array, xsize, ysize, geo_t, proj,
+                  nodata_value):
     gdal.AllRegister()
     driver = gdal.GetDriverByName('GTiff')
     DataType = gdal.GDT_Float32
