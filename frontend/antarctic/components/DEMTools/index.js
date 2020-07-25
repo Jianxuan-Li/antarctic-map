@@ -23,10 +23,12 @@ class DEMTools extends Component {
     }
 
     handleDraw = async () => {
-        let { attachDraw, exec } = this.props.demAction
+        let { attachDraw, detachDraw, exec } = this.props.demAction
 
         attachDraw(this.props.mapStore.map, 
             async (features) => {
+                detachDraw()
+
                 this.setState({ 
                     features: features,
                     loading: true,

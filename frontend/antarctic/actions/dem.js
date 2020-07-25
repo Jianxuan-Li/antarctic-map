@@ -50,6 +50,8 @@ class Actions extends BaseActions {
                 })
             })
 
+            this.store.paintedLayer.setZIndex(2)
+
             map.addLayer(this.store.paintedLayer);
             this.store.draw.stopDraw()
             
@@ -61,7 +63,7 @@ class Actions extends BaseActions {
     }
 
     @action
-    detachDraw(){
+    detachDraw = () => {
         this.store.draw.stopDraw()
     }
 
