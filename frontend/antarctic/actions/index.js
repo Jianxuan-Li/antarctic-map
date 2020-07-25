@@ -36,7 +36,9 @@ class Actions extends BaseActions {
         });
 
         this.store.view = new View({
-            projection: projection
+            projection: projection,
+            minZoom: 3,
+            maxZoom: 17,
         });
 
         this.store.map = new Map({
