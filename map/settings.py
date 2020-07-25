@@ -154,4 +154,34 @@ WEBPACK_LOADER = {
     }
 }
 
-DATA_DIR = '/data'
+GIS_DATA_DIR = '/data'
+
+WWW_DATA_DIR = '/www_data'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'formatter': 'verbose',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename':  os.path.join(WWW_DATA_DIR, 'logs', 'debug.log'),
+            'when': 'midnight',
+            'interval': 1
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

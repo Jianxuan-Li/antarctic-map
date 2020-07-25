@@ -41,7 +41,7 @@ class Pipeline():
 
         geom = self.geojson_obj['features'][0]['geometry']
 
-        ref_file = os.path.join(settings.DATA_DIR, 'DEM', 'krigged_dem_nsidc.tiff')
+        ref_file = os.path.join(settings.GIS_DATA_DIR, 'DEM', 'krigged_dem_nsidc.tiff')
 
         with rasterio.open(ref_file) as src:
             out_image, out_transform = mask(src, [geom], crop=True)
@@ -53,7 +53,7 @@ class Pipeline():
                          "width": out_image.shape[2],
                          "transform": out_transform})
 
-        dest_file = os.path.join(settings.DATA_DIR, 'DEM', 'masked.tif')
+        dest_file = os.path.join(settings.GIS_DATA_DIR, 'DEM', 'masked.tif')
         with rasterio.open(dest_file, "w", **out_meta) as dest:
             dest.write(out_image)
 
@@ -64,7 +64,7 @@ class Pipeline():
 
         # Get dimension and Geo info
         # In development env use low resolution data
-        ref_file = os.path.join(settings.DATA_DIR, 'DEM', 'masked.tif')
+        ref_file = os.path.join(settings.GIS_DATA_DIR, 'DEM', 'masked.tif')
 
         try:
             data, Ysize, Xsize = ReadGeoTiff(ref_file)

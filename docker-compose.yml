@@ -21,7 +21,8 @@ services:
         ipv4_address: 172.50.5.10
         ipv6_address: 2001:3984:4001::10
     volumes:
-      - ${DATA_DIR}:/data
+      - ${ANTARCTIC_MAP_GIS_DATA}:/data
+      - ${ANTARCTIC_MAP_WWW_DATA}:/www_data
 
 networks:
   antarctic_map_net:
