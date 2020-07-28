@@ -3,14 +3,17 @@ version: '3.5'
 services:
   antarctic_map_test:
     image: antarctic-map:latest
-    entrypoint: ["python3", "manage.py", "test", "--keepdb"]
+    command: "python3 manage.py test --keepdb"
     env_file:
       - /opt/env_files/antarctic.env
     volumes:
       - ${ANTARCTIC_MAP_GIS_DATA}:/data
       - ${ANTARCTIC_MAP_WWW_DATA}:/www_data
+    networks:
+      antarctic_map_net:
+        ipv4_address: 172.50.5.101
+        ipv6_address: 2001:3984:4001::101
 
 networks:
-  default:
-    external:
-      name: antarctic_map_net
+  antarctic_map_net:
+    external: true

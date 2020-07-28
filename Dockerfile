@@ -55,4 +55,5 @@ RUN apt-get update -y \
 
 RUN chmod +x ./docker-entrypoint.sh
 EXPOSE 9000
-ENTRYPOINT ["./docker-entrypoint.sh"]
+# ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ./docker-entrypoint.sh
