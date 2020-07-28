@@ -3,11 +3,7 @@ version: '3.5'
 services:
   antarctic_map_test:
     image: antarctic-map:latest
-    entrypoint: ["python3", "manage.py", "test"]
-    deploy:
-      replicas: 1
-    ports:
-      - "9002:9000"
+    entrypoint: ["python3", "manage.py", "test", "--keepdb"]
     env_file:
       - /opt/env_files/antarctic.env
     volumes:

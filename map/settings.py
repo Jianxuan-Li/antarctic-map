@@ -92,6 +92,9 @@ DATABASES = {
         'PASSWORD': os.environ.get('ANTARCTIC_MAP_DATABASE_PWD'),
         'HOST': os.environ.get('ANTARCTIC_MAP_DATABASE_HOST'),
         'PORT': os.environ.get('ANTARCTIC_MAP_DATABASE_PORT'),
+        'TEST': {
+            'NAME': os.environ.get('ANTARCTIC_MAP_TEST_DATABASE_NAME'),
+        },
         # 'OPTIONS': {
         #     'sslmode': 'verify-ca',
         #     'sslrootcert': os.path.join(BASE_DIR, 'secret', 'server-ca.pem'),
