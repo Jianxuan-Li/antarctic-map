@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  antarctic_map_test:
+    image: antarctic-map:latest
+    entrypoint: ["python3", "manage.py", "test"]
+    deploy:
+      replicas: 1
+    ports:
+      - "9002:9000"
+    env_file:
+      - /opt/env_files/antarctic.env
+    volumes:
+      - ${ANTARCTIC_MAP_GIS_DATA}:/data
+      - ${ANTARCTIC_MAP_WWW_DATA}:/www_data
+
+networks:
+  default:
+    external:
+      name: antarctic_map_net
