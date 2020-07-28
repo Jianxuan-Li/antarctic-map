@@ -27,10 +27,14 @@ while [ "$1" != "" ]; do
 
             down)
                 docker-compose -f docker-compose.dev.yml down
-                ;;   
+                ;;
+
+            docker-restart)
+                docker start $(docker ps -a -q -f status=exited)
+                ;;
             
             -h | --help)
-                echo $"Usage: $0 {postgis|backend|frontend|down|runserver|start}"
+                echo $"Usage: $0 {postgis|backend|frontend|down|runserver|start|docker-restart}"
                 exit 1
                 ;;
 

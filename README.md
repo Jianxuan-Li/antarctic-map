@@ -76,9 +76,13 @@ python3 manage.py migrate
 
 Every time you update code from the code repository, don't forget execute `python3 manage.py migrate`
 
-4. Recycle container
+5. Recycle container
 
 Quit the containers, and run `./dev down`.
+
+6. Restart containers after system restarted
+
+`./dev docker-restart`
 
 ## `.env`
 
