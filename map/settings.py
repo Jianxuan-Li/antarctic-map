@@ -154,9 +154,11 @@ WEBPACK_LOADER = {
     }
 }
 
-GIS_DATA_DIR = '/data'
+GIS_DATA_DIR = os.path.join(os.path.sep, 'data')
 
 WWW_DATA_DIR = '/www_data'
+
+SEA_ICE_DATA_DIR_NAME = 'sea_ice'
 
 LOGGING = {
     'version': 1,
