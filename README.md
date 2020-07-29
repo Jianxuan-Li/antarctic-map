@@ -86,14 +86,15 @@ Quit the containers, and run `./dev down`.
 
 ## `.env`
 
-* GEOSERVER_URL
-* SOURCE_CODE_PATH
-* GIS_DATA_DIR
-* ANTARCTIC_MAP_DATABASE_PWD
-* ANTARCTIC_MAP_DATABASE_USER
-* ANTARCTIC_MAP_DATABASE_PORT
-* ANTARCTIC_MAP_DATABASE_HOST
-* ANTARCTIC_MAP_DATABASE_NAME
+* `GEOSERVER_URL` e.g.: `=https://yourdomain.com/geoserver/`
+* `SOURCE_CODE_PATH` for development only
+* `GIS_DATA_DIR` path of your GIS data, contains `DEM`, `sea_ice`... for detail please check Data section below
+* `ANTARCTIC_MAP_DATABASE_PWD`
+* `ANTARCTIC_MAP_DATABASE_USER`
+* `ANTARCTIC_MAP_DATABASE_PORT`
+* `ANTARCTIC_MAP_DATABASE_HOST`
+* `ANTARCTIC_MAP_DATABASE_NAME`
+* `ANTARCTIC_MAP_TEST_DATABASE_NAME`
 
 ## Data
 

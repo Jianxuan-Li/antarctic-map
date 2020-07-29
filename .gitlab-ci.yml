@@ -20,7 +20,6 @@ build:
 test-backend:
   stage: test
   script: 
-    - /opt/env_files/antarctic_build.sh
     - docker-compose -f docker-compose.test.yml run antarctic_map_test
     - docker-compose -f docker-compose.test.yml down
   only:
