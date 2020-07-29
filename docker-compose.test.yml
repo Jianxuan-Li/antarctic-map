@@ -3,7 +3,7 @@ version: '3.5'
 services:
   antarctic_map_test:
     image: antarctic-map:latest
-    command: "python3 manage.py test --keepdb"
+    command: "./docker-entrypoint-test.sh"
     env_file:
       - /opt/env_files/antarctic.env
     volumes:

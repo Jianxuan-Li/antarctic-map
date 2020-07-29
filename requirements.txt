@@ -7,3 +7,4 @@ uvicorn
 python-dateutil
 numpy
 rasterio
+coverage

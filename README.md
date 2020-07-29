@@ -84,6 +84,11 @@ Quit the containers, and run `./dev down`.
 
 `./dev docker-restart`
 
+## Unit test
+
+* Start a test: `coverage run --source='.' manage.py test geodata`
+* coverage report: `coverage report`
+
 ## `.env`
 
 * `GEOSERVER_URL` e.g.: `=https://yourdomain.com/geoserver/`
