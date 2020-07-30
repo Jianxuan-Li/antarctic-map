@@ -12,6 +12,7 @@ RUN mkdir ${PROJECT_PATH} && mkdir /statics && mkdir /data
 WORKDIR ${PROJECT_PATH}
 COPY . .
 COPY ./site.conf /etc/nginx/sites-enabled/default
+COPY ./sources.list /etc/apt/sources.list
 
 # Set timezone
 ENV TZ Etc/UTC
@@ -28,7 +29,7 @@ ENV PATH /yarnpkg/yarn-v1.22.4/bin:/nodejs/node-${NODE_VERSION}-linux-x64/bin:$P
 
 RUN apt-get update -y \
     && apt-get install -y \
-        gnupg2 python3 python3-gdal nginx \
+        gnupg2 python3 python3-gdal nginx mapnik-utils python3-mapnik \
         python3-pip wget python3-setuptools libatlas-base-dev python3-dev build-essential \
         --no-install-recommends \
     #
