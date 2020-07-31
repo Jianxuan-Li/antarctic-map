@@ -43,7 +43,6 @@ class DEMTools extends Component {
 
                 let results = await exec('mean', 'numpy', json)
                 this.setState({'results': results, 'loading': false})
-                // alert('I am work on this feature, different approachs will take some time.')
 
                 // Transform and show on map ?
                 // console.log(geom.transform('EPSG:3031', 'EPSG:4326'))
