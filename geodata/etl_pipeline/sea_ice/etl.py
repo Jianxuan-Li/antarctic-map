@@ -6,6 +6,7 @@ import shutil
 import urllib
 import tarfile
 from .util import get_yesterday_str, get_default_file_name
+import mapnik
 
 
 class ETL():
@@ -52,3 +53,7 @@ class ETL():
                                    'data'))
 
         return self.tiff_name
+
+    def transform(self, file_name=None):
+
+        pass

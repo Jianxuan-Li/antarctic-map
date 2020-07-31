@@ -6,3 +6,5 @@ services:
       context: .
       dockerfile: Dockerfile.dev.postgis
     image: antarctic-postgis:latest
+    ports:
+      - "8000:8000"

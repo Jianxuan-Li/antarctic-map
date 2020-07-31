@@ -22,6 +22,7 @@ class ETLTestCase(TestCase):
 
 class VectorTestCase(TestCase):
     def setUp(self):
+        # Load test data to test database
         file_path = os.path.join(os.path.dirname(__file__),
                                  'test_data',
                                  'historic_sites_test.sql')
