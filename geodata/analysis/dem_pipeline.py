@@ -4,7 +4,7 @@ import rasterio
 import numpy as np
 from rasterio.mask import mask
 from django.conf import settings
-from geodata.etl_pipeline.tiff_io import ReadGeoTiff, GetGeoInfo
+from geodata.utils.tiff_io import ReadGeoTiff
 
 
 class Pipeline():
@@ -18,21 +18,8 @@ class Pipeline():
     def validation(self, geojson_obj):
         self.current_stage = 'validation'
         sorted_str = json.loads(geojson_obj)
-
-        # TODO: validate geojson 
-
+        # TODO: validate geojson
         self.geojson_obj = sorted_str
-
-        self.cutline_file = os.path.join('/tmp', 'cutline.geojson')
-        try:
-            os.remove(self.cutline_file)
-        except FileNotFoundError:
-            pass
-
-        with open(self.cutline_file, 'w') as f:
-            content = json.dumps(self.geojson_obj, indent=4)
-            f.write(content)
-
         return True
 
     def masking(self, geo_tiff):

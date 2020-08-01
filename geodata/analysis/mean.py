@@ -1,9 +1,9 @@
 
-from geodata.etl_pipeline.pipeline import Pipeline
+from geodata.analysis.dem_pipeline import Pipeline
 
 
 def mean_numpy(masking_json):
-    # Create a ETL pipeline
+    # Create a analytics pipeline
     pipeline = Pipeline()
 
     (True

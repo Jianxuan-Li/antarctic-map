@@ -6,6 +6,7 @@ import shutil
 import urllib
 import tarfile
 from .util import get_yesterday_str, get_default_file_name
+from geodata.utils.tiff_io import GetGeoInfo
 import mapnik
 
 
@@ -55,5 +56,5 @@ class ETL():
         return self.tiff_name
 
     def transform(self, file_name=None):
-
+        
         pass
