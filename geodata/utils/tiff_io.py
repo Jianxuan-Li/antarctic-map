@@ -14,6 +14,14 @@ def ReadGeoTiff(file_name):
     return data_arr, Ysize, Xsize
 
 
+def GetDimension(file_name):
+    # Open the file:
+    raster = gdal.Open(file_name)
+
+    # use GDAL to get dimensions of raster file
+    return raster.RasterXSize, raster.RasterYSize
+
+
 def GetGeoInfo(file_name):
     SourceDS = gdal.Open(file_name, GA_ReadOnly)
     GeoT = SourceDS.GetGeoTransform()

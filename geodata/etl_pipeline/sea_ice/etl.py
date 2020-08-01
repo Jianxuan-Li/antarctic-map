@@ -5,16 +5,20 @@ from django.conf import settings
 import shutil
 import urllib
 import tarfile
-from .util import get_yesterday_str, get_default_file_name
-from geodata.utils.tiff_io import GetGeoInfo
-import mapnik
+from .util import (get_yesterday_str, get_default_file_name,
+                   get_tiff_file_name, get_png_file_name)
+from osgeo import gdal
+# from geodata.utils.tiff_io import GetDimension
+# import mapnik
 
 
 class ETL():
     def __init__(self):
         self.save_path = None
         self.tiff_name = None
-        self.source_url_template = "https://www.polarview.aq/images/27_AMSR2/{}/{}.antarctic.tar.gz"
+        polar_host = "https://www.polarview.aq/"
+        self.source_url_template = polar_host \
+            + "images/27_AMSR2/{}/{}.antarctic.tar.gz"
 
     def download(self, date_str=None):
         if date_str is None:
@@ -38,9 +42,7 @@ class ETL():
                                               settings.SEA_ICE_DATA_DIR_NAME))
         tar.close()
 
-        self.tiff_name = os.path.join(settings.GIS_DATA_DIR,
-                                      settings.SEA_ICE_DATA_DIR_NAME,
-                                      "{}.tif".format(file_name))
+        self.tiff_name = get_tiff_file_name(file_name)
 
         shutil.move(os.path.join(settings.GIS_DATA_DIR,
                                  settings.SEA_ICE_DATA_DIR_NAME,
@@ -56,5 +58,17 @@ class ETL():
         return self.tiff_name
 
     def transform(self, file_name=None):
-        
-        pass
+        tif_file = get_tiff_file_name(file_name)
+        png_file = get_png_file_name(file_name)
+
+        ##
+        # TODO: If color table not work, use mapnik to render PNG image
+        ##
+        # x_size, y_size = GetDimension(tif_file)
+        # m = mapnik.Map(x_size, y_size)
+        # m.srs = settings.EPSG_3031_DEF
+
+        # Use GDAL translate generate PNG image, only worked with color table
+        gdal.Translate(png_file, tif_file, format='PNG')
+
+        return png_file

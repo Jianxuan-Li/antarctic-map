@@ -15,3 +15,22 @@ def get_default_file_name(file_name=None):
     return os.path.join(settings.GIS_DATA_DIR,
                         settings.SEA_ICE_DATA_DIR_NAME,
                         '{}.tar.gz'.format(file_name))
+
+
+def get_tiff_file_name(date_str=None):
+    if date_str is None or str(date_str) is None:
+        date_str = get_yesterday_str()
+
+    return os.path.join(settings.GIS_DATA_DIR,
+                        settings.SEA_ICE_DATA_DIR_NAME,
+                        "{}.tif".format(date_str))
+
+
+def get_png_file_name(date_str=None):
+    if date_str is None or str(date_str) is None:
+        date_str = get_yesterday_str()
+
+    return os.path.join(settings.GIS_DATA_DIR,
+                        settings.SEA_ICE_DATA_DIR_NAME,
+                        # TODO: change storage
+                        "{}.png".format(date_str))

@@ -28,7 +28,8 @@ class Pipeline():
 
         geom = self.geojson_obj['features'][0]['geometry']
 
-        ref_file = os.path.join(settings.GIS_DATA_DIR, 'DEM', 'krigged_dem_nsidc.tiff')
+        ref_file = os.path.join(settings.GIS_DATA_DIR, 'DEM',
+                                'krigged_dem_nsidc.tiff')
 
         with rasterio.open(ref_file) as src:
             out_image, out_transform = mask(src, [geom], crop=True)
