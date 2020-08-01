@@ -4,6 +4,7 @@ from django.db import connection
 from geodata.etl_pipeline.sea_ice import etl, util
 from geodata.restful.data.history import get_random_point
 from geodata.utils.tiff_io import GetDimension
+from django.db.utils import ProgrammingError
 
 test_file_date = '20200722'
 
@@ -30,12 +31,15 @@ class ETLTestCase(TestCase):
 class VectorTestCase(TestCase):
     def setUp(self):
         # Load test data to test database
-        file_path = os.path.join(os.path.dirname(__file__),
-                                 'test_data',
-                                 'historic_sites_test.sql')
-        sql_statement = open(file_path).read()
-        with connection.cursor() as c:
-            c.execute(sql_statement)
+        try:
+            file_path = os.path.join(os.path.dirname(__file__),
+                                     'test_data',
+                                     'historic_sites_test.sql')
+            sql_statement = open(file_path).read()
+            with connection.cursor() as c:
+                c.execute(sql_statement)
+        except ProgrammingError:
+            pass
 
     def test_random_historic_point(self):
         point_data = get_random_point()
