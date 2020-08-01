@@ -67,6 +67,31 @@ class ETL():
         # x_size, y_size = GetDimension(tif_file)
         # m = mapnik.Map(x_size, y_size)
         # m.srs = settings.EPSG_3031_DEF
+        # m.background = mapnik.Color('#00000000')
+
+        # s = mapnik.Style()
+        # r = mapnik.Rule()
+
+        # symbolizer = mapnik.RasterSymbolizer()
+        # c = mapnik.RasterColorizer(mapnik.COLORIZER_LINEAR , mapnik.Color(0,0,0,0) )
+        # c.epsilon = 0.001
+        # c.add_stop(0)
+        # c.add_stop(4, mapnik.Color("#deebf7"))
+        # c.add_stop(40, mapnik.Color("#08306b"))
+
+        # symbolizer.colorizer = c
+        # r.symbols.append(symbolizer)
+
+        # s.rules.append(r)
+        # m.append_style('Sea ice', s)
+        # ds = mapnik.Raster(file=tif)
+        # layer = mapnik.Layer('sea_ice')
+        # layer.datasource = ds
+        # layer.styles.append('Sea ice')
+        # m.layers.append(layer)
+        # m.zoom_all()
+
+        # mapnik.render_to_file(m, png_file, 'png')
 
         # Use GDAL translate generate PNG image, only worked with color table
         gdal.Translate(png_file, tif_file, format='PNG')
