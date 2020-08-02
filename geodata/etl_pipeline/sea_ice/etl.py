@@ -1,6 +1,7 @@
 # Sea ice data download url
 # https://www.polarview.aq/images/27_AMSR2/20200705/20200705.antarctic.tar.gz
 import os
+from datetime import datetime
 from django.conf import settings
 import shutil
 import urllib
@@ -8,6 +9,7 @@ import tarfile
 from .util import (get_yesterday_str, get_default_file_name,
                    get_tiff_file_name, get_png_file_name)
 from osgeo import gdal
+from geodata.models import Seaice
 # from geodata.utils.tiff_io import GetDimension
 # import mapnik
 
@@ -97,3 +99,18 @@ class ETL():
         gdal.Translate(png_file, tif_file, format='PNG')
 
         return png_file
+
+    def load(self, date_str=None):
+        tif_file = get_tiff_file_name(date_str)
+        png_file = get_png_file_name(date_str)
+
+        # date of sea ice tif file
+        date_obj = datetime.strptime(date_str, '%Y%m%d').date()
+
+        data = Seaice.objects.create(
+            tif_file=tif_file,
+            png_file=png_file,
+            date=date_obj
+        )
+
+        return data

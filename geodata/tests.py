@@ -1,10 +1,12 @@
 import os
+from datetime import datetime
 from django.test import TestCase
 from django.db import connection
 from geodata.etl_pipeline.sea_ice import etl, util
 from geodata.restful.data.history import get_random_point
 from geodata.utils.tiff_io import GetDimension
 from django.db.utils import ProgrammingError
+from geodata.models import Seaice
 
 test_file_date = '20200722'
 
@@ -26,6 +28,14 @@ class ETLTestCase(TestCase):
         png_file = etli.transform(test_file_date)
         self.assertTrue(os.path.exists(png_file))
         self.assertTrue(png_file.endswith(".png"))
+
+    def test_load_sea_ice(self):
+        etli = etl.ETL()
+        result = etli.load(test_file_date)
+        self.assertTrue(type(result) is Seaice)
+        self.assertGreaterEqual(result.id, 1)
+        self.assertEqual(result.date,
+                         datetime.strptime(test_file_date, '%Y%m%d').date())
 
 
 class VectorTestCase(TestCase):
