@@ -36,7 +36,7 @@ RUN apt-get update -y \
     # Frontend
     && wget -q -O /node.tar.gz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz \
     && mkdir -p /nodejs \
-    && wget -q -O /yarn.tar.gz https://data.westdc.cn/packages/yarn-v1.22.4.tar.gz \
+    && wget -q -O /yarn.tar.gz https://github.com/yarnpkg/yarn/releases/download/v1.22.4/yarn-v1.22.4.tar.gz \
     && mkdir -p /nodejs && mkdir -p /yarnpkg \
     && tar -xzf /node.tar.gz -C /nodejs \
     && rm /node.tar.gz \
