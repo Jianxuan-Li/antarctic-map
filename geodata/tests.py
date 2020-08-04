@@ -7,34 +7,46 @@ from geodata.restful.data.history import get_random_point
 from geodata.utils.tiff_io import GetDimension
 from django.db.utils import ProgrammingError
 from geodata.models import Seaice
+from geodata.etl_pipeline.sea_ice.pipeline import SeaIcePipeline
 
 test_file_date = '20200722'
 
 
 class ETLTestCase(TestCase):
     def test_download_sea_ice(self):
-        etli = etl.ETL()
+        etli = etl.SeaIceETL()
         downloaded_file_path = etli.download(test_file_date)
         self.assertTrue(os.path.exists(downloaded_file_path))
 
     def test_extract_sea_ice_tiff(self):
-        etli = etl.ETL()
+        etli = etl.SeaIceETL()
         tiff_file = etli.extract(test_file_date)
         self.assertTrue(os.path.exists(tiff_file))
         self.assertTrue(tiff_file.endswith(".tif"))
 
     def test_transform_sea_ice(self):
-        etli = etl.ETL()
+        etli = etl.SeaIceETL()
         png_file = etli.transform(test_file_date)
         self.assertTrue(os.path.exists(png_file))
         self.assertTrue(png_file.endswith(".png"))
 
     def test_load_sea_ice(self):
-        etli = etl.ETL()
+        etli = etl.SeaIceETL()
         result = etli.load(test_file_date)
         self.assertTrue(type(result) is Seaice)
         self.assertGreaterEqual(result.id, 1)
         self.assertEqual(result.date,
+                         datetime.strptime(test_file_date, '%Y%m%d').date())
+
+
+class SeaIcePipelineTestCase(TestCase):
+    def test_run_pipeline_and_dump_result(self):
+        pipe = SeaIcePipeline(test_file_date)
+        pipe.run()
+        data = pipe.dump()
+        self.assertTrue(type(data) is Seaice)
+        self.assertGreaterEqual(data.id, 1)
+        self.assertEqual(data.date,
                          datetime.strptime(test_file_date, '%Y%m%d').date())
 
 
