@@ -1,6 +1,7 @@
 psycopg2-binary
 django
 djangorestframework
+markdown
 django-cors-headers
 django-webpack-loader
 uvicorn

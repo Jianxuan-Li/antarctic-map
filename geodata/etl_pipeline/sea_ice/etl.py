@@ -114,6 +114,7 @@ class SeaIceETL(ETL):
         self.data = Seaice.objects.create(
             tif_file=tif_file,
             png_file=png_file,
+            png_name=date_str+'.png',
             date=date_obj
         )
 

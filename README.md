@@ -4,17 +4,16 @@
 
 [https://antarctic.freeyeti.net/](https://antarctic.freeyeti.net/)
 
-This demonstration is running on a VPS with 2 core and 4GB memory, map rendering speed is unsatisfactory.
+
 
 ## Technique
 
-* Language: Python\Nodejs\HTML\CSS\SHELL
-* Django \ Django Rest Framework
-* React.js in ES6 with webpack
-* Postgresql: Postgresql and PostGIS
-* Geoserver
-* Gitlab CI/CD
-* Docker with docker-compose
+- Backend: Python Django + Django Rest Framework
+- Frontend: React.js + Webpack with ES6
+- Map: Geoserver + Openlayers + Mapnik
+- Data processing: GDAL + NumPy
+- Data infrastructure: Apache Spark + PostGIS
+- DevOps: Docker + Docker Compose + Gitlab CI/CD
 
 ## Development
 

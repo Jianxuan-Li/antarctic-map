@@ -44,10 +44,19 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django.contrib.gis',
 
+    # Django Rest Framework
+    'rest_framework',
+
     'webpack_loader',
     'geodata',
     'portal',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
