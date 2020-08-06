@@ -5,7 +5,6 @@
 [https://antarctic.freeyeti.net/](https://antarctic.freeyeti.net/)
 
 
-
 ## Technique
 
 - Backend: Python Django + Django Rest Framework
@@ -99,6 +98,10 @@ Quit the containers, and run `./dev down`.
 * `ANTARCTIC_MAP_DATABASE_HOST`
 * `ANTARCTIC_MAP_DATABASE_NAME`
 * `ANTARCTIC_MAP_TEST_DATABASE_NAME`
+
+## Sea ice data ETL
+
+In development environment, use `python3 manage.py sea_ice_etl 20200730` to download data by day
 
 ## Data
 

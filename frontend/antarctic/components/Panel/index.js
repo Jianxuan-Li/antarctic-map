@@ -23,7 +23,16 @@ class Panel extends Component {
     }
 
     handleLayerChange = (e) => {
-        this.props.mapAction.changeLayer(e.target.value)
+        let { mapAction } = this.props
+        mapAction.clearDataset()
+        mapAction.changeLayer(e.target.value)
+    }
+
+    handleDatasetChange = (e) => {
+        let { mapAction } = this.props
+
+        mapAction.clearLayer()
+        mapAction.changeDataset(e.target.value)
     }
 
     handleBaseLayerChange = (e) => {
@@ -42,7 +51,7 @@ class Panel extends Component {
 
     render() {
         let layers = this.props.mapStore.availableLayers;
-        let { baseLayers, currentBaseLayerValue, currentLayerValue, 
+        let { baseLayers, currentBaseLayerValue, currentLayerValue, currentDataset,
              baseLayerLoading, baseLayerProgress } = this.props.mapStore;
         
         let { showPanel } = this.props
@@ -82,6 +91,13 @@ class Panel extends Component {
                     })}
                     <button onClick={this.handleClearLayer} 
                         style={{display: currentLayerValue ? 'block':'none'}}>Clear</button>
+                </div>
+
+                <div>
+                    <h2>Dataset</h2>
+                    <input type="radio" name="dataset" value="seaice" id="dataset_seaice"
+                        onChange={(e) => this.handleDatasetChange(e)} 
+                        checked={currentDataset == "seaice"}/> <label htmlFor="dataset_seaice">Sea ice</label>
                 </div>
             </div>
         )

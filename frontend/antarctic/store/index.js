@@ -24,6 +24,8 @@ class Store {
   @observable firstLoad = true
   @observable windowSize = null
 
+  @observable currentDataset = null
+
   baseLayers = [
     {
       key: 1,
