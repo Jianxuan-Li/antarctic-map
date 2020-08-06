@@ -100,7 +100,7 @@ class SeaIceETL(ETL):
         # mapnik.render_to_file(m, png_file, 'png')
 
         # Use GDAL translate generate PNG image, only worked with color table
-        gdal.Translate(png_file, tif_file, format='PNG')
+        gdal.Translate(png_file, tif_file, format='PNG', noData=0)
 
         return self.return_or_jump(png_file)
 

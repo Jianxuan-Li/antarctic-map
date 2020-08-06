@@ -6,6 +6,9 @@ DEBUG = True
 
 LOCAL_STATIC = True
 
+# In dev-env public the sea_ice images
+STATICFILES_DIRS.append(GIS_DATA_DIR)
+
 LOGGING = {}
 
 WEBPACK_LOADER = {

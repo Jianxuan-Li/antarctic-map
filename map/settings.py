@@ -26,7 +26,7 @@ SECRET_KEY = 'ons$gm#%@dnu9zb2r1(%1p)%-%=i41q%$plv$c5+8()=sa*jbr'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    '127.0.0.1', # For http 
+    '127.0.0.1',  # For http
     'antarctic.freeyeti.net',
 ]
 
