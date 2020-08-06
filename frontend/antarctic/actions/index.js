@@ -13,12 +13,11 @@ import { Fill, Icon, Stroke, Style, Text } from 'ol/style.js';
 import TileWMS from 'ol/source/TileWMS'
 
 import { Animations } from '@antarctic/components/animation'
-import { WMSLayerUtil, ImageLayerUtil } from '@util/map/layers'
+import { WMSLayerUtil } from '@util/map/layers'
 import { getScale } from '@util/map/resolution'
 import { handleTilesLoading } from '@util/map/loading'
 
 let WMSLayerCreator = new WMSLayerUtil(GEOSERVER_URL, 'antarctic', 'EPSG:3031')
-let ImageLayerCreator = new ImageLayerUtil(false, false, 'EPSG:3031')
 
 class Actions extends BaseActions {
 
@@ -175,24 +174,14 @@ class Actions extends BaseActions {
         this.store.windowSize = windowSize
     }
 
-    setupSeaIceLayer(name, url){
-        let { map } = this.store
-        let extent = ['-3961771.235', '-3961770.607', '4362963.182', '3961770.565' ]
-        this.store.currentLayer = ImageLayerCreator.create(name, url, extent)
-        this.store.currentLayer.setZIndex(1)
-        map.addLayer(this.store.currentLayer)
-    }
-
     @action
     changeDataset(dataset){
         this.store.currentDataset = dataset
-        this.setupSeaIceLayer('20200803', '20200803.png')
     }
 
     @action
     clearDataset(){
         if (!this.store.currentDataset) return
-
         this.store.currentDataset = null
     }
 }

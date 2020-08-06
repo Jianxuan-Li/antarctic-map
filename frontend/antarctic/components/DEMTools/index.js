@@ -59,13 +59,13 @@ class DEMTools extends Component {
                     <span>Algorithm</span>
                     <div>
                         <input type="radio" name="algo" value="mean" defaultChecked="true" /> Mean
-                        <input type="radio" name="algo" value="maximum" disabled="true" /> Maximum
-                        <input type="radio" name="algo" value="minimum" disabled="true" /> Minimum
+                        <input type="radio" name="algo" value="maximum" disabled={true} /> Maximum
+                        <input type="radio" name="algo" value="minimum" disabled={true} /> Minimum
                     </div>
                     <span>Approach</span>
                     <div>
-                        <input type="radio" name="approach" value="gdal" disabled="true" /> GDAL
-                        <input type="radio" name="approach" value="spark" disabled="true" /> Apache Spark
+                        <input type="radio" name="approach" value="gdal" disabled={true} /> GDAL
+                        <input type="radio" name="approach" value="spark" disabled={true} /> Apache Spark
                         <input type="radio" name="approach" value="numpy" defaultChecked="true" /> Numpy
                     </div>
                     <div>

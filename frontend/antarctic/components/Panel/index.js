@@ -6,7 +6,7 @@ import ProgressBar from '@components/Progressbar'
 
 import styles from './index.less'
 
-@inject('mapAction', 'mapStore', 'demAction')
+@inject('mapAction', 'mapStore', 'demAction', 'seaiceAction')
 @observer
 class Panel extends Component {
 
@@ -22,16 +22,30 @@ class Panel extends Component {
         
     }
 
-    handleLayerChange = (e) => {
-        let { mapAction } = this.props
+    clearLayerAndDataset() {
+        let { mapAction, seaiceAction } = this.props
+        let { map } = this.props.mapStore
+
+        // Clear tiled layers on map
+        mapAction.clearLayer()
+
+        // Clear dataset
         mapAction.clearDataset()
+
+        // Clear layers for each datasets
+        seaiceAction.clearLayer(map)
+    }
+
+    handleLayerChange = (e) => {
+        let { mapAction, seaiceAction } = this.props
+        // Clear layers for each datasets
+        this.clearLayerAndDataset()
         mapAction.changeLayer(e.target.value)
     }
 
     handleDatasetChange = (e) => {
         let { mapAction } = this.props
-
-        mapAction.clearLayer()
+        this.clearLayerAndDataset()
         mapAction.changeDataset(e.target.value)
     }
 

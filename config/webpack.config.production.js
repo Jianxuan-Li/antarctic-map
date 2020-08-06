@@ -90,14 +90,14 @@ module.exports = {
             localIdentName: '[hash:base64]'
           }
         },
-        {
-          loader: 'postcss-loader',
-          options: {
-            config: {
-              path: 'config/postcss.config.js'
-            }
-          }
-        }
+        // {
+        //   loader: 'postcss-loader',
+        //   options: {
+        //     config: {
+        //       path: 'config/postcss.config.js'
+        //     }
+        //   }
+        // }
       ]
     },
     {
@@ -113,14 +113,14 @@ module.exports = {
             }
           }
         },
-        {
-          loader: 'postcss-loader',
-          options: {
-            config: {
-              path: 'config/postcss.config.js'
-            }
-          }
-        },
+        // {
+        //   loader: 'postcss-loader',
+        //   options: {
+        //     config: {
+        //       path: 'config/postcss.config.js'
+        //     }
+        //   }
+        // },
         {
           loader: 'less-loader',
           options: {
@@ -129,27 +129,6 @@ module.exports = {
             }
           }
         }
-      ]
-    },
-    {
-      test: /antd\.less$/,
-      use: [
-        MiniCssExtractPlugin.loader,
-        {
-          loader: 'css-loader',
-          options: {
-            // minimize: true
-          }
-        },
-        {
-          loader: 'postcss-loader',
-          options: {
-            config: {
-              path: 'config/postcss.config.js'
-            }
-          }
-        },
-        'less-loader'
       ]
     },
     {
@@ -162,17 +141,19 @@ module.exports = {
                 // minimize: true,
                 sourceMap: true
               }
-            },{
-              loader: 'postcss-loader', // Run post css actions
-              options: {
-                plugins: function () { // post css plugins, can be exported to postcss.config.js
-                  return [
-                    require('precss'),
-                    require('autoprefixer')
-                  ];
-                }
-              }
-            }, {
+            },
+            // {
+            //   loader: 'postcss-loader', // Run post css actions
+            //   options: {
+            //     plugins: function () { // post css plugins, can be exported to postcss.config.js
+            //       return [
+            //         require('precss'),
+            //         require('autoprefixer')
+            //       ];
+            //     }
+            //   }
+            // }, 
+            {
               loader: 'sass-loader' // compiles Sass to CSS
             }, 
             'resolve-url-loader',

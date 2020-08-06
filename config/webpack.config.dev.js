@@ -60,14 +60,14 @@ module.exports = {
               modules: true
             }
           },
-          {
-            loader: "postcss-loader",
-            options: {
-              config: {
-                path: "config/postcss.config.js"
-              }
-            }
-          }
+          // {
+          //   loader: "postcss-loader",
+          //   options: {
+          //     config: {
+          //       path: "config/postcss.config.js"
+          //     }
+          //   }
+          // }
         ]
       },
       {
@@ -86,14 +86,14 @@ module.exports = {
               sourceMap: true
             }
           },
-          {
-            loader: "postcss-loader",
-            options: {
-              config: {
-                path: "config/postcss.config.js"
-              }
-            }
-          },
+          // {
+          //   loader: "postcss-loader",
+          //   options: {
+          //     config: {
+          //       path: "config/postcss.config.js"
+          //     }
+          //   }
+          // },
           {
             loader: "less-loader",
             options: {
@@ -118,17 +118,19 @@ module.exports = {
           options: {
             sourceMap: true
           }
-        }, {
-          loader: 'postcss-loader', // Run post css actions
-          options: {
-            plugins: function () { // post css plugins, can be exported to postcss.config.js
-              return [
-                require('precss'),
-                require('autoprefixer')
-              ];
-            }
-          }
-        }, {
+        }, 
+        // {
+        //   loader: 'postcss-loader', // Run post css actions
+        //   options: {
+        //     plugins: function () { // post css plugins, can be exported to postcss.config.js
+        //       return [
+        //         require('precss'),
+        //         require('autoprefixer')
+        //       ];
+        //     }
+        //   }
+        // },
+        {
           loader: 'sass-loader' // compiles Sass to CSS
         },
         'resolve-url-loader',

@@ -12,8 +12,6 @@ export default class ImageLayerA extends Layers {
     }
 
     create(name, url, extent, options = {}){
-        console.log(this.imageUrlPrefix + url)
-        console.log(this.projection)
         let layer = new ImageLayer({
             source: new Static({
                 url: this.imageUrlPrefix + url,

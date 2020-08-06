@@ -7,6 +7,7 @@ import Control from './Control'
 import Legend from './Legend'
 import Scale from './Scale'
 import DEMTools from './DEMTools'
+import SeaiceTools from './SeaiceTools'
 
 import ProgressBar from '@components/Progressbar'
 
@@ -42,7 +43,7 @@ class AntarcticMap extends Component {
     }
 
     render() {
-        let { tilesLoading, tilesProgress, showPanel } = this.props.mapStore
+        let { tilesLoading, tilesProgress, showPanel, currentDataset } = this.props.mapStore
         return (
             <div>
                 <div className={styles.menuButton} style={{left: showPanel ? '320px': '20px'}}>
@@ -57,6 +58,7 @@ class AntarcticMap extends Component {
                 <Scale />
                 <Legend />
                 <DEMTools />
+                {currentDataset && currentDataset == 'seaice' && <SeaiceTools />}
                 <div className={styles.map} id="map2d"></div>
             </div>
         )
