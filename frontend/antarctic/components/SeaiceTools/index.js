@@ -21,10 +21,12 @@ class SeaIceTools extends Component {
     }
 
     componentDidMount = async () => {
-        let { seaiceAction } = this.props
+        let { seaiceAction, mapStore } = this.props
 
         this.setState({loading: true})
         let dataset = await seaiceAction.getDataset()
+        const current = dataset[this.state.currentIndex]
+        seaiceAction.changeLayer(mapStore.map, current['date'], current['png_name'])
         this.setState({loading: false, dataset: dataset})
     }
 
