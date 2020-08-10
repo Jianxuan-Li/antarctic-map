@@ -106,6 +106,7 @@ class Actions extends BaseActions {
 
     @action
     stop(map){
+        if(this.store.playing == false) return
         this.store.playing = false
         clearInterval(this.store.timer)
         this.store.timer = null

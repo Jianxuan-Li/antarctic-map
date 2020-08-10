@@ -31,6 +31,10 @@ class SeaIceTools extends Component {
         this.setState({loading: false, dataset: dataset})
     }
 
+    componentWillUnmount = () => {
+        this.props.seaiceAction.stop(this.props.mapStore.map)
+    }
+
     handleDateChange = (e) => {
         const current = this.state.dataset[e.target.value]
         this.props.seaiceAction.changeLayer(

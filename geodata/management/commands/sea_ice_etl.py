@@ -1,5 +1,7 @@
+from datetime import datetime
 from django.core.management.base import BaseCommand
 from geodata.etl_pipeline.sea_ice.pipeline import SeaIcePipeline
+from geodata.models import Seaice
 
 
 class Command(BaseCommand):
@@ -13,6 +15,8 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
+        date_obj = datetime.strptime(options['date'], '%Y%m%d').date()
+        Seaice.objects.filter(date=date_obj).delete()
         pipe = SeaIcePipeline(options['date'])
         pipe.run()
         data = pipe.dump()
