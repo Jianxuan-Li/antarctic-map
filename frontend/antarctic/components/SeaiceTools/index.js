@@ -16,7 +16,8 @@ class SeaIceTools extends Component {
             loading: false,
             features: null,
             currentIndex: 0,
-            dataset: []
+            dataset: [],
+            playing: false
         }
     }
 
@@ -37,9 +38,40 @@ class SeaIceTools extends Component {
         this.setState({currentIndex: e.target.value})
     }
 
+    handlePlay = () => {
+        let { mapStore, seaiceAction, seaiceStore } = this.props
+        let { dataset, currentIndex, playing } = this.state
+
+        if (playing){
+            seaiceAction.stop(mapStore.map)
+            this.setState({playing: false})
+            let current = this.state.dataset[currentIndex]
+            seaiceAction.changeLayer(mapStore.map, current['date'], current['png_name'])
+            return
+        }
+
+        seaiceAction.play(mapStore.map, dataset, currentIndex, (status) => {
+            switch (status) {
+                case 'prepare':
+                    this.setState({loading: true})
+                    break;
+                case 'loaded':
+                    this.setState({loading: false})
+                    break;
+                case 'started':
+                    this.setState({playing: true})
+                    break;
+                default:
+                    break;
+            }
+        }, (current) => {
+            this.setState({currentIndex: current})
+        })
+        this.setState({playing: true})
+    }
+
     render() {
-        let { date } = this.props.seaiceStore
-        let { loading, currentIndex, dataset } = this.state
+        let { loading, currentIndex, dataset, playing } = this.state
         return (
             <div className={styles.demToolBox}>
                 <div className={styles.header}>Sea ice dataset</div>
@@ -50,13 +82,12 @@ class SeaIceTools extends Component {
                         return (<div key={item.date}>
                             <input type="radio" name="date" value={index} id={"date_"+item.date}
                             onChange={(e) => this.handleDateChange(e)} 
-                            checked={index == currentIndex}/>
+                            checked={index == currentIndex} disabled={playing} />
                             <label htmlFor={"date_"+item.date}>{item.date}</label>
                         </div>)
                     })}
 
-                    {/* <span>animation</span> */}
-
+                    <button onClick={this.handlePlay}>{playing ? 'Stop':'Play'}</button>
                 </div>
             </div>
         )
