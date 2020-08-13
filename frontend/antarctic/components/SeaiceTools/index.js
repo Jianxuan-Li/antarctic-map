@@ -77,7 +77,7 @@ class SeaIceTools extends Component {
     render() {
         let { loading, currentIndex, dataset, playing } = this.state
         return (
-            <div className={styles.demToolBox}>
+            <div className={styles.seaiceToolBox}>
                 <div className={styles.header}>Sea ice dataset</div>
                 <div>
                     <span>view by date</span>

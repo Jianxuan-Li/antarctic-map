@@ -1,5 +1,5 @@
 import {action, runInAction} from 'mobx'
-import store from '@antarctic/store/dem'
+import store from '@antarctic/store/seaice'
 
 import { Vector as VectorLayer} from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
@@ -107,11 +107,14 @@ class Actions extends BaseActions {
     @action
     stop(map){
         if(this.store.playing == false) return
+
         this.store.playing = false
         clearInterval(this.store.timer)
         this.store.timer = null
 
-        this.store.layers.map(layer => map.removeLayer(layer))
+        this.store.layers.map((layer) => {
+            map.removeLayer(layer)
+        })
     }
 }
 

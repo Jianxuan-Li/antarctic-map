@@ -29,7 +29,7 @@ class Panel extends Component {
         // Clear tiled layers on map
         mapAction.clearLayer()
 
-        // Clear dataset
+        // Clear dataset selection
         mapAction.clearDataset()
 
         // Clear layers for each datasets
