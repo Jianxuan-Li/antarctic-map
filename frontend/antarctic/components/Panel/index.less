@@ -3,7 +3,7 @@
 .panel {
   width: 300px;
   padding-left: 10px;
-  border-right: #ccc solid 1px;
+  border-right: @border-color solid 1px;
   background-color: #fcfcfc;
   position: absolute;
   z-index: @overlay-z-index;
@@ -17,6 +17,11 @@
   }
 
   .badges{
+    border-top: 1px solid @border-color;
+    padding: 5px 0 0 0;
+    left: 0;
+    bottom: -30px;
+    position: relative;
     display: block;
     overflow: hidden;
   }

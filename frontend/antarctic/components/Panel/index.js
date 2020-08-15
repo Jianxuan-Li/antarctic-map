@@ -73,14 +73,6 @@ class Panel extends Component {
         return (
             <div className={styles.panel} style={{display: showPanel ? 'block':'none'}}>
                 <h1 className={styles.title}>AntarcticMap</h1>
-                <div className={styles.badges}>
-                    <a href="https://gitlab.com/FreeYeti/antarctic-map/">
-                        <img alt="Gitlab" src="https://img.shields.io/badge/gitlab-fork-brightgreen"/></a>
-                    <a href="https://gitlab.com/FreeYeti/antarctic-map/-/pipelines">
-                        <img alt="pipeline status" src="https://gitlab.com/FreeYeti/antarctic-map/badges/master/pipeline.svg" /></a>
-                    <a href="https://gitlab.com/FreeYeti/antarctic-map/">
-                        <img alt="pipeline status" src="https://gitlab.com/FreeYeti/antarctic-map/badges/master/coverage.svg" /></a>
-                </div>
                 
                 <div>
                     <h2>Base map</h2>
@@ -112,6 +104,17 @@ class Panel extends Component {
                     <input type="radio" name="dataset" value="seaice" id="dataset_seaice"
                         onChange={(e) => this.handleDatasetChange(e)} 
                         checked={currentDataset == "seaice"}/> <label htmlFor="dataset_seaice">Sea ice</label>
+                </div>
+
+                <div className={styles.badges}>
+                    <a href="https://gitlab.com/FreeYeti/antarctic-map/">
+                        <img alt="Gitlab" src="https://img.shields.io/badge/gitlab-fork-brightgreen"/></a>
+                    <a href="https://gitlab.com/FreeYeti/antarctic-data">
+                        <img alt="Gitlab" src="https://img.shields.io/badge/data-access-brightgreen"/></a>
+                    <a href="https://gitlab.com/FreeYeti/antarctic-map/-/pipelines">
+                        <img alt="pipeline status" src="https://gitlab.com/FreeYeti/antarctic-map/badges/master/pipeline.svg" /></a>
+                    <a href="https://gitlab.com/FreeYeti/antarctic-map/">
+                        <img alt="pipeline status" src="https://gitlab.com/FreeYeti/antarctic-map/badges/master/coverage.svg" /></a>
                 </div>
             </div>
         )
