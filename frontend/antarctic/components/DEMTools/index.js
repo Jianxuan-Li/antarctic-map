@@ -14,7 +14,8 @@ class DEMTools extends Component {
         this.state = {
             loading: false,
             features: null,
-            results: false
+            results: false,
+            approach: 'numpy'
         }
     }
 
@@ -22,8 +23,13 @@ class DEMTools extends Component {
         
     }
 
+    handleApproachChange = (e) => {
+        this.setState({'approach': e.target.value})
+    }
+
     handleDraw = async () => {
         let { attachDraw, detachDraw, exec } = this.props.demAction
+        let { approach } = this.state
 
         attachDraw(this.props.mapStore.map, 
             async (features) => {
@@ -41,7 +47,7 @@ class DEMTools extends Component {
                 let GeoJSONHandler = new GeoJSON()
                 let json = GeoJSONHandler.writeFeatures(features)
 
-                let results = await exec('mean', 'numpy', json)
+                let results = await exec('mean', approach, json)
                 this.setState({'results': results, 'loading': false})
 
                 // Transform and show on map ?
@@ -58,15 +64,27 @@ class DEMTools extends Component {
                 <div>
                     <span>Algorithm</span>
                     <div>
-                        <input type="radio" name="algo" value="mean" defaultChecked="true" /> Mean
-                        <input type="radio" name="algo" value="maximum" disabled={true} /> Maximum
-                        <input type="radio" name="algo" value="minimum" disabled={true} /> Minimum
+                        <input type="radio" name="algo" value="mean" 
+                            defaultChecked="true" id="algo_mean" />
+                            <label htmlFor="algo_mean">Mean</label>
+                        <input type="radio" name="algo" value="maximum" 
+                            disabled={true} id="algo_max" /> 
+                            <label htmlFor="algo_max">Maximum</label>
+                        <input type="radio" name="algo" value="minimum" 
+                            disabled={true} id="algo_min" />
+                            <label htmlFor="algo_min">Minimum</label>
                     </div>
                     <span>Approach</span>
                     <div>
-                        <input type="radio" name="approach" value="gdal" disabled={true} /> GDAL
-                        <input type="radio" name="approach" value="spark" disabled={true} /> Apache Spark
-                        <input type="radio" name="approach" value="numpy" defaultChecked="true" /> Numpy
+                        <input type="radio" name="approach" onClick={this.handleApproachChange} 
+                            value="gdal" id="approach_gdal" disabled={true}/> 
+                            <label htmlFor="approach_gdal">GDAL</label>
+                        <input type="radio" name="approach" onClick={this.handleApproachChange} 
+                            value="spark" disabled={true} id="approach_spark" /> 
+                            <label htmlFor="approach_spark">Apache Spark</label>
+                        <input type="radio" name="approach" onClick={this.handleApproachChange} 
+                            value="numpy" defaultChecked="true" id="approach_numpy" /> 
+                            <label htmlFor="approach_numpy">Numpy</label>
                     </div>
                     <div>
                         To analyze the DEM data, please select area on the map
