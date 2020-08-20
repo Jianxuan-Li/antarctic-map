@@ -77,7 +77,7 @@ class DEMTools extends Component {
                     <span>Approach</span>
                     <div>
                         <input type="radio" name="approach" onClick={this.handleApproachChange} 
-                            value="gdal" id="approach_gdal" disabled={true}/> 
+                            value="gdal" id="approach_gdal" disabled={false}/> 
                             <label htmlFor="approach_gdal">GDAL</label>
                         <input type="radio" name="approach" onClick={this.handleApproachChange} 
                             value="spark" disabled={true} id="approach_spark" /> 
