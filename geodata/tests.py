@@ -81,7 +81,7 @@ class UtilTestCase(TestCase):
         self.assertGreaterEqual(y_size, 1)
 
 
-class TestSparkConnect(TestCase):
+class TestSpark(TestCase):
     def test_spark_connection(self):
         # Test connect to spark master
         spark = get_spark('test_get')
