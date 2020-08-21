@@ -1,5 +1,7 @@
 import os
 from datetime import datetime
+from operator import add
+from random import random
 from django.test import TestCase
 from django.db import connection
 from geodata.etl_pipeline.sea_ice import etl, util
@@ -8,6 +10,7 @@ from geodata.utils.tiff_io import GetDimension
 from django.db.utils import ProgrammingError
 from geodata.models import Seaice
 from geodata.etl_pipeline.sea_ice.pipeline import SeaIcePipeline
+from geodata.utils.spark import get_spark
 
 test_file_date = '20200722'
 
@@ -76,3 +79,24 @@ class UtilTestCase(TestCase):
         x_size, y_size = GetDimension(tif_file)
         self.assertGreaterEqual(x_size, 1)
         self.assertGreaterEqual(y_size, 1)
+
+
+class TestSparkConnect(TestCase):
+    def test_spark_connection(self):
+        # Test connect to spark master
+        spark = get_spark('test_get')
+        partitions = 10
+        n = 100000 * partitions
+
+        def f(_):
+            x = random() * 2 - 1
+            y = random() * 2 - 1
+            return 1 if x ** 2 + y ** 2 <= 1 else 0
+
+        count = spark.sparkContext\
+            .parallelize(range(1, n + 1), partitions)\
+            .map(f)\
+            .reduce(add)
+        result = 4.0 * count / n
+        spark.stop()
+        self.assertGreaterEqual(result, 3.13)
