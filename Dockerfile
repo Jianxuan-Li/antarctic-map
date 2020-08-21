@@ -21,16 +21,29 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Set LANG
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
+ENV LANGUAGE en_US:en
 
 # Project initalization
 ENV DJANGO_SETTINGS_MODULE "map.settings"
 ENV PATH /yarnpkg/yarn-v1.22.4/bin:/nodejs/node-${NODE_VERSION}-linux-x64/bin:$PATH
 
+# Spark
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV SPARK_HOME /spark
+ENV PATH="${PATH}:${SPARK_HOME}/sbin"
+ENV PYSPARK_PYTHON python3
 
 RUN apt-get update -y \
     && apt-get install -y \
+        #
+        # Python and mapnik
         gnupg2 python3 python3-gdal nginx mapnik-utils python3-mapnik \
+        #
+        # Python complie
         python3-pip wget python3-setuptools libatlas-base-dev python3-dev build-essential \
+        #
+        # JDK for spark client
+        openjdk-8-jre default-jre \
         --no-install-recommends \
     #
     # Frontend
@@ -47,6 +60,14 @@ RUN apt-get update -y \
     # Backend
     && pip3 --no-cache-dir install -r requirements.txt \
     && DJANGO_SETTINGS_MODULE="map.settings_docker_build" python3 manage.py collectstatic \
+    #
+    # Spark
+    && wget -q -O spark.tgz https://mirrors.sonic.net/apache/spark/spark-3.0.0/spark-3.0.0-bin-hadoop2.7.tgz \
+    && mkdir -p /temp_spark \
+    && gunzip -c spark.tgz | tar -C /temp_spark -xvf - \
+    && mv /temp_spark/spark-3.0.0-bin-hadoop2.7 /spark \
+    && rm spark.tgz \
+    && rm -rf /temp_spark \
     #
     # Prune files
     && rm -rf ./frontend ./node_modules && yarn cache clean \

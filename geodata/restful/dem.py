@@ -22,7 +22,6 @@ class Mean(views.APIView):
                         {'message': 'JSON format error', 'detail': err},
                         status=HTTP_400_BAD_REQUEST)
 
-        # TODO: approachs
         try:
             results = mean_numpy(masking_json)
         except (ValueError, WindowError):
