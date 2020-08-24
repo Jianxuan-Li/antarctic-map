@@ -80,9 +80,6 @@ class DEMTools extends Component {
                             value="gdal" id="approach_gdal" disabled={true}/> 
                             <label htmlFor="approach_gdal">GDAL</label>
                         <input type="radio" name="approach" onClick={this.handleApproachChange} 
-                            value="spark" disabled={true} id="approach_spark" /> 
-                            <label htmlFor="approach_spark">Apache Spark</label>
-                        <input type="radio" name="approach" onClick={this.handleApproachChange} 
                             value="numpy" defaultChecked="true" id="approach_numpy" /> 
                             <label htmlFor="approach_numpy">Numpy</label>
                     </div>
