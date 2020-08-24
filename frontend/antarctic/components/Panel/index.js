@@ -44,8 +44,11 @@ class Panel extends Component {
     }
 
     handleDatasetChange = (e) => {
-        let { mapAction } = this.props
+        let { mapAction, demAction } = this.props
         this.clearLayerAndDataset()
+        demAction.toggleDemTools(false)
+        demAction.clearDraw(this.props.mapStore.map)
+        mapAction.changeBaseLayer('Seamask_medium_res_polygon')
         mapAction.changeDataset(e.target.value)
     }
 
