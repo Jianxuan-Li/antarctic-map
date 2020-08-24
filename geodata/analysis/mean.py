@@ -1,15 +1,26 @@
 
-from geodata.analysis.dem_pipeline import Pipeline
+from geodata.analysis.dem.numpy import Numpy
+from geodata.analysis.dem.gdal import GDAL
 
 
-def mean_numpy(masking_json):
-    # Create a analytics pipeline
-    pipeline = Pipeline()
+class Mean():
+    def __init__(self):
+        self.approach_algo = {
+            "numpy": Numpy,
+            "gdal": GDAL
+        }
 
-    (True
-        | pipeline.validation(masking_json)
-        | pipeline.masking('tiff')
-        | pipeline.analysis('numpy')
-        | pipeline.load())
+    def set_mask(self, masking_json):
+        self.masking_json = masking_json
 
-    return pipeline.result
+    def analyze(self, approach_class):
+        instance = approach_class()
+        instance.call(self.masking_json)
+        return instance
+
+    def run(self, approach):
+        try:
+            pipeline = self.analyze(self.approach_algo[approach])
+        except KeyError:
+            raise Exception("Algorithm of {} is not exists".format(approach))
+        return pipeline.result

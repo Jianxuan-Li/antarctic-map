@@ -4,7 +4,7 @@ from rest_framework import views
 # from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.status import (HTTP_400_BAD_REQUEST, HTTP_201_CREATED)
-from geodata.analysis.mean import mean_numpy
+from geodata.analysis.mean import Mean as MeanMethod
 from rasterio.errors import WindowError
 
 
@@ -23,7 +23,9 @@ class Mean(views.APIView):
                         status=HTTP_400_BAD_REQUEST)
 
         try:
-            results = mean_numpy(masking_json)
+            mean = MeanMethod()
+            mean.set_mask(masking_json)
+            results = mean.run(approach)
         except (ValueError, WindowError):
             return JsonResponse(
                         {'message': 'No data'},

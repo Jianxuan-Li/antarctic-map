@@ -1,19 +1,25 @@
 import os
 import json
 import rasterio
-import numpy as np
 from rasterio.mask import mask
 from django.conf import settings
-from geodata.utils.tiff_io import ReadGeoTiff
 
 
 class Pipeline():
     def __init__(self, options=None):
         self.options = options
         self.current_stage = None
+        self.nodata = -999
 
     def __bool__(self):
         return True
+
+    def call(self, masking_json):
+        (True
+            | self.validation(masking_json)
+            | self.masking('tiff')
+            | self.analysis()
+            | self.load())
 
     def validation(self, geojson_obj):
         self.current_stage = 'validation'
@@ -31,8 +37,10 @@ class Pipeline():
         ref_file = os.path.join(settings.GIS_DATA_DIR, 'DEM',
                                 'krigged_dem_nsidc.tiff')
 
+        # Mask the DEM data, and use -999 fills nodata.
         with rasterio.open(ref_file) as src:
-            out_image, out_transform = mask(src, [geom], crop=True)
+            out_image, out_transform = mask(src, [geom],
+                                            crop=True, nodata=self.nodata)
         out_meta = src.meta.copy()
 
         # save the resulting raster
@@ -45,31 +53,13 @@ class Pipeline():
         with rasterio.open(dest_file, "w", **out_meta) as dest:
             dest.write(out_image)
 
-        return True
+        self.ref_file = dest_file
 
-    def analysis(self, approach):
-        self.approach = approach
-
-        # Get dimension and Geo info
-        # In development env use low resolution data
-        ref_file = os.path.join(settings.GIS_DATA_DIR, 'DEM', 'masked.tif')
-
-        try:
-            data, Ysize, Xsize = ReadGeoTiff(ref_file)
-            self.dimension = [Xsize, Ysize]
-        except AttributeError as err:
-            print(err)
-            return False
-
-        np_arr = np.array(data)
-        flat_arr = np_arr.ravel()
-        mean = flat_arr[(flat_arr != 0) & (flat_arr != -999)].mean()
-        self.mean = mean
         return True
 
     def load(self):
         self.result = {
             "dimension": self.dimension,
-            "mean": self.mean.item()
+            "mean": self.mean
         }
         return True
