@@ -16,6 +16,7 @@ class Dataset(views.APIView):
     http_method_names = ['get', 'head']
 
     def get(self, request, format=None):
-        results = SeaiceDateSerializer(Seaice.objects.all().order_by('-date'),
+        results = SeaiceDateSerializer(Seaice.objects.all()
+                                       .order_by('-date')[:10],
                                        many=True)
         return Response(results.data, status=HTTP_200_OK)
