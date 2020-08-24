@@ -77,11 +77,11 @@ class DEMTools extends Component {
                     <span>Approach</span>
                     <div>
                         <input type="radio" name="approach" onClick={this.handleApproachChange} 
-                            value="gdal" id="approach_gdal" disabled={false}/> 
-                            <label htmlFor="approach_gdal">GDAL</label>
-                        <input type="radio" name="approach" onClick={this.handleApproachChange} 
                             value="numpy" defaultChecked="true" id="approach_numpy" /> 
                             <label htmlFor="approach_numpy">Numpy</label>
+                        <input type="radio" name="approach" onClick={this.handleApproachChange} 
+                            value="gdal" id="approach_gdal" /> 
+                            <label htmlFor="approach_gdal">GDAL</label>
                     </div>
                     <div>
                         To analyze the DEM data, please select area on the map
