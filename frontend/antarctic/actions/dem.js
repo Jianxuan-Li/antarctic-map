@@ -75,9 +75,9 @@ class Actions extends BaseActions {
     }
 
     @action
-    exec = async (algo, approach, polyFeature) => {
+    exec = async (algorithm, approach, polyFeature) => {
         let result = await this.post(
-                                apis.DEM_MEAN(approach), 
+                                apis.DEM_ANALYZE(algorithm, approach), 
                                 {geom_string: JSON.stringify(polyFeature)}, 
                                 true)
         return result

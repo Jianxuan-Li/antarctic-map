@@ -4,15 +4,15 @@ from rest_framework import views
 # from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.status import (HTTP_400_BAD_REQUEST, HTTP_201_CREATED)
-from geodata.analysis.mean import Mean as MeanMethod
+from geodata.analysis.dem.analyzer import Analyzer
 from rasterio.errors import WindowError
 
 
-class Mean(views.APIView):
+class Analyze(views.APIView):
     permission_classes = (AllowAny,)
     http_method_names = ['post', 'head']
 
-    def post(self, request, approach, format=None):
+    def post(self, request, algorithm, approach, format=None):
         masking_str = request.data['geom_string']
 
         try:
@@ -23,9 +23,10 @@ class Mean(views.APIView):
                         status=HTTP_400_BAD_REQUEST)
 
         try:
-            mean = MeanMethod()
-            mean.set_mask(masking_json)
-            results = mean.run(approach)
+            analyzer = Analyzer()
+            analyzer.set_mask(masking_json)
+            analyzer.set_algorithm(algorithm)
+            results = analyzer.run(approach)
         except (ValueError, WindowError):
             return JsonResponse(
                         {'message': 'No data'},
@@ -33,5 +34,5 @@ class Mean(views.APIView):
 
         return JsonResponse({
             'dimension': results['dimension'],
-            'mean': round(results['mean'], 2)
+            'value': results[algorithm]
         }, safe=False, status=HTTP_201_CREATED)

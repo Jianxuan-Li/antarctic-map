@@ -15,7 +15,8 @@ class DEMTools extends Component {
             loading: false,
             features: null,
             results: false,
-            approach: 'numpy'
+            approach: 'numpy',
+            algorithm: 'mean'
         }
     }
 
@@ -27,9 +28,13 @@ class DEMTools extends Component {
         this.setState({'approach': e.target.value})
     }
 
+    handleAlgorithmChange = (e) => {
+        this.setState({'algorithm': e.target.value})
+    }
+
     handleDraw = async () => {
         let { attachDraw, detachDraw, exec } = this.props.demAction
-        let { approach } = this.state
+        let { approach, algorithm } = this.state
 
         attachDraw(this.props.mapStore.map, 
             async (features) => {
@@ -47,7 +52,7 @@ class DEMTools extends Component {
                 let GeoJSONHandler = new GeoJSON()
                 let json = GeoJSONHandler.writeFeatures(features)
 
-                let results = await exec('mean', approach, json)
+                let results = await exec(algorithm, approach, json)
                 this.setState({'results': results, 'loading': false})
 
                 // Transform and show on map ?
@@ -57,21 +62,21 @@ class DEMTools extends Component {
 
     render() {
         let { enable } = this.props.demStore
-        let { loading, results } = this.state
+        let { algorithm, loading, results } = this.state
         return (
             <div className={styles.demToolBox} style={{display: enable ? 'block':'none'}}>
                 <div className={styles.header}>DEM Analysis</div>
                 <div>
                     <span>Algorithm</span>
                     <div>
-                        <input type="radio" name="algo" value="mean" 
+                        <input type="radio" name="algo" value="mean" onClick={this.handleAlgorithmChange}
                             defaultChecked="true" id="algo_mean" />
                             <label htmlFor="algo_mean">Mean</label>
-                        <input type="radio" name="algo" value="maximum" 
-                            disabled={true} id="algo_max" /> 
+                        <input type="radio" name="algo" value="maximum" onClick={this.handleAlgorithmChange}
+                            id="algo_max" /> 
                             <label htmlFor="algo_max">Maximum</label>
-                        <input type="radio" name="algo" value="minimum" 
-                            disabled={true} id="algo_min" />
+                        <input type="radio" name="algo" value="minimum" onClick={this.handleAlgorithmChange}
+                            id="algo_min" />
                             <label htmlFor="algo_min">Minimum</label>
                     </div>
                     <span>Approach</span>
@@ -90,8 +95,11 @@ class DEMTools extends Component {
                     <div style={{display: loading ? 'block':'none'}}>
                         Analyzing...
                     </div>
-                    <div style={{display: !loading && results && results.mean ? 'block' : 'none'}}>
-                        Average elevations {results && results.mean}
+                    <div style={{display: !loading && results && results.value ? 'block' : 'none'}}>
+                        {algorithm && algorithm == 'mean' && <span>Average elevation</span>}
+                        {algorithm && algorithm == 'maximum' && <span>Max elevation</span>}
+                        {algorithm && algorithm == 'minimum' && <span>Min elevation</span>}
+                        {results && results.value}
                     </div>
                 </div>
             </div>

@@ -6,8 +6,7 @@ from django.conf import settings
 
 
 class Pipeline():
-    def __init__(self, options=None):
-        self.options = options
+    def __init__(self, *args, **kwargs):
         self.current_stage = None
         self.nodata = -999
 
@@ -60,6 +59,21 @@ class Pipeline():
     def load(self):
         self.result = {
             "dimension": self.dimension,
-            "mean": self.mean
         }
+
+        try:
+            self.result['mean'] = round(self.mean, 2)
+        except (AttributeError, KeyError, TypeError):
+            pass
+
+        try:
+            self.result['maximum'] = round(self.maximum, 2)
+        except (AttributeError, KeyError, TypeError):
+            pass
+
+        try:
+            self.result['minimum'] = round(self.minimum, 2)
+        except (AttributeError, KeyError, TypeError):
+            pass
+
         return True
