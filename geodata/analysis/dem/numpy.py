@@ -45,6 +45,16 @@ class Numpy(Pipeline):
         self.maximum = maximum.item()
         return self.maximum
 
+    def min_value(self):
+        # Find minimum in selected DEM
+
+        np_arr = np.array(self.data)
+        flat_arr = np_arr.ravel()
+
+        minimum = np.min(flat_arr[flat_arr != self.nodata])
+        self.minimum = minimum.item()
+        return self.minimum
+
     def analysis(self):
         data = self.extract()
 
@@ -57,6 +67,8 @@ class Numpy(Pipeline):
             self.mean()
         elif self.algorithm == 'maximum':
             self.max_value()
+        elif self.algorithm == 'minimum':
+            self.min_value()
         else:
             raise Exception("Algorithm not exists")
 
