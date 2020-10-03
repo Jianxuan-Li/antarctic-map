@@ -45,101 +45,47 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        // 第三方库 css 文件单独打包，不能模块化处理
-        test: /braft-editor\/dist\/index\.css$/,
-        loader: ["style-loader", "css-loader"]
-      },
-      {
         test: /\.css$/,
-        exclude: /(braft-editor)/, // 排除第三方库 css 文件
-        use: [
-          {
-            loader: "css-loader",
-            options: {
-              // minimize: true,
-              modules: true
-            }
-          },
-          // {
-          //   loader: "postcss-loader",
-          //   options: {
-          //     config: {
-          //       path: "config/postcss.config.js"
-          //     }
-          //   }
-          // }
-        ]
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.less$/,
-        exclude: /(node_modules|antd)/,
+        exclude: /(node_modules)/,
         use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                localIdentName: "[path][name]__[local]--[hash:base64:5]"
-              },
-              sourceMap: true
-            }
-          },
-          // {
-          //   loader: "postcss-loader",
-          //   options: {
-          //     config: {
-          //       path: "config/postcss.config.js"
-          //     }
-          //   }
-          // },
-          {
-            loader: "less-loader",
+          { loader: 'style-loader', },
+          { loader: 'css-loader', },
+          { loader: 'less-loader',
             options: {
               lessOptions: {
-                relativeUrls: false
-              }
-            }
-          }
-        ]
-      },
-      {
-        test: /antd\.less$/,
-        use: ["style-loader", "css-loader", "less-loader"]
+                relativeUrls: false,
+                javascriptEnabled: true,
+              },
+            }, 
+          },
+        ],
       },
       {
         test: /\.(scss)$/,
-        use: 
-        [{
-          loader: 'style-loader', // inject CSS to page
-        }, {
-          loader: 'css-loader', // translates CSS into CommonJS modules
-          options: {
-            sourceMap: true
+        use: [
+          {
+            loader: 'style-loader', // inject CSS to page
+          }, {
+            loader: 'css-loader', // translates CSS into CommonJS modules
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader' // compiles Sass to CSS
+          },
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
           }
-        }, 
-        // {
-        //   loader: 'postcss-loader', // Run post css actions
-        //   options: {
-        //     plugins: function () { // post css plugins, can be exported to postcss.config.js
-        //       return [
-        //         require('precss'),
-        //         require('autoprefixer')
-        //       ];
-        //     }
-        //   }
-        // },
-        {
-          loader: 'sass-loader' // compiles Sass to CSS
-        },
-        'resolve-url-loader',
-        {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: true
-          }
-        }] // use
+        ]
       },
       {
         test: /\.(png|jpe?g|gif)$/,

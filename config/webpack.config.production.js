@@ -72,37 +72,13 @@ module.exports = {
       loader: ['babel-loader'],
       exclude: /node_modules/
     },
-    { // 第三方库 css 文件单独打包，不能模块化处理
-      test: /braft-editor\/dist\/index\.css$/,
-      loader: [
-        'style-loader',
-        'css-loader'
-      ]
-    },
     {
       test: /\.css$/,
-      exclude: /(braft-editor)/, // 排除第三方库 css 文件
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            localIdentName: '[hash:base64]'
-          }
-        },
-        // {
-        //   loader: 'postcss-loader',
-        //   options: {
-        //     config: {
-        //       path: 'config/postcss.config.js'
-        //     }
-        //   }
-        // }
-      ]
+      use: ['style-loader', 'css-loader']
     },
     {
       test: /\.less$/,
-      exclude: /(node_modules|antd)/,
+      exclude: /(node_modules)/,
       use: [
         MiniCssExtractPlugin.loader,
         {
@@ -113,14 +89,6 @@ module.exports = {
             }
           }
         },
-        // {
-        //   loader: 'postcss-loader',
-        //   options: {
-        //     config: {
-        //       path: 'config/postcss.config.js'
-        //     }
-        //   }
-        // },
         {
           loader: 'less-loader',
           options: {
@@ -142,17 +110,6 @@ module.exports = {
                 sourceMap: true
               }
             },
-            // {
-            //   loader: 'postcss-loader', // Run post css actions
-            //   options: {
-            //     plugins: function () { // post css plugins, can be exported to postcss.config.js
-            //       return [
-            //         require('precss'),
-            //         require('autoprefixer')
-            //       ];
-            //     }
-            //   }
-            // }, 
             {
               loader: 'sass-loader' // compiles Sass to CSS
             }, 
