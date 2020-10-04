@@ -1,6 +1,9 @@
 # Docker file for development
 FROM ubuntu:18.04
 
+ARG SPARK_DOWNLOAD_URL=http://apache.mirrors.hoobly.com/spark/spark-3.0.1/spark-3.0.1-bin-hadoop2.7.tgz
+ARG SPARK_UNPACKED_DIR=spark-3.0.1-bin-hadoop2.7
+
 COPY ./sources.list /etc/apt/sources.list
 
 # Set timezone
@@ -24,10 +27,10 @@ RUN echo "nameserver 1.1.1.1" >> /etc/resolv.conf
 RUN apt-get update -y && apt-get install -y \ 
     gnupg2 wget python3 python3-pip gdal-bin python3-gdal mapnik-utils python3-mapnik \
     openjdk-8-jre default-jre \
-    && wget -q -O spark.tgz https://mirrors.sonic.net/apache/spark/spark-3.0.0/spark-3.0.0-bin-hadoop2.7.tgz \
+    && wget -q -O spark.tgz $SPARK_DOWNLOAD_URL \
     && mkdir -p /temp_spark \
     && gunzip -c spark.tgz | tar -C /temp_spark -xvf - \
-    && mv /temp_spark/spark-3.0.0-bin-hadoop2.7 /spark \
+    && mv /temp_spark/$SPARK_UNPACKED_DIR /spark \
     && rm spark.tgz \
     && rm -rf /temp_spark \
     && apt-get purge -y wget \
