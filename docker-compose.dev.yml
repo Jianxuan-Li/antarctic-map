@@ -19,7 +19,7 @@ services:
         ipv4_address: 172.30.5.20
         ipv6_address: 2001:3984:3989::20
     volumes:
-      - ${SOURCE_CODE_PATH}:/code
+      - .:/code
       - ${GIS_DATA_DIR}:/data
   frontend:
     image: antarctic-map-frontend:latest
@@ -30,7 +30,7 @@ services:
         ipv4_address: 172.30.5.21
         ipv6_address: 2001:3984:3989::21
     volumes:
-      - ${SOURCE_CODE_PATH}:/code
+      - .:/code
   databsae:
     image: antarctic-postgis:latest
     ports:
