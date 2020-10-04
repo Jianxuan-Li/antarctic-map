@@ -2,14 +2,17 @@ FROM ubuntu:18.04
 
 ARG PROJECT_PATH=/antarctic
 ARG NODE_VERSION=v12.18.2
+ARG YARN_VERSION=v1.22.5
 ARG GEOSERVER_URL_VAR
 ARG CPU_CORE=1
+ARG SPARK_DOWNLOAD_URL=http://apache.mirrors.hoobly.com/spark/spark-3.0.1/spark-3.0.1-bin-hadoop2.7.tgz
+ARG SPARK_UNPACKED_DIR=spark-3.0.1-bin-hadoop2.7
 
-ENV GEOSERVER_URL ${GEOSERVER_URL_VAR}
+ENV GEOSERVER_URL $GEOSERVER_URL_VAR
 
 # Create working dir
-RUN mkdir ${PROJECT_PATH} && mkdir /statics && mkdir /data
-WORKDIR ${PROJECT_PATH}
+RUN mkdir $PROJECT_PATH && mkdir /statics && mkdir /data
+WORKDIR $PROJECT_PATH
 COPY . .
 COPY ./site.conf /etc/nginx/sites-enabled/default
 COPY ./sources.list /etc/apt/sources.list
@@ -25,12 +28,12 @@ ENV LANGUAGE en_US:en
 
 # Project initalization
 ENV DJANGO_SETTINGS_MODULE "map.settings"
-ENV PATH /yarnpkg/yarn-v1.22.4/bin:/nodejs/node-${NODE_VERSION}-linux-x64/bin:$PATH
+ENV PATH /yarnpkg/yarn-$YARN_VERSION/bin:/nodejs/node-$NODE_VERSION-linux-x64/bin:$PATH
 
 # Spark
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV SPARK_HOME /spark
-ENV PATH="${SPARK_HOME}/bin::${SPARK_HOME}/sbin:${PATH}"
+ENV PATH="$SPARK_HOME/bin::$SPARK_HOME/sbin:$PATH"
 ENV PYSPARK_PYTHON /usr/bin/python3
 
 RUN apt-get update -y \
@@ -47,9 +50,9 @@ RUN apt-get update -y \
         --no-install-recommends \
     #
     # Frontend
-    && wget -q -O /node.tar.gz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz \
+    && wget -q -O /node.tar.gz https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz \
     && mkdir -p /nodejs \
-    && wget -q -O /yarn.tar.gz https://github.com/yarnpkg/yarn/releases/download/v1.22.4/yarn-v1.22.4.tar.gz \
+    && wget -q -O /yarn.tar.gz https://github.com/yarnpkg/yarn/releases/download/$YARN_VERSION/yarn-$YARN_VERSION.tar.gz \
     && mkdir -p /nodejs && mkdir -p /yarnpkg \
     && tar -xzf /node.tar.gz -C /nodejs \
     && rm /node.tar.gz \
@@ -62,10 +65,10 @@ RUN apt-get update -y \
     && DJANGO_SETTINGS_MODULE="map.settings_docker_build" python3 manage.py collectstatic \
     #
     # Spark
-    && wget -q -O spark.tgz https://mirrors.sonic.net/apache/spark/spark-3.0.0/spark-3.0.0-bin-hadoop2.7.tgz \
+    && wget -q -O spark.tgz $SPARK_DOWNLOAD_URL \
     && mkdir -p /temp_spark \
     && gunzip -c spark.tgz | tar -C /temp_spark -xvf - \
-    && mv /temp_spark/spark-3.0.0-bin-hadoop2.7 /spark \
+    && mv /temp_spark/$SPARK_UNPACKED_DIR /spark \
     && rm spark.tgz \
     && rm -rf /temp_spark \
     #
