@@ -9,7 +9,6 @@ stages:
 build:
   stage: build
   script: 
-    - /opt/env_files/antarctic_build.sh
     - docker-compose build --no-cache
   only:
     - master
@@ -31,7 +30,6 @@ test-backend:
 analyze:
   stage: analyze
   script:
-    - /opt/env_files/antarctic_build.sh
     - CI=true dive antarctic-map:latest
   only:
     - master
@@ -43,7 +41,6 @@ migrate:
   stage: migrate
   script: 
     - export PATH="/home/gitlab-runner/.local/bin:$PATH"
-    - /opt/env_files/antarctic_build.sh
     - export DJANGO_SETTINGS_MODULE="map.settings_docker_build"
     - pip3 install -U pip
     - pip3 install --no-cache -r requirements.txt
