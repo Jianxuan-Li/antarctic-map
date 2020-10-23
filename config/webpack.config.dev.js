@@ -6,10 +6,16 @@ const rules = require("./webpack.rules");
 const BundleTracker = require("webpack-bundle-tracker");
 const alias = require("./alias")
 
-const devProtocol = 'http'                  //开发环境启动协议，http 或 https
-const devHost = 'antarctic-map-statics'     //开发环境所在主机名，一般是localhost，如果连接远程的环境则写0.0.0.0
-const devPort = 9000;                       //启动端口，同时启动多个APP的时候需要启动在不同端口
-const staticPath = '/static/dist/';         //和settings.py里的WEBPACK_LOADER的设置对应
+const devProtocol = 'http' //开发环境启动协议，http 或 https
+//开发环境所在主机名，一般是localhost，如果连接远程的环境则写0.0.0.0
+const devHost = '0.0.0.0'     
+// Windows环境中使用 host.docker.internal
+// https://docs.docker.com/docker-for-mac/networking/
+if(process.env.USE_DOCKER_HOST_NAME === "1"){
+  devHost = "host.docker.internal"
+}
+const devPort = 9000;  //启动端口，同时启动多个APP的时候需要启动在不同端口，Dockerfile中需要Expose对应端口
+const staticPath = '/static/dist/'; //和settings.py里的WEBPACK_LOADER的设置对应
 
 const publicPath = (protocol, host, port, path) => protocol + "://" + host + ":" + port + path
 

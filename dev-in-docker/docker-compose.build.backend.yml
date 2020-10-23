@@ -6,7 +6,5 @@ services:
       context: .
       dockerfile: Dockerfile.dev.backend
     image: antarctic-map-backend:latest
-    volumes:
-      - ${SOURCE_CODE_PATH}:/code
     ports:
       - "8000:8000"

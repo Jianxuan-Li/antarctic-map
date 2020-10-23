@@ -21,24 +21,9 @@ Prepare:
 * clone code to your workspace
 * install docker
 
+Next:
+
 1. Build images for development
-
-Create a host record in `/etc/hosts`, point docker host to antarctic-map-statics. 
-
-On OSX/Linux: `127.0.0.1       antarctic-map-statics`
-
-On Windows, find out your IP-address of the gateway of docker network, and point it to `antarctic-map-statics`, example: `192.168.99.100  antarctic-map-statics`
-
-(Notice: this hostname is configured in `config/webpack.config.dev.js`)
-
-Create `.env` file in project directory with content:
-
-```bash
-SOURCE_CODE_PATH=/path/to/your/code
-GEOSERVER_URL=https://example.com/geoserver/
-```
-
-Then build the images
 
 ```bash
 cd ./dev-in-docker
@@ -58,7 +43,7 @@ Run `./dev frontend` in project root.
 Then, start webpack dev server in the contianer (hot reload is availabled)
 
 ```bash
-yarn build
+yarn install (only first time start container)
 yarn start
 ```
 
@@ -67,20 +52,24 @@ yarn start
 Start django service in the backend container
 
 ```bash
-pip3 install -r requirements.txt
-python3 manage.py migrate
+pip3 install -r requirements.txt (only first time start container)
+python3 manage.py migrate (only first time start container)
 ./dev runserver
 ```
 
 Every time you update code from the code repository, don't forget execute `python3 manage.py migrate`
 
-5. Recycle container
+Then access `http://localhost:8000` or `http://127.0.0.1:8000`
 
-Quit the containers, and run `./dev down`.
+Further opreations:
 
-6. Restart containers after system restarted
+* Recycle container
 
-`./dev docker-restart`
+Quit the containers, and run `./dev down` (only Unix/Linux).
+
+* Restart containers after system restarted
+
+`./dev docker-restart` (only Unix/Linux)
 
 ## Unit test
 
@@ -89,15 +78,14 @@ Quit the containers, and run `./dev down`.
 
 ## `.env`
 
-* `GEOSERVER_URL` e.g.: `=https://yourdomain.com/geoserver/`
-* `SOURCE_CODE_PATH` for development only
-* `GIS_DATA_DIR` path of your GIS data, contains `DEM`, `sea_ice`... for detail please check Data section below
-* `ANTARCTIC_MAP_DATABASE_PWD`
-* `ANTARCTIC_MAP_DATABASE_USER`
-* `ANTARCTIC_MAP_DATABASE_PORT`
-* `ANTARCTIC_MAP_DATABASE_HOST`
-* `ANTARCTIC_MAP_DATABASE_NAME`
-* `ANTARCTIC_MAP_TEST_DATABASE_NAME`
+* `GEOSERVER_URL=` e.g.: `https://yourdomain.com/geoserver/`
+* `GIS_DATA_DIR=` path of your GIS data, contains `DEM`, `sea_ice`... for detail please check Data section below
+* `ANTARCTIC_MAP_DATABASE_PWD=`
+* `ANTARCTIC_MAP_DATABASE_USER=`
+* `ANTARCTIC_MAP_DATABASE_PORT=`
+* `ANTARCTIC_MAP_DATABASE_HOST=`
+* `ANTARCTIC_MAP_DATABASE_NAME=`
+* `ANTARCTIC_MAP_TEST_DATABASE_NAME=`
 
 ## Sea ice data ETL
 
