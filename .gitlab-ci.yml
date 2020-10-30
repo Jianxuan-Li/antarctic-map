@@ -8,8 +8,9 @@ stages:
 
 build:
   stage: build
-  script: 
+  script:
     - docker-compose build --no-cache
+    - docker push registry.gitlab.com/freeyeti/antarctic-map
   only:
     - master
   tags:
@@ -18,7 +19,7 @@ build:
 
 test-backend:
   stage: test
-  script: 
+  script:
     - docker-compose -f docker-compose.test.yml run antarctic_map_test
     - docker-compose -f docker-compose.test.yml down
   only:
@@ -30,16 +31,16 @@ test-backend:
 analyze:
   stage: analyze
   script:
-    - CI=true dive antarctic-map:latest
+    - CI=true dive registry.gitlab.com/freeyeti/antarctic-map:latest
   only:
     - master
   tags:
     - build
-    - shell  
+    - shell
 
 migrate:
   stage: migrate
-  script: 
+  script:
     - export PATH="/home/gitlab-runner/.local/bin:$PATH"
     - export DJANGO_SETTINGS_MODULE="map.settings_docker_build"
     - pip3 install -U pip

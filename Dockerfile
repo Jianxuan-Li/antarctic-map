@@ -49,6 +49,14 @@ RUN apt-get update -y \
         openjdk-8-jre default-jre \
         --no-install-recommends \
     #
+    # Spark
+    && wget -q -O spark.tgz $SPARK_DOWNLOAD_URL \
+    && mkdir -p /temp_spark \
+    && gunzip -c spark.tgz | tar -C /temp_spark -xvf - \
+    && mv /temp_spark/$SPARK_UNPACKED_DIR /spark \
+    && rm spark.tgz \
+    && rm -rf /temp_spark \
+    #
     # Frontend
     && wget -q -O /node.tar.gz https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz \
     && mkdir -p /nodejs \
@@ -63,14 +71,6 @@ RUN apt-get update -y \
     # Backend
     && pip3 --no-cache-dir install -r requirements.txt \
     && DJANGO_SETTINGS_MODULE="map.settings_docker_build" python3 manage.py collectstatic \
-    #
-    # Spark
-    && wget -q -O spark.tgz $SPARK_DOWNLOAD_URL \
-    && mkdir -p /temp_spark \
-    && gunzip -c spark.tgz | tar -C /temp_spark -xvf - \
-    && mv /temp_spark/$SPARK_UNPACKED_DIR /spark \
-    && rm spark.tgz \
-    && rm -rf /temp_spark \
     #
     # Prune files
     && rm -rf ./frontend ./node_modules && yarn cache clean \

@@ -1,8 +1,8 @@
-version: '3.5'
+version: "3.5"
 
 services:
   antarctic_map_test:
-    image: antarctic-map:latest
+    image: registry.gitlab.com/freeyeti/antarctic-map:latest
     command: "./docker-entrypoint-test.sh"
     env_file:
       - /opt/env_files/antarctic.env
