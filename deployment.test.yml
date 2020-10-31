@@ -21,3 +21,15 @@ spec:
           env:
             - name: DJANGO_SETTINGS_MODULE
               value: map.settings_docker_build
+          volumeMounts:
+            - name: gis-data
+              mountPath: /data
+            - name: www-data
+              mountPath: /www_data
+      volumes:
+        - name: gis-data
+          hostPath:
+            path: __ANTARCTIC_MAP_GIS_DATA__
+        - name: www-data
+          hostPath:
+            path: __ANTARCTIC_MAP_WWW_DATA__

@@ -25,8 +25,10 @@ test-backend:
     # - docker-compose -f docker-compose.test.yml down
     #
     # In kubernetes (should be sure config maps applied first)
+    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.test.yml
+    - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.test.yml
     - microk8s kubectl apply -f deployment.test.yml
-    - microk8s kubectl logs -f antarctic-map-test
+    - microk8s kubectl logs -f jobs/antarctic-map-test
     - microk8s kubectl delete -f deployment.test.yml
   only:
     - master
@@ -56,7 +58,7 @@ migrate:
 
     # In kubernetes (should be sure config maps applied first)
     - microk8s kubectl apply -f deployment.migrate.yml
-    - microk8s kubectl logs -f antarctic-map-migrate
+    - microk8s kubectl logs -f jobs/antarctic-map-migrate
     - microk8s kubectl delete -f deployment.migrate.yml
   only:
     - master
