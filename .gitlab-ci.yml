@@ -76,6 +76,8 @@ deploy_prod:
     # - docker image prune -a -f
     #
     # In kubernetes (should be sure config maps applied first)
+    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.yml
+    - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.yml
     - microk8s kubectl apply -f deployment.yml
     - docker container prune -f
     - docker image prune -a -f
