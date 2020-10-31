@@ -59,6 +59,7 @@ migrate:
 
     # In kubernetes (should be sure config maps applied first)
     - microk8s kubectl apply -f deployment.migrate.yml
+    - microk8s kubectl wait --timeout=300s --for=condition=complete jobs/antarctic-map-migrate
     - microk8s kubectl logs -f jobs/antarctic-map-migrate
     - microk8s kubectl delete -f deployment.migrate.yml
   only:
