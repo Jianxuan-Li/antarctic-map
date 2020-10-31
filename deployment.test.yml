@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: antarctic-map-test
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Never
+      backoffLimit: 4
+      activeDeadlineSeconds: 300
+      containers:
+        - name: antarctic-map-test
+          image: registry.gitlab.com/freeyeti/antarctic-map
+          imagePullPolicy: IfNotPresent
+          command: ["./docker-entrypoint-test.sh"]
+          envFrom:
+            - configMapRef:
+                name: env-config

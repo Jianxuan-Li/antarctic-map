@@ -11,7 +11,7 @@ ARG SPARK_UNPACKED_DIR=spark-3.0.1-bin-hadoop2.7
 ENV GEOSERVER_URL $GEOSERVER_URL_VAR
 
 # Create working dir
-RUN mkdir $PROJECT_PATH && mkdir /statics && mkdir /data
+RUN mkdir $PROJECT_PATH && mkdir /statics && mkdir /data && mkdir /www_data
 WORKDIR $PROJECT_PATH
 COPY . .
 COPY ./site.conf /etc/nginx/sites-enabled/default
