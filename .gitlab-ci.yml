@@ -71,7 +71,12 @@ migrate:
 deploy_prod:
   stage: deploy
   script:
-    - docker-compose up --force-recreate -d
+    # - docker-compose up --force-recreate -d
+    # - docker container prune -f
+    # - docker image prune -a -f
+    #
+    # In kubernetes (should be sure config maps applied first)
+    - microk8s kubectl apply -f deployment.yml
     - docker container prune -f
     - docker image prune -a -f
   environment:

@@ -13,7 +13,7 @@ spec:
       containers:
         - name: antarctic-map-migrate
           image: registry.gitlab.com/freeyeti/antarctic-map
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command: ["python3", "manage.py", "migrate"]
           envFrom:
             - configMapRef:

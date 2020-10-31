@@ -1,26 +1,50 @@
-apiVersion: batch/v1
-kind: Job
+---
+kind: Service
+apiVersion: v1
 metadata:
-  name: antarctic-map-test
+  name: antarcticmap
+  labels:
+    run: antarcticmap
 spec:
-  backoffLimit: 4
-  activeDeadlineSeconds: 600
+  selector:
+    app: antarcticmap
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+      nodePort: 30053
+      name: http
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: antarcticmap
+  labels:
+    app: antarcticmap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: antarcticmap
   template:
+    metadata:
+      labels:
+        app: antarcticmap
     spec:
-      imagePullSecrets:
-        - name: regcred
-      restartPolicy: Never
       containers:
-        - name: antarctic-map-test
+        - name: antarcticmap
           image: registry.gitlab.com/freeyeti/antarctic-map
           imagePullPolicy: Always
-          command: ["./docker-entrypoint-test.sh"]
+          ports:
+            - containerPort: 9000
           envFrom:
             - configMapRef:
                 name: env-config
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: map.settings_docker_build
+              value: map.settings
           volumeMounts:
             - name: gis-data
               mountPath: /data
