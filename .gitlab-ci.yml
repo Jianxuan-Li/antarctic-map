@@ -28,7 +28,7 @@ test-backend:
     - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.test.yml
     - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.test.yml
     - microk8s kubectl apply -f deployment.test.yml
-    - microk8s kubectl wait --timeout=60s --for=condition=Running job/antarctic-map-test
+    - microk8s kubectl wait --timeout=600s --for=condition=complete job/antarctic-map-test
     - microk8s kubectl logs -f jobs/antarctic-map-test
     - microk8s kubectl delete -f deployment.test.yml
   only:
