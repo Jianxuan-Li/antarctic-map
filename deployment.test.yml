@@ -3,13 +3,13 @@ kind: Job
 metadata:
   name: antarctic-map-test
 spec:
+  backoffLimit: 4
+  activeDeadlineSeconds: 600
   template:
     spec:
       imagePullSecrets:
         - name: regcred
       restartPolicy: Never
-      backoffLimit: 4
-      activeDeadlineSeconds: 600
       containers:
         - name: antarctic-map-test
           image: registry.gitlab.com/freeyeti/antarctic-map

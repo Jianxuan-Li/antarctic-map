@@ -3,13 +3,13 @@ kind: Job
 metadata:
   name: antarctic-map-migrate
 spec:
+  backoffLimit: 4
+  activeDeadlineSeconds: 300
   template:
     spec:
       imagePullSecrets:
         - name: regcred
       restartPolicy: Never
-      backoffLimit: 4
-      activeDeadlineSeconds: 300
       containers:
         - name: antarctic-map-migrate
           image: registry.gitlab.com/freeyeti/antarctic-map
