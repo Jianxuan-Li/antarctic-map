@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: antarctic-map-test
+  name: antarctic-map-migrate
 spec:
   template:
     spec:
@@ -9,12 +9,15 @@ spec:
         - name: regcred
       restartPolicy: Never
       backoffLimit: 4
-      activeDeadlineSeconds: 600
+      activeDeadlineSeconds: 300
       containers:
-        - name: antarctic-map-test
+        - name: antarctic-map-migrate
           image: registry.gitlab.com/freeyeti/antarctic-map
           imagePullPolicy: IfNotPresent
-          command: ["./docker-entrypoint-test.sh"]
+          command: ["python3", "manage.py", "migrate"]
           envFrom:
             - configMapRef:
                 name: env-config
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: map.settings_docker_build

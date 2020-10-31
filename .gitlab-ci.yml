@@ -25,9 +25,9 @@ test-backend:
     # - docker-compose -f docker-compose.test.yml down
     #
     # In kubernetes (should be sure config maps applied first)
-    - kubectl apply -f deployment.test.yml
-    - kubectl logs -f antarctic-map-test
-    - kubectl delete -f deployment.test.yml
+    - microk8s kubectl apply -f deployment.test.yml
+    - microk8s kubectl logs -f antarctic-map-test
+    - microk8s kubectl delete -f deployment.test.yml
   only:
     - master
   tags:
@@ -47,11 +47,17 @@ analyze:
 migrate:
   stage: migrate
   script:
-    - export PATH="/home/gitlab-runner/.local/bin:$PATH"
-    - export DJANGO_SETTINGS_MODULE="map.settings_docker_build"
-    - pip3 install -U pip
-    - pip3 install --no-cache -r requirements.txt
-    - python3 manage.py migrate
+    # Use system python
+    # - export PATH="/home/gitlab-runner/.local/bin:$PATH"
+    # - export DJANGO_SETTINGS_MODULE="map.settings_docker_build"
+    # - pip3 install -U pip
+    # - pip3 install --no-cache -r requirements.txt
+    # - python3 manage.py migrate
+
+    # In kubernetes (should be sure config maps applied first)
+    - microk8s kubectl apply -f deployment.migrate.yml
+    - microk8s kubectl logs -f antarctic-map-migrate
+    - microk8s kubectl delete -f deployment.migrate.yml
   only:
     - master
   tags:
