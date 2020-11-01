@@ -76,7 +76,7 @@ RUN apt-get update -y \
     && rm -rf ./frontend ./node_modules && yarn cache clean \
     && rm -rf /nodejs /yarnpkg \
     && apt-get purge -y python3-pip wget python3-setuptools libatlas-base-dev python3-dev build-essential \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* 
+    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* 
 
 RUN chmod +x ./docker-entrypoint.sh
 EXPOSE 9000
