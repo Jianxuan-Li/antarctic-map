@@ -33,6 +33,8 @@ spec:
       labels:
         app: antarcticmap
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: antarcticmap
           image: registry.gitlab.com/freeyeti/antarctic-map
