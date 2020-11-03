@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 
 services:
   backend:
@@ -6,5 +6,3 @@ services:
       context: .
       dockerfile: Dockerfile.dev.backend
     image: antarctic-map-backend:latest
-    ports:
-      - "8000:8000"

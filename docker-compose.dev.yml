@@ -1,41 +1,28 @@
-version: '3.5'
-
-networks:
-  antarctic_dev_net:
-    name: antarctic_dev_net
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.30.5.0/24"
-        - subnet: "2001:3984:3989::/64"
+version: "3.5"
 
 services:
+  database:
+    image: postgis/postgis:13-3.0
+    ports:
+      - "0.0.0.0:5432:5432"
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=antarctic
+      - POSTGRES_USER=antarctic
+      - PGDATA=/var/lib/postgresql/data/pgdata
   backend:
     image: antarctic-map-backend:latest
     ports:
-      - "8000:8000"
-    networks:
-      antarctic_dev_net:
-        ipv4_address: 172.30.5.20
-        ipv6_address: 2001:3984:3989::20
+      - "0.0.0.0:8000:8000"
     volumes:
       - .:/code
       - ${GIS_DATA_DIR}:/data
+    depends_on:
+      - database
   frontend:
     image: antarctic-map-frontend:latest
     ports:
-      - "9000:9000"
-    networks:
-      antarctic_dev_net:
-        ipv4_address: 172.30.5.21
-        ipv6_address: 2001:3984:3989::21
+      - "0.0.0.0:9000:9000"
     volumes:
       - .:/code
-  databsae:
-    image: antarctic-postgis:latest
-    ports:
-      - "5436:5432"
-    networks:
-      antarctic_dev_net:
-        ipv4_address: 172.30.5.22
-        ipv6_address: 2001:3984:3989::22

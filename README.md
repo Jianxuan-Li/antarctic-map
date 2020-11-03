@@ -4,7 +4,6 @@
 
 [https://antarctic.freeyeti.net/](https://antarctic.freeyeti.net/)
 
-
 ## Technique
 
 - Backend: Python Django + Django Rest Framework
@@ -16,10 +15,10 @@
 
 ## Development
 
-Prepare: 
+Prepare:
 
-* clone code to your workspace
-* install docker
+- clone code to your workspace
+- install docker
 
 Next:
 
@@ -29,63 +28,49 @@ Next:
 cd ./dev-in-docker
 ./build frontend
 ./build backend
-./build postgis
 ```
 
-2. Start PostGIS database development server
-
-`./dev postgis`
-
-3. Start frontend container
+2. Start frontend container
 
 Run `./dev frontend` in project root.
 
-Then, start webpack dev server in the contianer (hot reload is availabled)
+Then, start webpack dev server in the contianer by `./dev start` (hot reload is availabled)
 
-```bash
-yarn install (only first time start container)
-yarn start
-```
-
-4. Start backend container in other terminal window (or tab) and run `./dev backend`
+3. Start backend container in other terminal window (or tab) and run `./dev backend`
 
 Start django service in the backend container
 
 ```bash
-pip3 install -r requirements.txt (only first time start container)
-python3 manage.py migrate (only first time start container)
-./dev runserver
+./dev run
 ```
-
-Every time you update code from the code repository, don't forget execute `python3 manage.py migrate`
 
 Then access `http://localhost:8000` or `http://127.0.0.1:8000`
 
 Further opreations:
 
-* Recycle container
+- Recycle container
 
 Quit the containers, and run `./dev down` (only Unix/Linux).
 
-* Restart containers after system restarted
+- Restart containers after system restarted
 
 `./dev docker-restart` (only Unix/Linux)
 
 ## Unit test
 
-* Start a test: `coverage run --source='.' manage.py test geodata`
-* coverage report: `coverage report`
+- Start a test: `coverage run --source='.' manage.py test geodata`
+- coverage report: `coverage report`
 
 ## `.env`
 
-* `GEOSERVER_URL=` e.g.: `https://yourdomain.com/geoserver/`
-* `GIS_DATA_DIR=` path of your GIS data, contains `DEM`, `sea_ice`... for detail please check Data section below
-* `ANTARCTIC_MAP_DATABASE_PWD=`
-* `ANTARCTIC_MAP_DATABASE_USER=`
-* `ANTARCTIC_MAP_DATABASE_PORT=`
-* `ANTARCTIC_MAP_DATABASE_HOST=`
-* `ANTARCTIC_MAP_DATABASE_NAME=`
-* `ANTARCTIC_MAP_TEST_DATABASE_NAME=`
+- `GEOSERVER_URL=` e.g.: `https://yourdomain.com/geoserver/`
+- `GIS_DATA_DIR=` path of your GIS data, contains `DEM`, `sea_ice`... for detail please check Data section below
+- `ANTARCTIC_MAP_DATABASE_PWD=`
+- `ANTARCTIC_MAP_DATABASE_USER=`
+- `ANTARCTIC_MAP_DATABASE_PORT=`
+- `ANTARCTIC_MAP_DATABASE_HOST=`
+- `ANTARCTIC_MAP_DATABASE_NAME=`
+- `ANTARCTIC_MAP_TEST_DATABASE_NAME=`
 
 ## Sea ice data ETL
 
@@ -93,8 +78,8 @@ In development environment, use `python3 manage.py sea_ice_etl 20200730` to down
 
 ## Data
 
-* [https://gitlab.com/FreeYeti/antarctic-data](https://gitlab.com/FreeYeti/antarctic-data)
+- [https://gitlab.com/FreeYeti/antarctic-data](https://gitlab.com/FreeYeti/antarctic-data)
 
 ## GeoServer
 
-* [https://gitlab.com/FreeYeti/antarctic-geoserver](https://gitlab.com/FreeYeti/antarctic-geoserver)
+- [https://gitlab.com/FreeYeti/antarctic-geoserver](https://gitlab.com/FreeYeti/antarctic-geoserver)

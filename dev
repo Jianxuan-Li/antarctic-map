@@ -2,42 +2,31 @@
 while [ "$1" != "" ]; do
     case "$1" in
             backend)
+                mkdir -p ./tmp/db
                 docker-compose -f docker-compose.dev.yml run -p 8000:8000 backend bash
                 ;;
-
             frontend)
                 docker-compose -f docker-compose.dev.yml run -p 9000:9000 frontend bash
                 ;;
-
-            tempdb)
-                mkdir -p ./tmp/{etc/postgresql,var/{log/postgresql,lib/postgresql}}
-                ;;
-            
-            postgis)
-                docker-compose -f docker-compose.dev.yml up -d databsae
-                ;;
-
             start)
+                yarn install
                 yarn start
                 ;;
-
-            runserver)
+            run)
+                pip3 install -r requirements.txt
+                python3 manage.py migrate
                 python3 manage.py runserver 0.0.0.0:8000
                 ;;
-
             down)
                 docker-compose -f docker-compose.dev.yml down
                 ;;
-
             docker-restart)
                 docker start $(docker ps -a -q -f status=exited)
                 ;;
-            
             -h | --help)
-                echo $"Usage: $0 {postgis|backend|frontend|down|runserver|start|docker-restart}"
+                echo $"Usage: $0 {backend|frontend|down|run|start|docker-restart}"
                 exit 1
                 ;;
-
     esac
     shift
 done

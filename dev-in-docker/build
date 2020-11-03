@@ -2,10 +2,6 @@
 
 while [ "$1" != "" ]; do
     case "$1" in
-            postgis)
-                docker-compose -f docker-compose.build.postgis.yml build
-                ;;
-
             frontend)
                 docker-compose -f docker-compose.build.frontend.yml build
                 ;;
@@ -15,7 +11,7 @@ while [ "$1" != "" ]; do
                 ;;
             
             -h | --help)
-                echo $"Usage: $0 {postgis|frontend|backend|prod}"
+                echo $"Usage: $0 {frontend|backend}"
                 exit 1
     
     esac

@@ -28,7 +28,7 @@ DATABASES = {
         'NAME': 'antarctic',
         'USER': 'antarctic',
         'PASSWORD': 'antarctic',
-        'HOST': '172.30.5.22',
+        'HOST': 'database',
         'PORT': 5432
     },
 }
