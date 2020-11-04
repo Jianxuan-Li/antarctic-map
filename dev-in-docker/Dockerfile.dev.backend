@@ -16,8 +16,9 @@ ENV LANGUAGE en_US:en
 # Spark
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV SPARK_HOME /spark
-ENV PATH="${PATH}:${SPARK_HOME}/sbin"
-ENV PYSPARK_PYTHON python3
+ENV PATH="$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH"
+ENV PYSPARK_PYTHON /usr/bin/python3
+ENV PYSPARK_DRIVER_PYTHON /usr/bin/python3
 
 # Set DNS
 RUN echo "nameserver 1.1.1.1" >> /etc/resolv.conf

@@ -3,7 +3,6 @@ from random import random
 from django.core.management.base import BaseCommand
 from geodata.utils.spark import get_spark
 
-
 class Command(BaseCommand):
     help = 'Spark Pi'
 

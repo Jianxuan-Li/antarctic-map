@@ -32,8 +32,9 @@ ENV PATH /yarnpkg/yarn-$YARN_VERSION/bin:/nodejs/node-$NODE_VERSION-linux-x64/bi
 # Spark
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV SPARK_HOME /spark
-ENV PATH="$SPARK_HOME/bin::$SPARK_HOME/sbin:$PATH"
+ENV PATH="$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH"
 ENV PYSPARK_PYTHON /usr/bin/python3
+ENV PYSPARK_DRIVER_PYTHON /usr/bin/python3
 
 RUN apt-get update -y \
     && apt-get install -y \
