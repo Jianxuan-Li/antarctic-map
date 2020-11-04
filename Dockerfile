@@ -15,7 +15,6 @@ RUN mkdir $PROJECT_PATH && mkdir /statics && mkdir /data && mkdir /www_data
 WORKDIR $PROJECT_PATH
 COPY . .
 COPY ./site.conf /etc/nginx/sites-enabled/default
-COPY ./sources.list /etc/apt/sources.list
 
 # Set timezone
 ENV TZ Etc/UTC
@@ -40,7 +39,7 @@ RUN apt-get update -y \
     && apt-get install -y \
         #
         # Python and mapnik
-        gnupg2 python3 python3-gdal nginx mapnik-utils python3-mapnik \
+        python3 python3-gdal nginx mapnik-utils python3-mapnik \
         #
         # Python complie
         python3-pip wget python3-setuptools libatlas-base-dev python3-dev build-essential \
