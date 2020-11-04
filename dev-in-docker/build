@@ -1,6 +1,6 @@
 #!/bin/bash
-
-while [ "$1" != "" ]; do
+while [ "$1" != "" ]
+do
     case "$1" in
             frontend)
                 docker-compose -f docker-compose.build.frontend.yml build

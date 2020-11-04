@@ -1,8 +1,9 @@
 #!/bin/bash
-while [ "$1" != "" ]; do
+while [ "$1" != "" ]
+do
     case "$1" in
             backend)
-                mkdir -p ./tmp/db
+                mkdir -p ./tmp/{db,pyenv}
                 docker-compose -f docker-compose.dev.yml run -p 8000:8000 backend bash
                 ;;
             frontend)
@@ -26,7 +27,6 @@ while [ "$1" != "" ]; do
             -h | --help)
                 echo $"Usage: $0 {backend|frontend|down|run|start|docker-restart}"
                 exit 1
-                ;;
     esac
     shift
 done

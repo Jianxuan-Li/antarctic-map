@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ARG PROJECT_PATH=/antarctic
 ARG NODE_VERSION=v12.18.2
