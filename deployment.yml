@@ -3,8 +3,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: antarcticmap
-  labels:
-    run: antarcticmap
 spec:
   selector:
     app: antarcticmap
