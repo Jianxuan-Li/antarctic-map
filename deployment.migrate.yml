@@ -12,7 +12,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: antarctic-map-migrate
-          image: registry.gitlab.com/freeyeti/antarctic-map
+          image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
           imagePullPolicy: Always
           command: ["python3", "manage.py", "migrate"]
           envFrom:

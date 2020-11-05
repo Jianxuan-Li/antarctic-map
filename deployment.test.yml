@@ -12,7 +12,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: antarctic-map-test
-          image: registry.gitlab.com/freeyeti/antarctic-map
+          image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
           imagePullPolicy: Always
           command: ["./docker-entrypoint-test.sh"]
           envFrom:

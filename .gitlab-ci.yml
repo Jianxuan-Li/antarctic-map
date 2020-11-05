@@ -24,9 +24,11 @@ test-backend:
     # - docker-compose -f docker-compose.test.yml run antarctic_map_test
     # - docker-compose -f docker-compose.test.yml down
     #
-    # In kubernetes (should be sure config maps applied first)
+    # In kubernetes
+    - echo $CI_COMMIT_SHORT_SHA
     - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.test.yml
     - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.test.yml
+    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" deployment.test.yml
     - microk8s kubectl apply -f deployment.test.yml
     - microk8s kubectl wait --timeout=600s --for=condition=complete job/antarctic-map-test
     - microk8s kubectl logs -f jobs/antarctic-map-test
@@ -40,7 +42,8 @@ test-backend:
 analyze:
   stage: analyze
   script:
-    - CI=true dive registry.gitlab.com/freeyeti/antarctic-map:latest
+    - echo $CI_COMMIT_SHORT_SHA
+    - CI=true dive registry.gitlab.com/freeyeti/antarctic-map:$CI_COMMIT_SHORT_SHA
   only:
     - master
   tags:
@@ -57,7 +60,9 @@ migrate:
     # - pip3 install --no-cache -r requirements.txt
     # - python3 manage.py migrate
 
-    # In kubernetes (should be sure config maps applied first)
+    # In kubernetes
+    - echo $CI_COMMIT_SHORT_SHA
+    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" deployment.migrate.yml
     - microk8s kubectl apply -f deployment.migrate.yml
     - microk8s kubectl wait --timeout=300s --for=condition=complete jobs/antarctic-map-migrate
     - microk8s kubectl logs -f jobs/antarctic-map-migrate
@@ -75,12 +80,14 @@ deploy_prod:
     # - docker container prune -f
     # - docker image prune -a -f
     #
-    # In kubernetes (should be sure config maps applied first)
+    # In kubernetes
     - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.yml
     - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.yml
+    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" deployment.yml
     - microk8s kubectl apply -f deployment.yml
     - docker container prune -f
     - docker image prune -a -f
+    - echo $CI_COMMIT_SHORT_SHA
   environment:
     name: production
   only:

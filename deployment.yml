@@ -37,7 +37,7 @@ spec:
         - name: regcred
       containers:
         - name: antarcticmap
-          image: registry.gitlab.com/freeyeti/antarctic-map
+          image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
           imagePullPolicy: Always
           ports:
             - containerPort: 9000
