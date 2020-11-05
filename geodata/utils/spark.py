@@ -16,6 +16,7 @@ def get_spark(app_name):
         spark_conf.set("spark.kubernetes.container.image", settings.K8S_SPARK_IMAGE)
         spark_conf.set("spark.kubernetes.namespace", settings.K8S_SPARK_NAMESPACE)
         spark_conf.set("spark.kubernetes.allocation.batch.size", settings.K8S_SPARK_BATCH_SIZE)
+        spark_conf.set("spark.kubernetes.executor.limit.cores", settings.K8S_SPARK_LIMIT_CORES)
         
         spark_session = SparkSession.builder.config(conf=spark_conf).getOrCreate()
         return spark_session
