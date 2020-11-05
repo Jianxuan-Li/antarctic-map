@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
       args:
         - GEOSERVER_URL_VAR=${GEOSERVER_URL}
-    image: registry.gitlab.com/freeyeti/antarctic-map:latest
+    image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
     deploy:
       replicas: 1
     ports:
