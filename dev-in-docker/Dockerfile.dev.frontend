@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ARG NODE_VERSION=v12.18.2
 ARG YARN_VERSION=v1.22.5
@@ -15,8 +15,7 @@ ENV PATH /yarnpkg/yarn-$YARN_VERSION/bin:/nodejs/node-$NODE_VERSION-linux-x64/bi
 
 RUN apt-get update -y \
     && apt-get install -y \
-        gnupg2 build-essential \
-        wget \
+        build-essential wget \
     && wget -q -O node.tar.xz https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.xz \
     && wget -q -O yarn.tar.gz https://github.com/yarnpkg/yarn/releases/download/$YARN_VERSION/yarn-$YARN_VERSION.tar.gz \
     && mkdir -p /nodejs && mkdir -p /yarnpkg \

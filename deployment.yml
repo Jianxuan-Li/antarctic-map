@@ -13,6 +13,14 @@ spec:
       targetPort: 9000
       nodePort: 30053
       name: http
+    - name: driver-rpc-port
+      protocol: TCP
+      port: 7077
+      targetPort: 7077
+    - name: blockmanager
+      protocol: TCP
+      port: 7078
+      targetPort: 7078
 
 ---
 apiVersion: apps/v1
@@ -39,6 +47,8 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 9000
+            - containerPort: 7078
+            - containerPort: 7079
           envFrom:
             - configMapRef:
                 name: env-config

@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://gitlab.com/FreeYeti/antarctic-map/issues"
   },
-  "homepage": "https://gitlab.com/FreeYeti/antarctic-map#readme",
+  "homepage": "https://gitlab.com/FreeYeti/antarctic-map",
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
     "mobx": "^5.15.4",
@@ -31,17 +31,16 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.4",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-decorators": "^7.10.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
-    "@babel/polyfill": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-react": "^7.10.4",
+    "@babel/core": "7.12.3",
+    "@babel/plugin-proposal-class-properties": "7.12.1",
+    "@babel/plugin-proposal-decorators": "7.12.1",
+    "@babel/plugin-proposal-object-rest-spread": "7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "7.12.1",
+    "@babel/polyfill": "7.12.1",
+    "@babel/preset-env": "7.12.1",
+    "@babel/preset-react": "7.12.5",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-import": "^1.13.0",
+    "babel-loader": "8.2.1",
     "bundle-loader": "^0.5.6",
     "css-loader": "^3.6.0",
     "dotenv": "^8.2.0",

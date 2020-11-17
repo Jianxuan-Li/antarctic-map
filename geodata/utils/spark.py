@@ -15,14 +15,17 @@ def get_spark(app_name):
         spark_conf.setAppName(app_name)
         spark_conf.set("spark.kubernetes.container.image", settings.K8S_SPARK_IMAGE)
         spark_conf.set("spark.kubernetes.namespace", settings.K8S_SPARK_NAMESPACE)
+        spark_conf.set("spark.driver.bindAddress", "0.0.0.0")
         spark_conf.set("spark.driver.host", "spark-driver")
         spark_conf.set("spark.driver.port", 7077)
-        spark_conf.set("spark.kubernetes.driver.pod.name", "spark-driver-pod")
+        spark_conf.set("spark.driver.blockManager.port", 7079)
+        spark_conf.set("spark.kubernetes.driver.pod.name", "spark-driver")
         spark_conf.set("spark.kubernetes.allocation.batch.size", 5)
         spark_conf.set("spark.kubernetes.driver.request.cores", 0.1)
         spark_conf.set("spark.kubernetes.driver.limit.cores", 0.5)
         spark_conf.set("spark.kubernetes.executor.request.cores", 0.1)
         spark_conf.set("spark.kubernetes.executor.limit.cores", 0.5)
+        spark_conf.set("spark.port.maxRetries", 15)
         
         spark_session = SparkSession.builder.config(conf=spark_conf).getOrCreate()
         return spark_session

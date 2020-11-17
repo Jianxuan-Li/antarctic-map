@@ -1,15 +1,11 @@
-import Cookie from 'js-cookie'
-import style from './index.scss';
+import style from "./index.scss";
 
-class Index{
-    constructor() {
-        console.log('Email: yeti@freeyeti.net')
-    }
-
-    
+class Index {
+  constructor() {
+    console.log("Email: yeti@freeyeti.net");
+  }
 }
 
-(function() {
-    const index = new Index()
-    
+(function () {
+  const index = new Index();
 })();
