@@ -15,30 +15,24 @@
 
 ## Development
 
-Prepare:
+### Prepare:
 
 - clone code to your workspace
 - install docker
 
-Next:
+### Developing:
 
-1. Build images for development
-
-```bash
-cd ./dev-in-docker
-./build frontend
-./build backend
-```
-
-2. Start frontend container
+1. Start frontend container
 
 Run `./dev frontend` in project root.
 
 Then, start webpack dev server in the contianer by `./dev start` (hot reload is availabled)
 
-3. Start backend container in other terminal window (or tab) and run `./dev backend`
+2. Start backend container in other terminal window (or tab) with:
 
-Start django service in the backend container
+`./dev backend`
+
+And then start django service in the backend container
 
 ```bash
 ./dev run
@@ -46,17 +40,19 @@ Start django service in the backend container
 
 Then access `http://localhost:8000` or `http://127.0.0.1:8000`
 
-Further opreations:
+### Further:
 
-- Recycle container
+#### Recycle container
 
 Quit the containers, and run `./dev down` (only Unix/Linux).
 
-- Restart containers after system restarted
+#### Restart containers after system restarted
 
 `./dev docker-restart` (only Unix/Linux)
 
 ## Unit test
+
+(Run in backend container)
 
 - Start a test: `coverage run --source='.' manage.py test geodata`
 - coverage report: `coverage report`
@@ -83,3 +79,7 @@ In development environment, use `python3 manage.py sea_ice_etl 20200730` to down
 ## GeoServer
 
 - [https://gitlab.com/FreeYeti/antarctic-geoserver](https://gitlab.com/FreeYeti/antarctic-geoserver)
+
+## Development environment
+
+- [https://gitlab.com/FreeYeti/dev-in-docker](https://gitlab.com/FreeYeti/dev-in-docker)

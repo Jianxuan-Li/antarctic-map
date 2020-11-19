@@ -12,7 +12,9 @@ services:
       - POSTGRES_USER=antarctic
       - PGDATA=/var/lib/postgresql/data/pgdata
   backend:
-    image: antarctic-map-backend:latest
+    image: freeyeti/dev-in-docker:python3-pyspark
+    environment:
+      - DJANGO_SETTINGS_MODULE=map.settings_dev
     ports:
       - "0.0.0.0:8000:8000"
     volumes:
@@ -21,7 +23,7 @@ services:
     depends_on:
       - database
   frontend:
-    image: antarctic-map-frontend:latest
+    image: freeyeti/dev-in-docker:node-yarn
     ports:
       - "0.0.0.0:9000:9000"
     volumes:
