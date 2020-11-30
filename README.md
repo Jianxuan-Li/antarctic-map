@@ -11,7 +11,7 @@
 - Map: Geoserver + Openlayers + Mapnik
 - Data processing: GDAL + NumPy
 - Data infrastructure: Apache Spark + PostGIS
-- DevOps: Docker + Docker Compose + Gitlab CI/CD
+- DevOps: Docker + Kubernetes (Microk8s) + Gitlab CI/CD
 
 ## Development
 
@@ -72,11 +72,7 @@ Quit the containers, and run `./dev down` (only Unix/Linux).
 
 In development environment, use `python3 manage.py sea_ice_etl 20200730` to download data by day
 
-## Data
-
-- [https://gitlab.com/FreeYeti/antarctic-data](https://gitlab.com/FreeYeti/antarctic-data)
-
-## GeoServer
+## GeoServer and Data
 
 - [https://gitlab.com/FreeYeti/antarctic-geoserver](https://gitlab.com/FreeYeti/antarctic-geoserver)
 
