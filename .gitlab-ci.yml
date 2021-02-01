@@ -22,11 +22,6 @@ build:
 test-backend:
   stage: test
   script:
-    # With docker-compose
-    # - docker-compose -f docker-compose.test.yml run antarctic_map_test
-    # - docker-compose -f docker-compose.test.yml down
-    #
-    # In kubernetes
     - echo $CI_COMMIT_SHORT_SHA
     - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.test.yml
     - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.test.yml

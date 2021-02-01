@@ -6,27 +6,5 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - GEOSERVER_URL_VAR=${GEOSERVER_URL}
+        - GEOSERVER_URL_VAR=https://geo.freeyeti.net/geoserver/
     image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
-    deploy:
-      replicas: 1
-    ports:
-      - "9001:9000"
-    env_file:
-      - /opt/env_files/antarctic.env
-    networks:
-      antarctic_map_net:
-        ipv4_address: 172.50.5.10
-        ipv6_address: 2001:3984:4001::10
-    volumes:
-      - ${ANTARCTIC_MAP_GIS_DATA}:/data
-      - ${ANTARCTIC_MAP_WWW_DATA}:/www_data
-
-networks:
-  antarctic_map_net:
-    name: antarctic_map_net
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.50.5.0/24"
-        - subnet: "2001:3984:4001::/64"
