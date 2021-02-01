@@ -6,12 +6,10 @@ metadata:
 spec:
   selector:
     app: antarcticmap
-  type: NodePort
   ports:
     - protocol: TCP
       port: 9000
       targetPort: 9000
-      nodePort: 30053
       name: http
     - name: driver-rpc-port
       protocol: TCP
@@ -40,7 +38,7 @@ spec:
         app: antarcticmap
     spec:
       imagePullSecrets:
-        - name: regcred
+        - name: yeti2-pull-secret
       containers:
         - name: antarcticmap
           image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
@@ -60,6 +58,8 @@ spec:
               mountPath: /data
             - name: www-data
               mountPath: /www_data
+            - name: download-data
+              mountPath: /data/antarctic
       volumes:
         - name: gis-data
           hostPath:
@@ -67,3 +67,7 @@ spec:
         - name: www-data
           hostPath:
             path: __ANTARCTIC_MAP_WWW_DATA__
+        - name: download-data
+          hostPath:
+            path: __ANTARCTIC_MAP_DOWNLOAD_DATA__
+
