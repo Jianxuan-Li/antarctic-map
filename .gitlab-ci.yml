@@ -82,6 +82,7 @@ deploy_prod:
     - kubectl apply -f ingress.yaml
     - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.yml
     - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.yml
+    - sed -i "s@__ANTARCTIC_MAP_DOWNLOAD_DATA__@$ANTARCTIC_MAP_DOWNLOAD_DATA@g" deployment.yml
     - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" deployment.yml
     - kubectl apply -f deployment.yml
     - docker container prune -f
