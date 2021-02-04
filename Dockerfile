@@ -64,7 +64,6 @@ RUN mkdir -p /{www_data,data/{antarctic,sea_ice}}
 
 COPY --from=backend ${PROJECT_PATH}/dist/manage ${PROJECT_PATH}
 COPY --from=backend ${PROJECT_PATH}/dist/app/app ${PROJECT_PATH}/app
-COPY --from=backend ${PROJECT_PATH}/dist/report/report ${PROJECT_PATH}/report
 COPY --from=backend ${PROJECT_PATH}/webpack-stats-production.json ${PROJECT_PATH}/webpack-stats-production.json
 
 WORKDIR ${PROJECT_PATH}
