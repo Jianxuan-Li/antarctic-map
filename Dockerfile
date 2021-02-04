@@ -60,7 +60,7 @@ ENV GEOSERVER_URL $GEOSERVER_URL_VAR
 
 ENV DJANGO_SETTINGS_MODULE="map.settings"
 
-RUN mkdir -p /www_data /data/antarctic
+RUN mkdir -p /{www_data,data/{antarctic,sea_ice}}
 
 COPY --from=backend ${PROJECT_PATH}/dist/manage ${PROJECT_PATH}
 COPY --from=backend ${PROJECT_PATH}/dist/app/app ${PROJECT_PATH}/app

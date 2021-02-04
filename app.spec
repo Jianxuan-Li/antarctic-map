@@ -12,6 +12,7 @@ added_files = [
   (os.path.join(local_lib, 'coverage'), 'coverage'),
   (os.path.join(local_lib, 'uvicorn'), 'uvicorn'),
   (os.path.join(local_lib, 'rasterio'), 'rasterio'),
+  (os.path.join(local_lib, 'certifi'), 'certifi'),
   (os.path.join(local_lib, 'h11'), 'h11'),
   ('geodata', 'geodata'),
   ('map', 'map'),
@@ -22,8 +23,9 @@ hide_imports = [
   "rest_framework",
   "webpack_loader",
   "coverage",
-  "rasterio",
   "uvicorn",
+  "rasterio",
+  "certifi",
   "h11",
   "GDAL",
 

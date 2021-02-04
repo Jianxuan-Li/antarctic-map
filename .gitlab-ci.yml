@@ -23,7 +23,7 @@ build:
     - build
     - shell
 
-test-backend:
+test-django:
   stage: test
   script:
     - echo $CI_COMMIT_SHORT_SHA
