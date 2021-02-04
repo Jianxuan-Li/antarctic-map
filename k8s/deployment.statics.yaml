@@ -20,6 +20,10 @@ spec:
         - name: antarcticmap-statics
           image: __IMAGE_STATICS__:__IMAGE_TAG__
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: "0.1"
           ports:
             - containerPort: 80
           volumeMounts:

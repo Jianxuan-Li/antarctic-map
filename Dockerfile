@@ -27,7 +27,8 @@ COPY --from=builder ${PROJECT_PATH} ${PROJECT_PATH}
 
 RUN pipenv lock -r > requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
-RUN DJANGO_SETTINGS_MODULE="map.settings_docker_build" python3 manage.py collectstatic
+ENV DJANGO_SETTINGS_MODULE="map.settings_docker_build" 
+RUN python3 manage.py collectstatic
 RUN pyinstaller app.spec
 
 # for Statics deployment and service
@@ -57,14 +58,14 @@ ARG GEOSERVER_URL_VAR
 
 ENV GEOSERVER_URL $GEOSERVER_URL_VAR
 
-ENV DJANGO_SETTINGS_MODULE "map.settings"
+ENV DJANGO_SETTINGS_MODULE="map.settings"
 
 RUN mkdir -p /www_data /data/antarctic
 
-COPY --from=backend /website/dist/manage ${PROJECT_PATH}
-COPY --from=backend /website/dist/app/app ${PROJECT_PATH}/app
-COPY --from=backend /website/dist/report/report ${PROJECT_PATH}/report
-COPY --from=backend /website/webpack-stats-production.json ${PROJECT_PATH}/webpack-stats-production.json
+COPY --from=backend ${PROJECT_PATH}/dist/manage ${PROJECT_PATH}
+COPY --from=backend ${PROJECT_PATH}/dist/app/app ${PROJECT_PATH}/app
+COPY --from=backend ${PROJECT_PATH}/dist/report/report ${PROJECT_PATH}/report
+COPY --from=backend ${PROJECT_PATH}/webpack-stats-production.json ${PROJECT_PATH}/webpack-stats-production.json
 
 WORKDIR ${PROJECT_PATH}
 
