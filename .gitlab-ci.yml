@@ -27,9 +27,7 @@ test-django:
   stage: test
   script:
     - echo $CI_COMMIT_SHORT_SHA
-    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/test.django.yaml
-    - sed -i "s@__IMAGE_DJANGO__@$IMAGE_DJANGO@g" k8s/test.django.yaml
-    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/test.django.yaml
+    - sed -i "s@__CODE_PATH__@$(pwd)@g" k8s/test.django.yaml
     - kubectl delete -f k8s/test.django.yaml || echo "Django test job is not exists"
     - kubectl apply -f k8s/test.django.yaml
     - kubectl wait --timeout=300s --for=condition=complete job/antarctic-map-django-test
@@ -75,6 +73,8 @@ migrate:
   stage: migrate
   script:
     - echo $CI_COMMIT_SHORT_SHA
+    - echo $IMAGE_DJANGO:$CI_COMMIT_SHORT_SHA
+    - echo $IMAGE_STATICS:$CI_COMMIT_SHORT_SHA
     - sed -i "s@__IMAGE_DJANGO__@$IMAGE_DJANGO@g" k8s/migrate.yaml
     - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/migrate.yaml
     - kubectl delete -f k8s/migrate.yaml || echo "Database migration job is not exists"
@@ -91,13 +91,15 @@ migrate:
 deploy_prod:
   stage: deploy
   script:
+    - echo $IMAGE_DJANGO:$CI_COMMIT_SHORT_SHA
+    - echo $IMAGE_STATICS:$CI_COMMIT_SHORT_SHA
     # Issuer
     - kubectl apply -f clusterissuer.yaml
 
     # Backend
     - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/deployment.django.yaml
     - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" k8s/deployment.django.yaml
-    - sed -i "s@__IMAGE_DJANGO__@$IMAGE_DJANGO@g" k8s/migrate.yaml
+    - sed -i "s@__IMAGE_DJANGO__@$IMAGE_DJANGO@g" k8s/deployment.django.yaml
     - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/deployment.django.yaml
     - kubectl apply -f k8s/deployment.django.yaml
     - kubectl apply -f k8s/service.django.yaml

@@ -12,9 +12,9 @@ spec:
       restartPolicy: Never
       containers:
         - name: antarctic-map-django-test
-          image: __IMAGE_DJANGO__:__IMAGE_TAG__
+          image: freeyeti/dev-in-docker:python3-gis
           imagePullPolicy: IfNotPresent
-          command: ["./report"]
+          command: ["./docker-entrypoint-test.sh"]
           envFrom:
             - configMapRef:
                 name: env-config
@@ -22,9 +22,9 @@ spec:
             - name: DJANGO_SETTINGS_MODULE
               value: map.settings_docker_build
           volumeMounts:
-            - name: gis-data
-              mountPath: /data
+            - name: code
+              mountPath: /code
       volumes:
-        - name: gis-data
+        - name: code
           hostPath:
-            path: __ANTARCTIC_MAP_GIS_DATA__
+            path: __CODE_PATH__
