@@ -30,6 +30,7 @@ test-django:
   script:
     - echo $CI_COMMIT_SHORT_SHA
     - echo $IMAGE_DJANGO:$CI_COMMIT_SHORT_SHA
+    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/test.django.yaml
     - sed -i "s@__CODE_PATH__@$(pwd)@g" k8s/test.django.yaml
     - kubectl delete -f k8s/test.django.yaml || echo "Django test job is not exists"
     - kubectl apply -f k8s/test.django.yaml
@@ -47,7 +48,6 @@ test-nginx:
   script:
     - echo $CI_COMMIT_SHORT_SHA
     - echo $IMAGE_STATICS:$CI_COMMIT_SHORT_SHA
-    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/test.nginx.yaml
     - sed -i "s@__IMAGE_STATICS__@$IMAGE_STATICS@g" k8s/test.nginx.yaml
     - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/test.nginx.yaml
     - kubectl delete -f k8s/test.nginx.yaml || echo "Nginx test job is not exists"
