@@ -24,7 +24,12 @@ spec:
           volumeMounts:
             - name: code
               mountPath: /code
+            - name: gis-data
+              mountPath: /data
       volumes:
         - name: code
           hostPath:
             path: __CODE_PATH__
+        - name: gis-data
+          hostPath:
+            path: __ANTARCTIC_MAP_GIS_DATA__

@@ -47,6 +47,7 @@ test-nginx:
   script:
     - echo $CI_COMMIT_SHORT_SHA
     - echo $IMAGE_STATICS:$CI_COMMIT_SHORT_SHA
+    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/test.nginx.yaml
     - sed -i "s@__IMAGE_STATICS__@$IMAGE_STATICS@g" k8s/test.nginx.yaml
     - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/test.nginx.yaml
     - kubectl delete -f k8s/test.nginx.yaml || echo "Nginx test job is not exists"
