@@ -30,7 +30,7 @@ spec:
             - name: gis-data
               mountPath: /data
             - name: download-data
-              mountPath: /data/antarctic
+              mountPath: /data/download
       volumes:
         - name: gis-data
           hostPath:
