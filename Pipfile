@@ -15,10 +15,7 @@ python-dateutil = "*"
 numpy = "*"
 rasterio = "*"
 coverage = "*"
-pyspark = "*"
-django = "*"
-markdown = "*"
-gdal = "==3.0.4"
+GDAL = "==3.0.4"
 
 [dev-packages]
 
