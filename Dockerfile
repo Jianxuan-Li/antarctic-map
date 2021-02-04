@@ -18,7 +18,7 @@ RUN yarn install && yarn build
 RUN rm -rf ./frontend ./.yarn
 
 # Backend Builder
-FROM registry.cn-beijing.aliyuncs.com/westdc/dev:pyinstaller AS backend
+FROM freeyeti/dev-in-docker:pyinstaller AS backend
 
 ARG PROJECT_PATH
 
@@ -42,7 +42,7 @@ CMD ["nginx", "-g", "daemon off;"]
 EXPOSE 80
 
 # for Django deployment and service
-FROM registry.cn-beijing.aliyuncs.com/westdc/dev:ubuntu20.04-gdal AS django
+FROM freeyeti/dev-in-docker:ubuntu20.04-gdal AS django
 
 # Set timezone
 ENV TZ Etc/UTC
