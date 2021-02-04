@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: antarctic-map-nginx-test
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 300
+  template:
+    spec:
+      imagePullSecrets:
+        - name: yeti2-pull-secret
+      restartPolicy: Never
+      containers:
+        - name: antarctic-map-nginx-test
+          image: __IMAGE_STATICS__:__IMAGE_TAG__
+          imagePullPolicy: Always
+          command: ["nginx", "-t"]

@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: antarctic-map-migrate
 spec:
-  backoffLimit: 4
+  backoffLimit: 0
   activeDeadlineSeconds: 300
   template:
     spec:
@@ -12,9 +12,9 @@ spec:
       restartPolicy: Never
       containers:
         - name: antarctic-map-migrate
-          image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
+          image: __IMAGE_DJANGO__:__IMAGE_TAG__
           imagePullPolicy: Always
-          command: ["python3", "manage.py", "migrate"]
+          command: ["./manage", "migrate"]
           envFrom:
             - configMapRef:
                 name: env-config

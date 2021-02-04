@@ -14,7 +14,7 @@ import { ImageLayerUtil } from '@util/map/layers'
 let ImageLayerCreator = new ImageLayerUtil(false, false, 'EPSG:3031')
 
 const extent = ['-3961771.235', '-3961770.607', '4362963.182', '3961770.565']
-const imageUrlPrefix = PRODUCTION ? '/sea_ice/' : '/static/sea_ice/'
+const imageUrlPrefix = PRODUCTION ? '/static/sea_ice/' : '/static/sea_ice/'
 
 class Actions extends BaseActions {
     @action

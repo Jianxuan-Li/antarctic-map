@@ -14,15 +14,27 @@ do
                 yarn start
                 ;;
             run)
-                pip3 install -r requirements.txt
-                python3 manage.py migrate
-                python3 manage.py runserver 0.0.0.0:8000
+                pipenv run python3 manage.py migrate
+                pipenv run python3 manage.py runserver 0.0.0.0:8000
                 ;;
             down)
                 docker-compose -f docker-compose.dev.yml down
                 ;;
             docker-restart)
                 docker start $(docker ps -a -q -f status=exited)
+                ;;
+            makemigrations)
+                pipenv run python3 manage.py makemigrations
+                ;;
+            migrate)
+                pipenv run python3 manage.py migrate
+                ;;
+            test)
+                pipenv run python3 manage.py test
+                ;;
+            coverage)
+                pipenv run coverage run --source='.' manage.py test
+                pipenv run coverage report
                 ;;
             -h | --help)
                 echo $"Usage: $0 {backend|frontend|down|run|start|docker-restart}"

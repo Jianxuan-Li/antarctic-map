@@ -201,10 +201,3 @@ LOGGING = {
 }
 
 EPSG_3031_DEF = "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs"
-
-SPARK_MASTER = os.environ.get('YETI_SPARK_MASTER')
-K8S_SPARK = os.environ.get('YETI_K8S_SPARK')
-K8S_SPARK_BATCH_SIZE = os.environ.get('K8S_SPARK_BATCH_SIZE')
-K8S_SPARK_IMAGE = os.environ.get('K8S_SPARK_IMAGE')
-K8S_SPARK_NAMESPACE = os.environ.get('K8S_SPARK_NAMESPACE')
-K8S_SPARK_LIMIT_CORES = os.environ.get('K8S_SPARK_LIMIT_CORES')

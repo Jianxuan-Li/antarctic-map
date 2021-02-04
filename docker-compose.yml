@@ -1,10 +1,19 @@
 version: "3.5"
 
 services:
-  antarctic_map:
+  antarctic_map_static:
     build:
       context: .
       dockerfile: Dockerfile
       args:
         - GEOSERVER_URL_VAR=https://geo.freeyeti.net/geoserver/
-    image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
+      target: nginx
+    image: __IMAGE_STATICS__:__IMAGE_TAG__
+  antarctic_map_django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GEOSERVER_URL_VAR=https://geo.freeyeti.net/geoserver/
+      target: django
+    image: __IMAGE_DJANGO__:__IMAGE_TAG__

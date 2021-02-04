@@ -1,4 +1,3 @@
-// https://www.maizhiying.me/posts/2017/03/01/webpack-babel-ie8-support.html
 const fs = require('fs')
 const path = require('path')
 const moment = require('moment')
@@ -28,17 +27,15 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          // 将第三方模块提取出来
           test: /[\\/]node_modules[\\/](react|react-dom|isomorphic-fetch|mobx|mobx-react)[\\/]/,
           chunks: 'initial',
           name: 'vendor',
-          priority: 10, // 优先级
+          priority: 10,
           enforce: true
         }
       }
     },
     minimizer: [
-      // 压缩
       new TerserPlugin({
         parallel: true,
         terserOptions: {
@@ -143,12 +140,9 @@ module.exports = {
     ])
   },
   plugins: [
-    new WebpackCleanupPlugin({ // 清除上次 build 残留文件
+    new WebpackCleanupPlugin({
       exclude: []
     }),
-    // new webpack.DllReferencePlugin({ // 指定打包时遇到 manifest json中的库时，使用 vendor 文件，而不加载库文件
-    //   manifest: require('../tmp/manifest.json')
-    // }),
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(true),
       API_SERVER_PLACEHOLDER: JSON.stringify(''),
@@ -161,13 +155,6 @@ module.exports = {
       chunkFilename: '[name].[hash].css',
       filename: '[name].css'
     }),
-    // 根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id，使得ids可预测，降低文件大小
-    // new webpack.optimize.OccurrenceOrderPlugin(),
-    // new webpack.BannerPlugin(`
-    // Production build ${moment().format('YYYY-MM-DD HH:mm:ss')}
-    // Copy right by www.freeyeti.net
-    // FreeYeti <yeti@freeyeti.net>
-    // `),
     new BundleTracker({ filename: './webpack-stats-production.json' })
   ],
   stats: { children: false },

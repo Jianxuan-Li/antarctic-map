@@ -1,20 +1,20 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: antarctic-map-test
+  name: antarctic-map-django-test
 spec:
-  backoffLimit: 4
-  activeDeadlineSeconds: 600
+  backoffLimit: 0
+  activeDeadlineSeconds: 300
   template:
     spec:
       imagePullSecrets:
-        - name: regcred
+        - name: yeti2-pull-secret
       restartPolicy: Never
       containers:
-        - name: antarctic-map-test
-          image: registry.gitlab.com/freeyeti/antarctic-map:__IMAGE_TAG__
-          imagePullPolicy: Always
-          command: ["./docker-entrypoint-test.sh"]
+        - name: antarctic-map-django-test
+          image: __IMAGE_DJANGO__:__IMAGE_TAG__
+          imagePullPolicy: IfNotPresent
+          command: ["./report"]
           envFrom:
             - configMapRef:
                 name: env-config
@@ -24,12 +24,7 @@ spec:
           volumeMounts:
             - name: gis-data
               mountPath: /data
-            - name: www-data
-              mountPath: /www_data
       volumes:
         - name: gis-data
           hostPath:
             path: __ANTARCTIC_MAP_GIS_DATA__
-        - name: www-data
-          hostPath:
-            path: __ANTARCTIC_MAP_WWW_DATA__

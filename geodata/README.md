@@ -31,7 +31,7 @@
 Objective: mean, maximum, minimum
 
 1. masks the `DEM` data to specifically extent 
-2. analyze by `numpy`, `GDAL` or `Apache Spark`
+2. analyze by `numpy`, `GDAL`
 
 ### Sea ice
 

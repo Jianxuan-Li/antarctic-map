@@ -176,3 +176,5 @@ webpack-stats-*.json
 *.db
 
 test
+
+.venv

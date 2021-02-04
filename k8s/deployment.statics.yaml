@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: antarcticmap-statics
+  labels:
+    app: antarcticmap-statics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: antarcticmap-statics
+  template:
+    metadata:
+      labels:
+        app: antarcticmap-statics
+    spec:
+      imagePullSecrets:
+        - name: yeti2-pull-secret
+      containers:
+        - name: antarcticmap-statics
+          image: __IMAGE_STATICS__:__IMAGE_TAG__
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: gis-data
+              mountPath: /data
+            - name: download-data
+              mountPath: /data/antarctic
+      volumes:
+        - name: gis-data
+          hostPath:
+            path: __ANTARCTIC_MAP_GIS_DATA__
+        - name: download-data
+          hostPath:
+            path: __ANTARCTIC_MAP_DOWNLOAD_DATA__

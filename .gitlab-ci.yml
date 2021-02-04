@@ -11,8 +11,12 @@ build:
   script:
     - echo $CI_COMMIT_SHORT_SHA
     - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" docker-compose.yml
-    - docker-compose build --no-cache
-    - docker push registry.gitlab.com/freeyeti/antarctic-map:$CI_COMMIT_SHORT_SHA
+    - sed -i "s@__IMAGE_STATICS__@$IMAGE_STATICS@g" docker-compose.yml
+    - sed -i "s@__IMAGE_DJANGO__@$IMAGE_DJANGO@g" docker-compose.yml
+    - docker-compose build --no-cache antarctic_map_static
+    - docker-compose build antarctic_map_django
+    - docker push $IMAGE_STATICS:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_DJANGO:$CI_COMMIT_SHORT_SHA
   only:
     - master
   tags:
@@ -23,24 +27,44 @@ test-backend:
   stage: test
   script:
     - echo $CI_COMMIT_SHORT_SHA
-    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.test.yml
-    - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.test.yml
-    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" deployment.test.yml
-    - kubectl apply -f deployment.test.yml
-    - kubectl wait --timeout=600s --for=condition=complete job/antarctic-map-test
-    - kubectl logs -f jobs/antarctic-map-test
-    - kubectl delete -f deployment.test.yml
+    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/test.django.yaml
+    - sed -i "s@__IMAGE_DJANGO__@$IMAGE_DJANGO@g" k8s/test.django.yaml
+    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/test.django.yaml
+    - kubectl delete -f k8s/test.django.yaml || echo "Django test job is not exists"
+    - kubectl apply -f k8s/test.django.yaml
+    - kubectl wait --timeout=600s --for=condition=complete job/antarctic-map-django-test
+    - kubectl logs -f jobs/antarctic-map-django-test
+    - kubectl delete -f k8s/test.django.yaml
   only:
     - master
   tags:
     - test
     - shell
 
+test-nginx:
+  stage: test
+  script:
+    - echo $CI_COMMIT_SHORT_SHA 
+    - sed -i "s@__IMAGE_STATICS__@$IMAGE_STATICS@g" k8s/test.nginx.yaml
+    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/test.nginx.yaml
+    - kubectl delete -f k8s/test.nginx.yaml || echo "Nginx test job is not exists"
+    - kubectl apply -f k8s/test.nginx.yaml
+    - kubectl wait --timeout=600s --for=condition=complete job/antarctic-map-nginx-test
+    - kubectl logs -f jobs/antarctic-map-nginx-test
+    - kubectl delete -f k8s/test.nginx.yaml
+  only:
+    - master
+  tags:
+    - test
+    - shell
+
+
 analyze:
   stage: analyze
   script:
     - echo $CI_COMMIT_SHORT_SHA
-    - CI=true dive registry.gitlab.com/freeyeti/antarctic-map:$CI_COMMIT_SHORT_SHA
+    - CI=true dive $IMAGE_DJANGO:$CI_COMMIT_SHORT_SHA
+    - CI=true dive $IMAGE_STATICS:$CI_COMMIT_SHORT_SHA
   only:
     - master
   tags:
@@ -50,20 +74,14 @@ analyze:
 migrate:
   stage: migrate
   script:
-    # Use system python
-    # - export PATH="/home/gitlab-runner/.local/bin:$PATH"
-    # - export DJANGO_SETTINGS_MODULE="map.settings_docker_build"
-    # - pip3 install -U pip
-    # - pip3 install --no-cache -r requirements.txt
-    # - python3 manage.py migrate
-
-    # In kubernetes
     - echo $CI_COMMIT_SHORT_SHA
-    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" deployment.migrate.yml
-    - kubectl apply -f deployment.migrate.yml
+    - sed -i "s@__IMAGE_DJANGO__@$IMAGE_DJANGO@g" k8s/migrate.yaml
+    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/migrate.yaml
+    - kubectl delete -f k8s/migrate.yaml || echo "Database migration job is not exists"
+    - kubectl apply -f k8s/migrate.yaml
     - kubectl wait --timeout=300s --for=condition=complete jobs/antarctic-map-migrate
     - kubectl logs -f jobs/antarctic-map-migrate
-    - kubectl delete -f deployment.migrate.yml
+    - kubectl delete -f k8s/migrate.yaml
   only:
     - master
   tags:
@@ -73,18 +91,29 @@ migrate:
 deploy_prod:
   stage: deploy
   script:
-    # - docker-compose up --force-recreate -d
-    # - docker container prune -f
-    # - docker image prune -a -f
-    #
-    # In kubernetes
+    # Issuer
     - kubectl apply -f clusterissuer.yaml
+
+    # Backend
+    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/deployment.django.yaml
+    - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" k8s/deployment.django.yaml
+    - sed -i "s@__IMAGE_DJANGO__@$IMAGE_DJANGO@g" k8s/migrate.yaml
+    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/deployment.django.yaml
+    - kubectl apply -f k8s/deployment.django.yaml
+    - kubectl apply -f k8s/service.django.yaml
+
+    # Statics
+    - sed -i "s@__ANTARCTIC_MAP_DOWNLOAD_DATA__@$ANTARCTIC_MAP_DOWNLOAD_DATA@g" k8s/deployment.statics.yaml
+    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/deployment.statics.yaml
+    - sed -i "s@__IMAGE_STATICS__@$IMAGE_STATICS@g" k8s/deployment.statics.yaml
+    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/deployment.statics.yaml
+    - kubectl apply -f k8s/deployment.statics.yaml
+    - kubectl apply -f k8s/service.statics.yaml
+
+    # Ingress
     - kubectl apply -f ingress.yaml
-    - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" deployment.yml
-    - sed -i "s@__ANTARCTIC_MAP_WWW_DATA__@$ANTARCTIC_MAP_WWW_DATA@g" deployment.yml
-    - sed -i "s@__ANTARCTIC_MAP_DOWNLOAD_DATA__@$ANTARCTIC_MAP_DOWNLOAD_DATA@g" deployment.yml
-    - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" deployment.yml
-    - kubectl apply -f deployment.yml
+
+    # Clean
     - docker container prune -f
     - docker image prune -a -f
     - echo $CI_COMMIT_SHORT_SHA

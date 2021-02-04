@@ -21,6 +21,13 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: antarcticmap
+                name: antarcticmap-django
                 port:
-                  number: 9000
+                  number: 8000
+          - path: /static
+            pathType: Prefix
+            backend:
+              service:
+                name: antarcticmap-statics
+                port:
+                  number: 80
