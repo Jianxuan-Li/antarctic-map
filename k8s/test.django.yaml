@@ -13,7 +13,7 @@ spec:
       containers:
         - name: antarctic-map-django-test
           image: freeyeti/dev-in-docker:python3-gis
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command: ["./docker-entrypoint-test.sh"]
           envFrom:
             - configMapRef:
