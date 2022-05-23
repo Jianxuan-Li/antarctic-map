@@ -7,8 +7,6 @@ spec:
   activeDeadlineSeconds: 300
   template:
     spec:
-      imagePullSecrets:
-        - name: yeti2-pull-secret
       restartPolicy: Never
       containers:
         - name: antarctic-map-django-test
@@ -32,4 +30,4 @@ spec:
             path: __CODE_PATH__
         - name: gis-data
           hostPath:
-            path: __ANTARCTIC_MAP_GIS_DATA__
+            path: __GIS_DATA_PATH__

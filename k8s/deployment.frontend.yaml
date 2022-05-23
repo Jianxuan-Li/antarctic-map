@@ -14,11 +14,9 @@ spec:
       labels:
         app: antarcticmap-statics
     spec:
-      imagePullSecrets:
-        - name: yeti2-pull-secret
       containers:
         - name: antarcticmap-statics
-          image: __IMAGE_STATICS__:__IMAGE_TAG__
+          image: __IMAGE_FRONTEND__:__IMAGE_TAG__
           imagePullPolicy: Always
           resources:
             limits:
@@ -34,7 +32,7 @@ spec:
       volumes:
         - name: gis-data
           hostPath:
-            path: __ANTARCTIC_MAP_GIS_DATA__
+            path: __GIS_DATA_PATH__
         - name: download-data
           hostPath:
-            path: __ANTARCTIC_MAP_DOWNLOAD_DATA__
+            path: __WWW_DATA_PATH__

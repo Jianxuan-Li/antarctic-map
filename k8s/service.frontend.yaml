@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: antarcticmap-statics
+  name: antarcticmap-frontend
 spec:
   selector:
-    app: antarcticmap-statics
+    app: antarcticmap-frontend
   ports:
     - protocol: TCP
       port: 80

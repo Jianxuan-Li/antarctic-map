@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: antarcticmap-django
+  name: antarcticmap-backend
 spec:
   selector:
-    app: antarcticmap-django
+    app: antarcticmap-backend
   ports:
     - protocol: TCP
       port: 8000
