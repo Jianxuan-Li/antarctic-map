@@ -72,8 +72,8 @@ jobs:
           IMAGE_TAG: ${{ steps.vars.outputs.tag }}
         run: |
           sed -i "s@__IMAGE_TAG__@$IMAGE_TAG@g" docker-compose.yml
-          sed -i "s@__IMAGE_STATICS__@$FRONTEND_IMAGE@g" docker-compose.yml
-          sed -i "s@__IMAGE_DJANGO__@$BACKEND_IMAGE@g" docker-compose.yml
+          sed -i "s@__IMAGE_FRONTEND__@$FRONTEND_IMAGE@g" docker-compose.yml
+          sed -i "s@__IMAGE_BACKEND__@$BACKEND_IMAGE@g" docker-compose.yml
 
       - name: Build image
         run: |
