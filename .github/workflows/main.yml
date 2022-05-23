@@ -36,7 +36,7 @@ jobs:
       - name: Upload version file
         uses: actions/upload-artifact@v2
         with:
-          name: deployment
+          name: antarctic-map-k8s
           path: version.txt
 
   # Build and push image to Docker registry.
@@ -106,19 +106,21 @@ jobs:
       - name: Check image version
         env:
           IMAGE_TAG: ${{ steps.vars.outputs.tag }}
-          GEO_DATA_PATH: ${{ secrets.GEO_DATA_PATH }}
-          WWW_DATA_PATH: ${{ secrets.WWW_DATA_PATH }}
-          TEST_CODE_PATH: ${{ secrets.TEST_CODE_PATH }}
         run: |
           echo $IMAGE_TAG
 
       - name: Generate deployment files
         env:
           IMAGE_TAG: ${{ steps.vars.outputs.tag }}
+          GEO_DATA_PATH: ${{ secrets.GEO_DATA_PATH }}
+          WWW_DATA_PATH: ${{ secrets.WWW_DATA_PATH }}
+          TEST_CODE_PATH: ${{ secrets.TEST_CODE_PATH }}
         run: |
           sed -i "s@__IMAGE_TAG__@$IMAGE_TAG@g" k8s/deployment.backend.yaml
           sed -i "s@__IMAGE_TAG__@$IMAGE_TAG@g" k8s/deployment.frontend.yaml
           sed -i "s@__IMAGE_TAG__@$IMAGE_TAG@g" k8s/job.db-migrate.yaml
+
+          sed -i "s@__IMAGE_BACKEND__@$BACKEND_IMAGE@g" k8s/job.db-migrate.yaml
 
           sed -i "s@__IMAGE_BACKEND__@$BACKEND_IMAGE@g" k8s/deployment.backend.yaml
           sed -i "s@__GIS_DATA_PATH__@$GEO_DATA_PATH@g" k8s/deployment.backend.yaml
@@ -137,7 +139,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: deployment
+          name: antarctic-map-k8s
           path: |
             k8s/deployment.backend.yaml
             k8s/deployment.frontend.yaml

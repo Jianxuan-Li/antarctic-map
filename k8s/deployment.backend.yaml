@@ -23,7 +23,7 @@ spec:
             - containerPort: 8000
           envFrom:
             - configMapRef:
-                name: env-config
+                name: antarctic-map-env-config
           env:
             - name: DJANGO_SETTINGS_MODULE
               value: map.settings
