@@ -7,11 +7,9 @@ spec:
   activeDeadlineSeconds: 300
   template:
     spec:
-      imagePullSecrets:
-        - name: yeti2-pull-secret
       restartPolicy: Never
       containers:
         - name: antarctic-map-nginx-test
-          image: __IMAGE_STATICS__:__IMAGE_TAG__
+          image: __IMAGE_FRONTEND__:__IMAGE_TAG__
           imagePullPolicy: Always
           command: ["nginx", "-t"]

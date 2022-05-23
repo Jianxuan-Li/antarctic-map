@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: antarcticmap-django
+  name: antarcticmap-backend
   labels:
-    app: antarcticmap-django
+    app: antarcticmap-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: antarcticmap-django
+      app: antarcticmap-backend
   template:
     metadata:
       labels:
-        app: antarcticmap-django
+        app: antarcticmap-backend
     spec:
-      imagePullSecrets:
-        - name: yeti2-pull-secret
       containers:
-        - name: antarcticmap-django
-          image: __IMAGE_DJANGO__:__IMAGE_TAG__
+        - name: antarcticmap-backend
+          image: __IMAGE_BACKEND__:__IMAGE_TAG__
           command: ["./app"]
           imagePullPolicy: IfNotPresent
           ports:
@@ -41,7 +39,7 @@ spec:
       volumes:
         - name: gis-data
           hostPath:
-            path: __ANTARCTIC_MAP_GIS_DATA__
+            path: __GIS_DATA_PATH__
         - name: www-data
           hostPath:
-            path: __ANTARCTIC_MAP_WWW_DATA__
+            path: __WWW_DATA_PATH__

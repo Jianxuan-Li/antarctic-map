@@ -87,4 +87,62 @@ jobs:
           docker push $FRONTEND_IMAGE:$IMAGE_TAG
           docker push $BACKEND_IMAGE:$IMAGE_TAG
 
-  
+  # Generate deployment files.
+  generate-artifacts:
+    # Ensure django image is built before run testing.
+    needs: build
+
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - name: Set image version
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
+      
+      - name: Reset owner
+        run: |
+          sudo chown -R $USER:$USER $(pwd)
+          
+      - name: Check image version
+        env:
+          IMAGE_TAG: ${{ steps.vars.outputs.tag }}
+          GEO_DATA_PATH: ${{ secrets.GEO_DATA_PATH }}
+          WWW_DATA_PATH: ${{ secrets.WWW_DATA_PATH }}
+          TEST_CODE_PATH: ${{ secrets.TEST_CODE_PATH }}
+        run: |
+          echo $IMAGE_TAG
+
+      - name: Generate deployment files
+        env:
+          IMAGE_TAG: ${{ steps.vars.outputs.tag }}
+        run: |
+          sed -i "s@__IMAGE_TAG__@$IMAGE_TAG@g" k8s/deployment.backend.yaml
+          sed -i "s@__IMAGE_TAG__@$IMAGE_TAG@g" k8s/deployment.frontend.yaml
+          sed -i "s@__IMAGE_TAG__@$IMAGE_TAG@g" k8s/job.db-migrate.yaml
+
+          sed -i "s@__IMAGE_BACKEND__@$BACKEND_IMAGE@g" k8s/deployment.backend.yaml
+          sed -i "s@__GIS_DATA_PATH__@$GEO_DATA_PATH@g" k8s/deployment.backend.yaml
+          sed -i "s@__WWW_DATA_PATH__@$WWW_DATA_PATH@g" k8s/deployment.backend.yaml
+
+          sed -i "s@__IMAGE_FRONTEND__@$FRONTEND_IMAGE@g" k8s/deployment.frontend.yaml
+          sed -i "s@__GIS_DATA_PATH__@$GEO_DATA_PATH@g" k8s/deployment.frontend.yaml
+          sed -i "s@__WWW_DATA_PATH__@$WWW_DATA_PATH@g" k8s/deployment.frontend.yaml
+
+          sed -i "s@__IMAGE_FRONTEND__@$FRONTEND_IMAGE@g" k8s/job.test.frontend.yaml
+          sed -i "s@__IMAGE_TAG__@$IMAGE_TAG@g" k8s/job.test.frontend.yaml
+          sed -i "s@__CODE_PATH__@$TEST_CODE_PATH@g" k8s/job.test.backend.yaml
+          sed -i "s@__GIS_DATA_PATH__@$GEO_DATA_PATH@g" k8s/job.test.backend.yaml
+
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: deployment
+          path: |
+            k8s/deployment.backend.yaml
+            k8s/deployment.frontend.yaml
+            k8s/job.db-migrate.yaml
+            k8s/job.test.frontend.yaml
+            k8s/job.test.backend.yaml
+            k8s/service.backend.yaml
+            k8s/service.frontend.yaml

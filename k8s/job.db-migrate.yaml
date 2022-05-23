@@ -1,18 +1,16 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: antarctic-map-migrate
+  name: antarctic-map-db-migrate
 spec:
   backoffLimit: 0
   activeDeadlineSeconds: 300
   template:
     spec:
-      imagePullSecrets:
-        - name: regcred
       restartPolicy: Never
       containers:
-        - name: antarctic-map-migrate
-          image: __IMAGE_DJANGO__:__IMAGE_TAG__
+        - name: antarctic-map-db-migrate
+          image: __IMAGE_BACKEND__:__IMAGE_TAG__
           imagePullPolicy: Always
           command: ["./manage", "migrate"]
           envFrom:
