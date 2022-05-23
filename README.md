@@ -79,3 +79,9 @@ In development environment, use `python3 manage.py sea_ice_etl 20200730` to down
 ## Development environment
 
 - [https://gitlab.com/FreeYeti/dev-in-docker](https://gitlab.com/FreeYeti/dev-in-docker)
+
+
+## Build envs
+
+- `BACKEND_IMAGE=antarcticmap/backend`
+- `FRONTEND_IMAGE=antarcticmap/frontend`
