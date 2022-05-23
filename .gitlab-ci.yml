@@ -100,8 +100,6 @@ deploy_prod:
   script:
     - echo $IMAGE_DJANGO:$CI_COMMIT_SHORT_SHA
     - echo $IMAGE_STATICS:$CI_COMMIT_SHORT_SHA
-    # Issuer
-    - kubectl apply -f k8s/clusterissuer.yaml
 
     # Backend
     - sed -i "s@__ANTARCTIC_MAP_GIS_DATA__@$ANTARCTIC_MAP_GIS_DATA@g" k8s/deployment.django.yaml
@@ -118,9 +116,6 @@ deploy_prod:
     - sed -i "s@__IMAGE_TAG__@$CI_COMMIT_SHORT_SHA@g" k8s/deployment.statics.yaml
     - kubectl apply -f k8s/deployment.statics.yaml
     - kubectl apply -f k8s/service.statics.yaml
-
-    # Ingress
-    - kubectl apply -f k8s/ingress.yaml
 
     # Clean
     - docker container prune -f
