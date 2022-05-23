@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: antarcticmap-statics
+  name: antarcticmap-frontend
   labels:
-    app: antarcticmap-statics
+    app: antarcticmap-frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: antarcticmap-statics
+      app: antarcticmap-frontend
   template:
     metadata:
       labels:
-        app: antarcticmap-statics
+        app: antarcticmap-frontend
     spec:
       containers:
-        - name: antarcticmap-statics
+        - name: antarcticmap-frontend
           image: __IMAGE_FRONTEND__:__IMAGE_TAG__
           imagePullPolicy: Always
           resources:
