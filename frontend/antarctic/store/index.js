@@ -62,11 +62,11 @@ class Store {
       key: 3,
       name: 'Rock outcrop',
       value: 'Rock_outcrop_medium_res_polygon'
-    }, {
+    }/*, {
       key: 4,
       name: 'Contours',
       value: 'Contours_medium_res_line'
-    }, {
+    }*/, {
       key: 5,
       name: 'Antarctic circle',
       value: 'Antarctic_Circle_line'
