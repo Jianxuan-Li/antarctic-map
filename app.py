@@ -2,7 +2,7 @@ import os
 import uvicorn
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yuyun.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'map.settings')
 
 app = get_asgi_application()
 
