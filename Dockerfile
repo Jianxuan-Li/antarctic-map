@@ -24,6 +24,7 @@ ARG PROJECT_PATH
 
 WORKDIR ${PROJECT_PATH}
 COPY --from=builder ${PROJECT_PATH} ${PROJECT_PATH}
+COPY ./pyi_rth_django.py /usr/local/lib/python3.8/dist-packages/PyInstaller/hooks/rthooks/pyi_rth_django.py
 
 RUN pipenv lock -r > requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
